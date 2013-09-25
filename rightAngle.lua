@@ -21,7 +21,7 @@ display.setStatusBar(display.HiddenStatusBar)
 --Local forward references
 
 
-local back
+local back, back2
 local angleAtext, angleBtext, sideAtext, sideBtext, sideCtext
 local whatTap
 local tapTable, aniTable

@@ -13,7 +13,7 @@ local widget = require ( "widget" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
-local stepperDataFile = require("Images.customStep_customStep")
+--local stepperDataFile = require("Images.customStep_customStep")
 local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
 
 display.setStatusBar(display.HiddenStatusBar)
@@ -21,7 +21,7 @@ display.setStatusBar(display.HiddenStatusBar)
 --Local forward references
 
 
-local back, back2
+local back
 local angleAtext, angleBtext, sideAtext, sideBtext, sideCtext
 local whatTap
 local tapTable, aniTable
@@ -180,7 +180,7 @@ local function measureChange( event )
 		if measure:getLabel() == "TO METRIC" then
 			measure:setLabel("TO IMPERIAL")
 			--measureLabel.text = "Metric"
-      measureLabel:setText("metric")
+      measureLabel:setText("Metric")
       measureLabel.x = backEdgeX + 115
       measureLabel.y = backEdgeY + 95
 			for i = 1, 3, 1 do			
@@ -191,7 +191,7 @@ local function measureChange( event )
 		else
 			measure:setLabel("TO METRIC")
 			--measureLabel.text = "Imperial"
-      measureLabel:setText("imperial")
+      measureLabel:setText("Imperial")
       measureLabel.x = backEdgeX + 115
       measureLabel.y = backEdgeY + 95
 			for i = 1, 3, 1 do
@@ -265,7 +265,7 @@ function scene:createScene( event )
   
   Runtime:addEventListener( "key", onKeyEvent )
   
-	stepSheet = graphics.newImageSheet("Images/customStep_customStep.png", stepperDataFile.getSpriteSheetData() )
+	--stepSheet = graphics.newImageSheet("Images/customStep_customStep.png", stepperDataFile.getSpriteSheetData() )
 	
 	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
 	local tapAniSequenceDataFile = require("Images.tapAniv2");
@@ -300,27 +300,29 @@ function scene:createScene( event )
 --	helpButt.x = backEdgeX + 105
 --	helpButt.y = backEdgeY + 85
 
-	decStep = widget.newStepper
-	{
-		left = 0,
-		top = 0,
-		initialValue = 4,
-		minimumValue = 2,
-		maximumValue = 5,
-		onPress = stepPress,		
-		}
-	optionsGroup:insert(decStep)
-	decStep.x = 55
-	decStep.y = backEdgeY + 120
-	
+--	decStep = widget.newStepper
+--	{
+--		left = 0,
+--		top = 0,
+--		initialValue = 4,
+--		minimumValue = 2,
+--		maximumValue = 5,
+--		onPress = stepPress,		
+--		}
+--	optionsGroup:insert(decStep)
+--	decStep.x = 55
+--	decStep.y = backEdgeY + 120
+--	
 	measure = widget.newButton
 	{
 		id = "measureButt",
     width = 125,
 		label = "TO METRIC",
-		labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "Rock Salt",
-		fontSize = 16,
+		labelColor = { default = {39, 102, 136, 150}, over = {255, 255, 255}},
+		font = "Berlin Sans FB",
+		fontSize = 20,
+    defaultFile = "Images/button.png",
+    overFile = "Images/buttonOver.png",
 		onEvent = measureChange,
 		}
 	optionsGroup:insert(measure)
@@ -332,9 +334,11 @@ function scene:createScene( event )
 		id = "menuButt",
     width = 125,
 		label = "MENU",
-		labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "WCManoNegraBta",
-		fontSize = 16,
+		labelColor = { default = {39, 102, 136, 150}, over = {255, 255, 255}},
+		font = "Berlin Sans FB",
+		fontSize = 20,
+    defaultFile = "Images/button.png",
+    overFile = "Images/buttonOver.png",
 		onRelease = goBack,
 		}
 	optionsGroup:insert(menu)
@@ -346,9 +350,11 @@ function scene:createScene( event )
 		id = "resetButt",
     width = 125,
 		label = "RESET",
-		labelColor = { default = {128, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "Rock Salt",
-		fontSize = 18,
+		labelColor = { default = {39, 102, 136, 150}, over = {255, 255, 255}},
+		font = "Berlin Sans FB",
+		fontSize = 20,
+    defaultFile = "Images/button.png",
+    overFile = "Images/buttonOver.png",
 		onEvent = resetCalc,
 		}
 	optionsGroup:insert(reset)
@@ -369,18 +375,18 @@ function scene:createScene( event )
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 	
-	decPlaces = display.newEmbossedText( backGroup, "dec places:", 0, 0, "Rock Salt", 16 )
+	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "Berlin Sans FB", 16 )
   decPlaces:setTextColor(255)
   decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	decPlaces.x = backEdgeX + 115
 	decPlaces.y = backEdgeY + 117
 	
 	places = 4
-	decLabel = display.newText( backGroup, places, 0, 0, "WCManoNegraBta", 18 )
+	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 20 )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 118
   
-  measureLabel = display.newEmbossedText(backGroup, "imperial", 0, 0, "Rock Salt", 16)
+  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "Berlin Sans FB", 20)
   measureLabel:setTextColor(255)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	measureLabel.x = backEdgeX + 115

@@ -35,7 +35,7 @@ local continue
 local angleAtap, angleBtap, sideAtap, sideBtap, sideCtap
 local stepSheet, buttSheet, tapSheet
 
-local decPlaces, measureLabel, optionsGroup, optionsButt
+local decPlaces, measureLabel, optionsGroup
 local decStep, decLabel, places, menuBack
 local menu, reset, helpButt
 local measure

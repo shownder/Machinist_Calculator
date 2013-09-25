@@ -1,0 +1,2120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Bogdan Vladu</string>
+	<key>CreatedWith</key>
+	<string>SpriteHelper</string>
+	<key>SHEETS_INFO</key>
+	<array>
+		<dict>
+			<key>2HDSuffix</key>
+			<string>@4x</string>
+			<key>AllowRotation</key>
+			<false/>
+			<key>Crop</key>
+			<false/>
+			<key>DropSprites</key>
+			<false/>
+			<key>HDSuffix</key>
+			<string>@2x</string>
+			<key>IsRendable</key>
+			<true/>
+			<key>MaxSheetSize</key>
+			<integer>4096</integer>
+			<key>NpotSize</key>
+			<string>{368, 644}</string>
+			<key>Padding</key>
+			<integer>8</integer>
+			<key>PixelFormat</key>
+			<integer>0</integer>
+			<key>SheetImage</key>
+			<string>tapSheetv2_tapSheetv2.png</string>
+			<key>SheetImage-HD</key>
+			<string>tapSheetv2_tapSheetv2@4x.png</string>
+			<key>SheetName</key>
+			<string>tapSheetv2</string>
+			<key>SheetSceneImageName</key>
+			<string></string>
+			<key>Sheet_Sprites_Info</key>
+			<dict>
+				<key>Tap Me 1</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAxLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHTDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABiNjVlMzM4
+					ODQ0MWE0MmU1Yzk5MDlkODE4MDJjODZjNDNl
+					OGY1MThkOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3NDsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMS5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 1</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 2}, {90, 21.75}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 8}, {360, 85}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 1</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 1.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%201.png/</string>
+						<key>OriginalRect</key>
+						<string>{{24, 51}, {360, 85}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 8}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-5.25, 1.375}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 2</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAyLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIjDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAAyNjQ4NTA4
+					YmM3Mjg3ZGE0MTJiNzk3OTA1OWY4ZWMyODM4
+					NzllNGQ3OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4ODsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMi5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 2</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 26}, {87.75, 20.75}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 104}, {351, 81}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 2</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 2.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%202.png/</string>
+						<key>OriginalRect</key>
+						<string>{{28, 52}, {351, 81}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 104}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-5.375, 1.625}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 3</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAzLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIbDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAA1ZjgxNzhh
+					OWMzZDRmZWFlY2M2ZWY4NjllNGY4YWNiY2Nk
+					NmI1MWYwOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4NjsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMy5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 3</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 48}, {86, 19.5}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 192}, {344, 78}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 3</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 3.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%203.png/</string>
+						<key>OriginalRect</key>
+						<string>{{31, 53}, {344, 78}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 192}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-5.5, 2}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 4</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA0LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAJHDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABmMjRjZDIw
+					NGE4YWU4Y2M1MmM4ZTg2ZDM1MzkxYzkwNTEx
+					NmVlNzU0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM5MTsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNC5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 4</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 69}, {84.75, 18.5}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 276}, {337, 74}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 4</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 4.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%204.png/</string>
+						<key>OriginalRect</key>
+						<string>{{34, 54}, {337, 74}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 276}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-5.375, 2.25}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 5</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA1LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAGzDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABiNjhiMzM3
+					YWVjY2JkMzI4ODBiOWRlMGQ2MmM3ZjJkNThk
+					MDcyNzk0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM2YzsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNS5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 5</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 90}, {82.5, 17.5}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 360}, {330, 70}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 5</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 5.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%205.png/</string>
+						<key>OriginalRect</key>
+						<string>{{37, 55}, {330, 70}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 360}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-5.75, 2.5}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 6</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA2LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIDDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABjMDM3MDY2
+					MmM2YzNiNjE2YjdmY2E5MGFhOGZhMjM4YmZj
+					MGVjMDA0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4MDsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNi5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 6</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 109}, {80.75, 16.5}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 436}, {323, 66}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 6</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 6.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%206.png/</string>
+						<key>OriginalRect</key>
+						<string>{{40, 56}, {323, 66}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 436}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-5.875, 2.75}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 7</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA3LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHLDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABhNDE5NzNm
+					NTM4Y2ZkMzY2MWI2YTBjNjllNjdkOGNmZGNh
+					ZGQ0YTdjOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3MjsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNy5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 7</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 128}, {79, 15.75}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 512}, {316, 63}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 7</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 7.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%207.png/</string>
+						<key>OriginalRect</key>
+						<string>{{43, 57}, {316, 63}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 512}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-6, 2.875}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+				<key>Tap Me 8</key>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA4LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHjDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAAxNzEyYjQw
+					YmNiNDVmMzU4MTYxZWRlNGVkZmEyODgzZDFl
+					MjFhZWNlOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3ODsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgOC5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>IsSHSprite</key>
+					<true/>
+					<key>PhysicProperties</key>
+					<dict>
+						<key>AngularDamping</key>
+						<real>0.0</real>
+						<key>AngularVelocity</key>
+						<real>0.0</real>
+						<key>CanSleep</key>
+						<true/>
+						<key>FixedRot</key>
+						<false/>
+						<key>GravityScale</key>
+						<real>1</real>
+						<key>HandledBySH</key>
+						<true/>
+						<key>IsBullet</key>
+						<false/>
+						<key>LinearDamping</key>
+						<real>0.0</real>
+						<key>LinearVelocity</key>
+						<string>{0, 0}</string>
+						<key>SH_ComplexShapes</key>
+						<array/>
+						<key>Type</key>
+						<integer>3</integer>
+					</dict>
+					<key>SHSheetName</key>
+					<string>tapSheetv2</string>
+					<key>SHSpriteName</key>
+					<string>Tap Me 8</string>
+					<key>SheetImage</key>
+					<string>tapSheetv2_tapSheetv2.png</string>
+					<key>SheetImage-HD</key>
+					<string>tapSheetv2_tapSheetv2@4x.png</string>
+					<key>TextureProperties</key>
+					<dict>
+						<key>Angle</key>
+						<integer>0</integer>
+						<key>Border</key>
+						<integer>0</integer>
+						<key>CanBeTrimmed</key>
+						<true/>
+						<key>Color</key>
+						<string>{{1, 1}, {1, 1}}</string>
+						<key>ConvertedFromOldFormat</key>
+						<false/>
+						<key>CustomClassName</key>
+						<string></string>
+						<key>FlipX</key>
+						<false/>
+						<key>FlipY</key>
+						<false/>
+						<key>Frame</key>
+						<string>{{2, 146}, {77, 14.5}}</string>
+						<key>Frame-HD</key>
+						<string>{{8, 584}, {308, 58}}</string>
+						<key>Image</key>
+						<string>tapSheetv2_tapSheetv2.png</string>
+						<key>Image-HD</key>
+						<string>tapSheetv2_tapSheetv2@4x.png</string>
+						<key>IsCropped</key>
+						<false/>
+						<key>IsDrawable</key>
+						<true/>
+						<key>IsRotated</key>
+						<false/>
+						<key>IsTrimmed</key>
+						<true/>
+						<key>Name</key>
+						<string>Tap Me 8</string>
+						<key>Opacity</key>
+						<real>1</real>
+						<key>OriginalImage</key>
+						<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 8.png</string>
+						<key>OriginalImage_RelativePath</key>
+						<string>Tap%20Me%208.png/</string>
+						<key>OriginalRect</key>
+						<string>{{46, 58}, {308, 58}}</string>
+						<key>OriginalSize</key>
+						<string>{450, 200}</string>
+						<key>Position</key>
+						<string>{8, 584}</string>
+						<key>Scale</key>
+						<string>{1, 1}</string>
+						<key>SpriteSize</key>
+						<string>{112.5, 50}</string>
+						<key>SpriteWasBreaked</key>
+						<false/>
+						<key>Tag</key>
+						<integer>0</integer>
+						<key>TextureOffset</key>
+						<string>{-6.25, 3.25}</string>
+						<key>UsesBatchRendering</key>
+						<true/>
+						<key>ZOrder</key>
+						<integer>0</integer>
+					</dict>
+				</dict>
+			</dict>
+			<key>Size</key>
+			<string>{512, 1024}</string>
+			<key>Trim</key>
+			<true/>
+			<key>ZOrder</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>SH_ANIMATIONS_LIST</key>
+	<array>
+		<dict>
+			<key>DelayPerUnit</key>
+			<real>0.05000000074505806</real>
+			<key>Frames</key>
+			<array>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAxLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHTDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABiNjVlMzM4
+					ODQ0MWE0MmU1Yzk5MDlkODE4MDJjODZjNDNl
+					OGY1MThkOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3NDsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMS5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 2}, {90, 21.75}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 8}, {360, 85}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 1.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.25, 1.375}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 1</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAyLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIjDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAAyNjQ4NTA4
+					YmM3Mjg3ZGE0MTJiNzk3OTA1OWY4ZWMyODM4
+					NzllNGQ3OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4ODsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMi5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 26}, {87.75, 20.75}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 104}, {351, 81}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 2.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.375, 1.625}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 2</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAzLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIbDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAA1ZjgxNzhh
+					OWMzZDRmZWFlY2M2ZWY4NjllNGY4YWNiY2Nk
+					NmI1MWYwOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4NjsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMy5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 48}, {86, 19.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 192}, {344, 78}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 3.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.5, 2}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 3</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA0LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAJHDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABmMjRjZDIw
+					NGE4YWU4Y2M1MmM4ZTg2ZDM1MzkxYzkwNTEx
+					NmVlNzU0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM5MTsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNC5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 69}, {84.75, 18.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 276}, {337, 74}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 4.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.375, 2.25}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 4</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA1LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAGzDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABiNjhiMzM3
+					YWVjY2JkMzI4ODBiOWRlMGQ2MmM3ZjJkNThk
+					MDcyNzk0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM2YzsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNS5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 90}, {82.5, 17.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 360}, {330, 70}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 5.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.75, 2.5}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 5</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA2LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIDDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABjMDM3MDY2
+					MmM2YzNiNjE2YjdmY2E5MGFhOGZhMjM4YmZj
+					MGVjMDA0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4MDsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNi5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 109}, {80.75, 16.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 436}, {323, 66}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 6.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.875, 2.75}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 6</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA3LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHLDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABhNDE5NzNm
+					NTM4Y2ZkMzY2MWI2YTBjNjllNjdkOGNmZGNh
+					ZGQ0YTdjOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3MjsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNy5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 128}, {79, 15.75}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 512}, {316, 63}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 7.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-6, 2.875}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 7</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA4LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHjDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAAxNzEyYjQw
+					YmNiNDVmMzU4MTYxZWRlNGVkZmEyODgzZDFl
+					MjFhZWNlOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3ODsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgOC5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 146}, {77, 14.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 584}, {308, 58}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 8.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-6.25, 3.25}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 8</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA3LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAHLDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABhNDE5NzNm
+					NTM4Y2ZkMzY2MWI2YTBjNjllNjdkOGNmZGNh
+					ZGQ0YTdjOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM3MjsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNy5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 128}, {79, 15.75}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 512}, {316, 63}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 7.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-6, 2.875}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 7</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA2LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIDDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABjMDM3MDY2
+					MmM2YzNiNjE2YjdmY2E5MGFhOGZhMjM4YmZj
+					MGVjMDA0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4MDsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNi5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 109}, {80.75, 16.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 436}, {323, 66}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 6.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.875, 2.75}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 6</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA1LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAGzDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABiNjhiMzM3
+					YWVjY2JkMzI4ODBiOWRlMGQ2MmM3ZjJkNThk
+					MDcyNzk0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM2YzsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNS5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 90}, {82.5, 17.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 360}, {330, 70}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 5.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.75, 2.5}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 5</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSA0LnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAJHDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAABmMjRjZDIw
+					NGE4YWU4Y2M1MmM4ZTg2ZDM1MzkxYzkwNTEx
+					NmVlNzU0OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM5MTsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgNC5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 69}, {84.75, 18.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 276}, {337, 74}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 4.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.375, 2.25}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 4</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAzLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIbDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAA1ZjgxNzhh
+					OWMzZDRmZWFlY2M2ZWY4NjllNGY4YWNiY2Nk
+					NmI1MWYwOzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4NjsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMy5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 48}, {86, 19.5}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 192}, {344, 78}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 3.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.5, 2}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 3</string>
+				</dict>
+				<dict>
+					<key>DocumentSecurityImageBookmark</key>
+					<data>
+					Ym9va+ADAAAAAAQQMAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAxAIAAAUA
+					AAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZl
+					AAAADAAAAAEBAABHb29nbGUgRHJpdmUIAAAA
+					AQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUg
+					djIAAAAMAAAAAQEAAFRhcCBNZSAyLnBuZxgA
+					AAABBgAABAAAABQAAAAkAAAAOAAAAEgAAABc
+					AAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAA
+					bgAIAAAAAAAIAAAABAMAAJ5ZIQEAAAAACAAA
+					AAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAA
+					AAAIAAAABAMAAIjDMwEAAAAAGAAAAAEGAACQ
+					AAAAoAAAALAAAADAAAAA0AAAAOAAAAAYAAAA
+					AQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAA
+					AAAAAAABBQAABAAAAAMDAAABAAAACAAAAAQD
+					AAAEAAAAAAAAAAQAAAADAwAA9QEAAAwAAAAB
+					AQAATWFjaW50b3NoIEhECAAAAAQDAAAAAHQF
+					OgAAAAgAAAAABAAAQbFRkIoAAAAkAAAAAQEA
+					ADU5QzMzNEIzLTM5RjAtM0MwNi1CMjZFLUU2
+					NTZENzQ5MEUwQhgAAAABAgAAgQAAAAEACADv
+					PwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+					BAAAAAMDAAAAAQAAwQAAAAECAAAyNjQ4NTA4
+					YmM3Mjg3ZGE0MTJiNzk3OTA1OWY4ZWMyODM4
+					NzllNGQ3OzAwMDAwMDAwOzAwMDAwMDAwMDAw
+					MDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5kYm94
+					LnJlYWQtd3JpdGU7MDAwMDAwMDE7MGUwMDAw
+					MDI7MDAwMDAwMDAwMTMzYzM4ODsvdXNlcnMv
+					c3RldmUvZ29vZ2xlIGRyaXZlL3Byb2plY3Rz
+					L3RhcCBtZSB2Mi90YXAgbWUgMi5wbmcAAAAA
+					5AAAAP7///8BAAAAAAAAABIAAAAEEAAAcAAA
+					AAAAAAAFEAAA8AAAAAAAAAAQEAAAEAEAAAAA
+					AABUEAAAOAEAAAAAAABVEAAAOAEAAAAAAABW
+					EAAAMAEAAAAAAAACIAAA4AEAAAAAAAAQIAAA
+					YAEAAAAAAAARIAAAlAEAAAAAAAASIAAAdAEA
+					AAAAAAATIAAAhAEAAAAAAAAgIAAAwAEAAAAA
+					AAAwIAAAMAEAAAAAAAABwAAARAEAAAAAAAAR
+					wAAAFAAAAAAAAAASwAAAVAEAAAAAAAAQ0AAA
+					7AEAAAAAAACA8AAA+AEAAAAAAAA=
+					</data>
+					<key>Frame</key>
+					<string>{{2, 26}, {87.75, 20.75}}</string>
+					<key>Frame-HD</key>
+					<string>{{8, 104}, {351, 81}}</string>
+					<key>IsRotated</key>
+					<false/>
+					<key>OriginalImage</key>
+					<string>/Users/Steve/Google Drive/Projects/Tap Me v2/Tap Me 2.png</string>
+					<key>SpriteSize</key>
+					<string>{112.5, 50}</string>
+					<key>TextureOffset</key>
+					<string>{-5.375, 1.625}</string>
+					<key>delayPerUnit</key>
+					<real>1</real>
+					<key>notifications</key>
+					<dict/>
+					<key>offset</key>
+					<string>{0, 0}</string>
+					<key>spriteframe</key>
+					<string>Tap Me 2</string>
+				</dict>
+			</array>
+			<key>Loop</key>
+			<true/>
+			<key>Repetitions</key>
+			<integer>1</integer>
+			<key>RestoreOriginalFrame</key>
+			<false/>
+			<key>SheetImage</key>
+			<string>tapSheetv2_tapSheetv2.png</string>
+			<key>SheetName</key>
+			<string>tapSheetv2</string>
+			<key>StartAtLaunch</key>
+			<true/>
+			<key>UniqueName</key>
+			<string>tapAniv2</string>
+		</dict>
+	</array>
+	<key>SaveSettings</key>
+	<dict>
+		<key>Dither</key>
+		<false/>
+		<key>DocumentName</key>
+		<string>tapSheetv2</string>
+		<key>HD2XSuffix</key>
+		<string>@4x</string>
+		<key>HDSuffix</key>
+		<string>@2x</string>
+		<key>ImageFormatId</key>
+		<integer>0</integer>
+		<key>Npot</key>
+		<true/>
+		<key>PvrFormat</key>
+		<integer>0</integer>
+		<key>PvrRemoveParent</key>
+		<true/>
+		<key>ResamplingAlgorithm</key>
+		<integer>0</integer>
+		<key>ResizingOptions</key>
+		<integer>2</integer>
+		<key>SaveStyle</key>
+		<integer>0</integer>
+	</dict>
+	<key>SceneFolderSandboxBookmark</key>
+	<data>
+	Ym9va3QDAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAIA
+	AAUAAAABAQAAVXNlcnMAAAAFAAAAAQEAAFN0ZXZlAAAADAAAAAEBAABHb29nbGUgRHJp
+	dmUIAAAAAQEAAFByb2plY3RzCQAAAAEBAABUYXAgTWUgdjIAAAAUAAAAAQYAAAQAAAAU
+	AAAAJAAAADgAAABIAAAACAAAAAQDAAA/kQAAAAAAAAgAAAAEAwAAbgAIAAAAAAAIAAAA
+	BAMAAJ5ZIQEAAAAACAAAAAQDAADnZzEBAAAAAAgAAAAEAwAAZcMzAQAAAAAUAAAAAQYA
+	AHgAAACIAAAAmAAAAKgAAAC4AAAAGAAAAAECAAACAAAAAAAAAA8AAAAAAAAAAAAAAAAA
+	AAAIAAAABAMAAAMAAAAAAAAABAAAAAMDAAD1AQAADAAAAAEBAABNYWNpbnRvc2ggSEQI
+	AAAABAMAAAAAdAU6AAAACAAAAAAEAABBsVGQigAAACQAAAABAQAANTlDMzM0QjMtMzlG
+	MC0zQzA2LUIyNkUtRTY1NkQ3NDkwRTBCGAAAAAECAACBAAAAAQAIAO8/AAABAAgAAAAA
+	AAAAAAABAAAAAQEAAC8AAAAAAAAAAQUAAAQAAAADAwAAAAEAALQAAAABAgAAYjFlYjI0
+	ZTQ4MWEwMzJmNjdlOTQ2MzRiYzBiMTJkZDdlMzA4YzQwNDswMDAwMDAwMDswMDAwMDAw
+	MDAwMDAwMDIwO2NvbS5hcHBsZS5hcHAtc2FuZGJveC5yZWFkLXdyaXRlOzAwMDAwMDAx
+	OzBlMDAwMDAyOzAwMDAwMDAwMDEzM2MzNjU7L3VzZXJzL3N0ZXZlL2dvb2dsZSBkcml2
+	ZS9wcm9qZWN0cy90YXAgbWUgdjIAwAAAAP7///8BAAAAAAAAAA8AAAAEEAAAXAAAAAAA
+	AAAFEAAAyAAAAAAAAAAQEAAA5AAAAAAAAAACIAAAoAEAAAAAAAAQIAAAIAEAAAAAAAAR
+	IAAAVAEAAAAAAAASIAAANAEAAAAAAAATIAAARAEAAAAAAAAgIAAAgAEAAAAAAAAwIAAA
+	rAEAAAAAAAABwAAABAEAAAAAAAARwAAAFAAAAAAAAAASwAAAFAEAAAAAAAAQ0AAAtAEA
+	AAAAAACA8AAAwAEAAAAAAAA=
+	</data>
+	<key>Version</key>
+	<string>1.8.307</string>
+</dict>
+</plist>

@@ -1,0 +1,44 @@
+settings =
+{
+	orientation =
+	{
+		default = "landscapeRight",
+		supported = { "landscapeRight", "landscapeLeft" },
+	},
+	
+	iphone =
+    {
+		plist =
+      {
+        UIAppFonts = 
+          {
+            "Rock Salt.ttf",
+            "WCManoNegraBta.ttf",
+            "Digital-7Mono.ttf",
+            "Berlin Sans FB.TTF"
+          },
+        UIStatusBarHidden = true,
+        CFBundleIconFiles = 
+          {
+            "Icon.png",
+            "Icon@2x.png",
+            "Icon-72.png",
+            "Icon-72@2x.png",
+            "Icon-Small-50.png",
+            "Icon-Small-50@2x.png",
+            "Icon-Small.png",
+            "Icon-Small@2x.png"
+          },
+      }
+    },
+  android =
+  {
+   usesPermissions =
+   {
+      "android.permission.INTERNET",
+      "com.android.vending.BILLING",
+      "com.android.vending.CHECK_LICENSE",
+   },
+  }
+    
+}

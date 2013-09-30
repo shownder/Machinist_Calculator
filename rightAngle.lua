@@ -13,7 +13,7 @@ local widget = require ( "widget" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
---local stepperDataFile = require("Images.customStep_customStep")
+local stepperDataFile = require("Images.stepSheet_stepSheet")
 local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
 
 display.setStatusBar(display.HiddenStatusBar)
@@ -27,7 +27,7 @@ local whatTap
 local tapTable, aniTable
 
 local backEdgeX, backEdgeY
-local tapCount
+local tapCount, doneCount
 
 local area, areaAnswer
 local continue
@@ -63,16 +63,20 @@ local function optionsMove(event)
   if "ended" == phase then
 		
     if not options then
-      transition.to ( optionsBack, { time = 500, x = -50 } )
-      transition.to ( optionsBack, { time = 500, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1, delay = 400} )
-      transition.to ( backGroup, { time = 500, x=400 } )
-			options = true
+      options = true
+      transition.to ( optionsBack, { time = 200, x = -50 } )
+      transition.to ( optionsBack, { time = 200, y = 0 } )
+			transition.to ( optionsGroup, { time = 500, alpha = 1} )
+      transition.to ( backGroup, { time = 200, x=400 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
+      decLabel:setTextColor(39, 102, 186)
 		elseif options then 
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setTextColor(255)
 			options = false
     end
   end
@@ -124,17 +128,13 @@ local function resetCalc(event)
 		continue = false
     storyboard.number = nil
     
-    for i = 1, 5, 1 do
-      tapTable[i]:setTextColor(0, 0, 0)
-    end
-    
-    timer.performWithDelay( 1, addListeners )
-    
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
+      transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
       transition.to ( optionsBack, { time = 500, x = -170 } )
       transition.to ( optionsBack, { time = 500, y = -335 } )
+      transition.to (decLabel, { time = 500, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setTextColor(255)
 			options = false
 		end		
 end
@@ -153,12 +153,19 @@ end
 local function calcTouch( event )
 	if event.phase == "ended" then
     
+    local continue = false
+    
+      for i = 1, 5, 1 do
+        if tapTable[i].text == "Tap Me" then
+          continue = true
+        end
+      end
+    
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
       transition.to ( optionsBack, { time = 500, x = -170 } )
       transition.to ( optionsBack, { time = 500, y = -335 } )
-			options = false
 		end
 		
 		whatTap = event.target.tap
@@ -167,11 +174,27 @@ local function calcTouch( event )
 			tapCount = tapCount + 1
 		end
     
+    if not continue then
+      native.showAlert ("Continue?", "Press OK to reset all values and continue.", { "OK", "Cancel" }, alertListener2 )
+    else
 		storyboard.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
+  end
 		
 		return true
 	end
 end
+
+local function alertListener2 ( event )
+	if "clicked" == event.action then
+    local i = event.index
+    if 1 == i then
+     print("OK was pressed")
+    elseif 2 == i then
+      print("Cancel was pressed")
+    end
+  end
+end
+
 
 local function measureChange( event )
 	local phase = event.phase
@@ -253,6 +276,7 @@ end
 function scene:createScene( event )
 	local screenGroup = self.view
 	
+  doneCount = 0
 	tapTable = {}
 	aniTable = {}
 	optionsGroup = display.newGroup ( )
@@ -265,7 +289,7 @@ function scene:createScene( event )
   
   Runtime:addEventListener( "key", onKeyEvent )
   
-	--stepSheet = graphics.newImageSheet("Images/customStep_customStep.png", stepperDataFile.getSpriteSheetData() )
+	stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
 	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
 	local tapAniSequenceDataFile = require("Images.tapAniv2");
@@ -300,25 +324,32 @@ function scene:createScene( event )
 --	helpButt.x = backEdgeX + 105
 --	helpButt.y = backEdgeY + 85
 
---	decStep = widget.newStepper
---	{
---		left = 0,
---		top = 0,
---		initialValue = 4,
---		minimumValue = 2,
---		maximumValue = 5,
---		onPress = stepPress,		
---		}
---	optionsGroup:insert(decStep)
---	decStep.x = 55
---	decStep.y = backEdgeY + 120
---	
+		decStep = widget.newStepper
+	{
+		
+		left = 0,
+		top = 0,
+		initialValue = 4,
+		minimumValue = 2,
+		maximumValue = 5,
+		sheet = stepSheet,
+		defaultFrame = 1,
+		noMinusFrame = 2,
+		noPlusFrame = 3,
+		minusActiveFrame = 2,
+		plusActiveFrame = 3,
+		onPress = stepPress,		
+		}
+	optionsGroup:insert(decStep)
+	decStep.x = 70
+	decStep.y = backEdgeY + 110
+	
 	measure = widget.newButton
 	{
 		id = "measureButt",
     width = 125,
 		label = "TO METRIC",
-		labelColor = { default = {39, 102, 136, 150}, over = {255, 255, 255}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		font = "Berlin Sans FB",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -334,7 +365,7 @@ function scene:createScene( event )
 		id = "menuButt",
     width = 125,
 		label = "MENU",
-		labelColor = { default = {39, 102, 136, 150}, over = {255, 255, 255}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		font = "Berlin Sans FB",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -350,7 +381,7 @@ function scene:createScene( event )
 		id = "resetButt",
     width = 125,
 		label = "RESET",
-		labelColor = { default = {39, 102, 136, 150}, over = {255, 255, 255}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		font = "Berlin Sans FB",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -392,7 +423,7 @@ function scene:createScene( event )
 	measureLabel.x = backEdgeX + 115
 	measureLabel.y = backEdgeY + 95
 
-  area = display.newEmbossedText(backGroup, "Area:", 0, 0, "Rock Salt", 16)
+  area = display.newEmbossedText(backGroup, "Area:", 0, 0, "Berlin Sans FB", 20)
   area:setTextColor(255)
   area:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	area.x = backEdgeX + 320
@@ -504,10 +535,6 @@ function scene:createScene( event )
   
   screenGroup:insert(backGroup)
   
-  for i = 1, 5, 1 do
-      tapTable[i]:setTextColor(0, 0, 0)
-  end
-
 end
 
 
@@ -562,7 +589,6 @@ function scene:overlayEnded( event )
     
   if storyboard.number ~= "Tap Me" then
   
-  local doneCount = 0
   print(tapCount)
 
 	if whatTap > 5 then
@@ -660,17 +686,17 @@ function scene:overlayEnded( event )
       doneCount = doneCount + 1
     end
   end
-  
-  if doneCount == 5 then
-    print("removing event listeners")
-    timer.performWithDelay( 10, removeListeners, 2 )
-  end
-  
-  if doneCount == 5 then
-    for i = 1, 5, 1 do
-      tapTable[i]:setTextColor(255, 255, 255)
-    end
-  end
+--  
+--  if doneCount == 5 then
+--    print("removing event listeners")
+--    timer.performWithDelay( 10, removeListeners, 2 )
+--  end
+--  
+--  if doneCount == 5 then
+--    for i = 1, 5, 1 do
+--      tapTable[i]:setTextColor(255, 255, 255)
+--    end
+--  end
   
 else
   tapCount = tapCount - 1
@@ -785,23 +811,23 @@ function angBcalc()
 	end
 end
 
-function addListeners()
-  print("adding event listeners")
-  sideAtext:addEventListener( "touch", calcTouch )
-  sideBtext:addEventListener( "touch", calcTouch )
-  sideCtext:addEventListener( "touch", calcTouch )
-  angleAtext:addEventListener( "touch", calcTouch )
-  angleBtext:addEventListener( "touch", calcTouch )
-end
+--function addListeners()
+--  print("adding event listeners")
+--  sideAtext:addEventListener( "touch", calcTouch )
+--  sideBtext:addEventListener( "touch", calcTouch )
+--  sideCtext:addEventListener( "touch", calcTouch )
+--  angleAtext:addEventListener( "touch", calcTouch )
+--  angleBtext:addEventListener( "touch", calcTouch )
+--end
 
-function removeListeners()
-  print("removing event listeners")
-  sideAtext:removeEventListener( "touch", calcTouch )
-  sideBtext:removeEventListener( "touch", calcTouch )
-  sideCtext:removeEventListener( "touch", calcTouch )
-  angleAtext:removeEventListener( "touch", calcTouch )
-  angleBtext:removeEventListener( "touch", calcTouch )
-end
+--function removeListeners()
+--  print("removing event listeners")
+--  sideAtext:removeEventListener( "touch", calcTouch )
+--  sideBtext:removeEventListener( "touch", calcTouch )
+--  sideCtext:removeEventListener( "touch", calcTouch )
+--  angleAtext:removeEventListener( "touch", calcTouch )
+--  angleBtext:removeEventListener( "touch", calcTouch )
+--end
 
 function goBack2()
 	

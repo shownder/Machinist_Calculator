@@ -72,7 +72,7 @@ local function optionsMove(event)
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
       transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -340 } )
+      transition.to ( optionsBack, { time = 500, y = -335 } )
 			options = false
     end
   end
@@ -134,7 +134,7 @@ local function resetCalc(event)
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
       transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -340 } )
+      transition.to ( optionsBack, { time = 500, y = -335 } )
 			options = false
 		end		
 end
@@ -144,7 +144,7 @@ local function goBack(event)
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 100, alpha = 0 } )
       transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -340 } )
+      transition.to ( optionsBack, { time = 500, y = -335 } )
 			options = false
 			storyboard.gotoScene( "menu", { effect="slideRight", time=800})
 		
@@ -157,7 +157,7 @@ local function calcTouch( event )
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
       transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -340 } )
+      transition.to ( optionsBack, { time = 500, y = -335 } )
 			options = false
 		end
 		
@@ -367,11 +367,11 @@ function scene:createScene( event )
   optionsBack:setFillColor(255, 255, 255)
   optionsBack:setReferencePoint(display.TopLeftReferencePoint)
   optionsBack.x = -170
-  optionsBack.y = -340
+  optionsBack.y = -335  
   
-  optionsButt = display.newImageRect(screenGroup, "Images/Options.png", 17, 17)
+  optionsButt = display.newImageRect(screenGroup, "Images/Options.png", 38, 38)
   optionsButt.x = 15
-  optionsButt.y = 13
+  optionsButt.y = 15
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 	
@@ -382,9 +382,9 @@ function scene:createScene( event )
 	decPlaces.y = backEdgeY + 117
 	
 	places = 4
-	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 20 )
+	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 22 )
 	decLabel.x = backEdgeX + 178
-	decLabel.y = backEdgeY + 118
+	decLabel.y = backEdgeY + 115
   
   measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "Berlin Sans FB", 20)
   measureLabel:setTextColor(255)
@@ -499,6 +499,8 @@ function scene:createScene( event )
   transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
   optionsBack.alpha = 0
   transition.to ( optionsBack, { time = 500, alpha = 1, delay = 600} )
+  optionsButt.alpha = 0
+  transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
   
   screenGroup:insert(backGroup)
   

@@ -158,6 +158,27 @@ local function resetCalc(event)
     end
 end
 
+local function alertListener3 ( event )
+	if "clicked" == event.action then
+    local i = event.index
+    if 1 == i then
+     --timer.performWithDelay( 1000, resetCalc("ended") )
+     resetCalc("ended")
+     if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
+      transition.to ( optionsBack, { time = 500, x = -170 } )
+      transition.to ( optionsBack, { time = 500, y = -335 } )
+		end
+			tapCount = tapCount + 1
+      whatTap = whatTap + 10
+      storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
+    elseif 2 == i then
+      print("Cancel was pressed")
+    end
+  end
+end
+
 local function measureChange( event )
 	local phase = event.phase
 	
@@ -197,7 +218,15 @@ end
 local function calcTouch( event )
 	if event.phase == "ended" then
 		
-		whatTap = event.target.tap
+		local continue = false
+    
+      for i = 1, 5, 1 do
+        if tapTable[i].text == "Tap Me" then
+          continue = true
+        end
+      end
+    
+    whatTap = event.target.tap
     print(whatTap)
     
     if whatTap > 6 then
@@ -214,8 +243,12 @@ local function calcTouch( event )
 			options = false
 		end
 		
-		storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
-		
+		if not continue then
+      native.showAlert ("Continue?", "Press OK to reset all values and continue.", { "OK", "Cancel" }, alertListener3 )
+    else
+			storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
+  end
+  
 		return true
 	end
 end

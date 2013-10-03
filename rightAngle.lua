@@ -58,50 +58,6 @@ local function onKeyEvent( event )
    return true
 end
 
-local function optionsMove(event)
-	local phase = event.phase
-  if "ended" == phase then
-		
-    if not options then
-      options = true
-      transition.to ( optionsBack, { time = 200, x = -50 } )
-      transition.to ( optionsBack, { time = 200, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=400 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
-      decLabel:setTextColor(39, 102, 186)
-		elseif options then 
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setTextColor(255)
-			options = false
-    end
-  end
-end
-
-local function helpScreen(event)
-	local phase = event.phase
-  
-  if "ended" == phase then	
-
-    if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				--transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
-    end
-    
-    --Runtime:removeEventListener( "touch", onScreenTouch  )
-    
-    storyboard.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "rightAngle" }, isModal = true}  )
-    
-  end
-      
-end
-
 local function resetCalc(event)
 	local phase = event.phase
 		
@@ -147,7 +103,71 @@ local function goBack(event)
       transition.to ( optionsBack, { time = 500, y = -335 } )
 			options = false
 			storyboard.gotoScene( "menu", { effect="slideRight", time=800})
+		return true
+end
+
+local function alertListener2 ( event )
+	if "clicked" == event.action then
+    local i = event.index
+    if 1 == i then
+     timer.performWithDelay( 1000, resetCalc("ended") )
+     if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
+      transition.to ( optionsBack, { time = 500, x = -170 } )
+      transition.to ( optionsBack, { time = 500, y = -335 } )
+		end
+			tapCount = tapCount + 1
+      whatTap = whatTap + 10
+      storyboard.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
+    elseif 2 == i then
+      print("Cancel was pressed")
+    end
+  end
+end
+
+local function optionsMove(event)
+	local phase = event.phase
+  if "ended" == phase then
 		
+    if not options then
+      options = true
+      transition.to ( optionsBack, { time = 200, x = -50 } )
+      transition.to ( optionsBack, { time = 200, y = 0 } )
+			transition.to ( optionsGroup, { time = 500, alpha = 1} )
+      transition.to ( backGroup, { time = 200, x=400 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
+      decLabel:setTextColor(39, 102, 186)
+		elseif options then 
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setTextColor(255)
+			options = false
+    end
+  end
+end
+
+local function helpScreen(event)
+	local phase = event.phase
+  
+  if "ended" == phase then	
+
+    if options then
+				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
+				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
+				--transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
+				options = false
+    end
+    
+    --Runtime:removeEventListener( "touch", onScreenTouch  )
+    
+    storyboard.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "rightAngle" }, isModal = true}  )
+    
+  end
+      
 end
 
 local function calcTouch( event )
@@ -182,17 +202,6 @@ local function calcTouch( event )
 		
 		return true
 	end
-end
-
-local function alertListener2 ( event )
-	if "clicked" == event.action then
-    local i = event.index
-    if 1 == i then
-     print("OK was pressed")
-    elseif 2 == i then
-      print("Cancel was pressed")
-    end
-  end
 end
 
 

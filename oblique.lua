@@ -28,7 +28,7 @@ local angleAtext, angleBtext, angleCtext, sideAtext, sideBtext, sideCtext
 local angleAtap, angleBtap, angleCtap, sideAtap, sideBtap, sideCtap
 local tapTable, whatTap, tapCount, aniTable
 
-local menu, reset, measure, decStep
+local menu, reset, measure, decStep, resetVal
 
 local infoButt, infoText, measureLabel, decLabel
 
@@ -76,19 +76,19 @@ local function optionsMove(event)
   if "ended" == phase then
 		
     if not options then
-      transition.to ( optionsBack, { time = 500, x = -50 } )
-      transition.to ( optionsBack, { time = 500, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1, delay = 400} )
-      transition.to ( backGroup, { time = 500, x=400 } )
-      transition.to (decLabel, { time = 500, x = backEdgeX - 43, y = backEdgeY + 110} )
+      options = true
+      transition.to ( optionsBack, { time = 200, x = -50 } )
+      transition.to ( optionsBack, { time = 200, y = 0 } )
+			transition.to ( optionsGroup, { time = 500, alpha = 1} )
+      transition.to ( backGroup, { time = 200, x=400 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
       decLabel:setTextColor(39, 102, 186)
-			options = true
 		elseif options then 
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
-      transition.to (decLabel, { time = 500, x = backEdgeX + 177, y = backEdgeY + 115} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 125} )
       decLabel:setTextColor(255)
 			options = false
     end
@@ -149,34 +149,13 @@ local function resetCalc(event)
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
-      transition.to (decLabel, { time = 500, x = backEdgeX + 177, y = backEdgeY + 115} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 125} )
       decLabel:setTextColor(255)
 			options = false
     end
-end
-
-local function alertListener3 ( event )
-	if "clicked" == event.action then
-    local i = event.index
-    if 1 == i then
-     --timer.performWithDelay( 1000, resetCalc("ended") )
-     resetCalc("ended")
-     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
-		end
-			tapCount = tapCount + 1
-      whatTap = whatTap + 10
-      storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
-    elseif 2 == i then
-      print("Cancel was pressed")
-    end
-  end
 end
 
 local function measureChange( event )
@@ -201,6 +180,15 @@ local function measureChange( event )
 				end
 			end
 		end
+    if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 125} )
+      decLabel:setTextColor(255)
+			options = false
+		end
 
 	end	
 end
@@ -218,14 +206,6 @@ end
 local function calcTouch( event )
 	if event.phase == "ended" then
 		
-		local continue = false
-    
-      for i = 1, 5, 1 do
-        if tapTable[i].text == "Tap Me" then
-          continue = true
-        end
-      end
-    
     whatTap = event.target.tap
     print(whatTap)
     
@@ -235,19 +215,15 @@ local function calcTouch( event )
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
-      transition.to (decLabel, { time = 500, x = backEdgeX + 177, y = backEdgeY + 115} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 125} )
       decLabel:setTextColor(255)
 			options = false
 		end
 		
-		if not continue then
-      native.showAlert ("Continue?", "Press OK to reset all values and continue.", { "OK", "Cancel" }, alertListener3 )
-    else
-			storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
-  end
+		storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
   
 		return true
 	end
@@ -269,7 +245,13 @@ local function infoPress( event )
 	local phase = event.phase		
 		if "ended" == phase then
 			
-			tapCount = 0
+      if resetVal then
+        timer.performWithDelay( 1000, resetCalc("ended") )
+        resetVal = false
+        infoButt:setLabel("Input")
+      else
+			
+      tapCount = 0
     
 			angleAtext.alpha = 0
 			angleBtext.alpha = 0
@@ -340,7 +322,8 @@ local function infoPress( event )
         	sideCtap.alpha = 0
 			end		
       
-		areaAnswer.text = ""    
+		areaAnswer.text = ""
+    end
 		end	
 end
 
@@ -414,12 +397,12 @@ function scene:createScene( event )
 		back.x = display.contentCenterX
 		back.y = display.contentCenterY	
     
+    backEdgeX = back.contentBounds.xMin
+		backEdgeY = back.contentBounds.yMin
+    
     rightDisplay = display.newImageRect(backGroup, "backgrounds/Oblique.png", 570, 360)
     rightDisplay.x = display.contentCenterX
     rightDisplay.y = display.contentCenterY
-    
-		backEdgeX = back.contentBounds.xMin
-		backEdgeY = back.contentBounds.yMin
     
 --  helpButt = widget.newButton
 --	{
@@ -522,18 +505,18 @@ function scene:createScene( event )
   decPlaces:setTextColor(255)
   decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	decPlaces.x = backEdgeX + 115
-	decPlaces.y = backEdgeY + 117
+	decPlaces.y = backEdgeY + 127
 	
 	places = 4
 	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 22 )
 	decLabel.x = backEdgeX + 178
-	decLabel.y = backEdgeY + 115
+	decLabel.y = backEdgeY + 125
   
   measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "Berlin Sans FB", 20)
   measureLabel:setTextColor(255)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	measureLabel.x = backEdgeX + 115
-	measureLabel.y = backEdgeY + 95
+	measureLabel.y = backEdgeY + 105
 		
 		infoButt = widget.newButton
 		{
@@ -814,8 +797,6 @@ function scene:overlayEnded( event )
     end
 
 	if continue then
-		--areaAnswer.text = 0.5 * (sideAtext.text * sideBtext.text * (math.sin(angleCtext.text)))
-		--areaAnswer.text = math.round(sideAtext.text * sideBtext.text * (math.sin(angleCtext.text)) / 2 * math.pow(10, places)) / math.pow(10, places)
     local temp = (sideAtext.text + sideBtext.text + sideCtext.text) / 2
     areaAnswer.text = math.round(math.sqrt(temp * (temp - sideAtext.text) * (temp - sideBtext.text) * (temp - sideCtext.text)) * math.pow(10, places)) / math.pow(10, places)
 	end
@@ -824,7 +805,13 @@ function scene:overlayEnded( event )
 		for i =1, 6, 1 do
 			tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
 		end
-	end  
+	end
+  
+  if continue then
+    timer.performWithDelay( 10, removeListeners, 2 )
+    infoButt:setLabel("Reset")
+    resetVal = true
+  end
     
   else
     tapCount = tapCount - 1
@@ -865,6 +852,27 @@ function update()
     angleBtext.text = math.deg(math.atan(temp / (math.sqrt(-temp * temp + 1))))
     angleCtext.text = 180 - (angleAtext.text + angleBtext.text)
   end
+end
+
+function addListeners()
+  
+  sideAtext:addEventListener( "touch", calcTouch )
+  sideBtext:addEventListener( "touch", calcTouch )
+  sideCtext:addEventListener( "touch", calcTouch )
+  angleAtext:addEventListener( "touch", calcTouch )
+  angleBtext:addEventListener( "touch", calcTouch )
+  angleCtext:addEventListener( "touch", calcTouch )
+  
+end
+
+function removeListeners()
+  
+  sideAtext:removeEventListener ( "touch", calcTouch )
+  sideBtext:removeEventListener ( "touch", calcTouch )
+  sideCtext:removeEventListener ( "touch", calcTouch )
+  angleAtext:removeEventListener ( "touch", calcTouch )
+  angleBtext:removeEventListener ( "touch", calcTouch )
+  angleCtext:removeEventListener ( "touch", calcTouch )
 end
 
 function goBack2()

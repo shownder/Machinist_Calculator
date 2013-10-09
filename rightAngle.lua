@@ -86,10 +86,10 @@ local function resetCalc(event)
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
-      transition.to (decLabel, { time = 500, x = backEdgeX + 177, y = backEdgeY + 115} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
       decLabel:setTextColor(255)
 			options = false
 		end		
@@ -183,9 +183,12 @@ local function calcTouch( event )
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 500, x=display.contentCenterX, delay = 200 } )
-      transition.to ( optionsBack, { time = 500, x = -170 } )
-      transition.to ( optionsBack, { time = 500, y = -335 } )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setTextColor(255)
+			options = false
 		end
 		
 		whatTap = event.target.tap
@@ -232,13 +235,15 @@ local function measureChange( event )
 				end
 			end
 		end
-    
---    if options then
---				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
---				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
---				--transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
---				options = false
---    end
+    if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setTextColor(255)
+			options = false
+		end
 	end
   
 	
@@ -310,13 +315,13 @@ function scene:createScene( event )
 	back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
 	back.x = display.contentCenterX
 	back.y = display.contentCenterY
+  backEdgeX = back.contentBounds.xMin
+	backEdgeY = back.contentBounds.yMin
   
   rightDisplay = display.newImageRect(backGroup, "backgrounds/rightangle.png", 570, 360)
   rightDisplay.x = display.contentCenterX
-  rightDisplay.y = display.contentCenterY
-  
-  backEdgeX = back.contentBounds.xMin
-	backEdgeY = back.contentBounds.yMin
+  rightDisplay.y = display.contentCenterY  
+
 
 --  helpButt = widget.newButton
 --	{
@@ -543,7 +548,7 @@ function scene:createScene( event )
   transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
   
   screenGroup:insert(backGroup)
-  
+    
 end
 
 
@@ -695,17 +700,6 @@ function scene:overlayEnded( event )
       doneCount = doneCount + 1
     end
   end
---  
---  if doneCount == 5 then
---    print("removing event listeners")
---    timer.performWithDelay( 10, removeListeners, 2 )
---  end
---  
---  if doneCount == 5 then
---    for i = 1, 5, 1 do
---      tapTable[i]:setTextColor(255, 255, 255)
---    end
---  end
   
 else
   tapCount = tapCount - 1

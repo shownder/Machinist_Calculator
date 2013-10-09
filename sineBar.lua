@@ -13,12 +13,12 @@ local widget = require ( "widget" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
-local stepperDataFile = require("Images.customStep_customStep")
+local stepperDataFile = require("Images.stepSheet_stepSheet")
 local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
 
 --Local forward references
 
-local optionsGroup
+local optionsGroup, backGroup
 local back, menuBack, backEdgeX, backEdgeY
 
 local sineText
@@ -67,22 +67,28 @@ local function helpScreen(event)
       
 end
 
-local function onScreenTouch( event )
-	if event.phase == "ended" then
+local function optionsMove(event)
+	local phase = event.phase
+  if "ended" == phase then
 		
-		if event.xStart < event.x and (event.x - event.xStart) >= 30 then
-			transition.to ( optionsGroup, { time = 500, x=(backEdgeX + 118) } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1, delay = 200} )
-			options = true
-			return true
-
-		elseif event.xStart > event.x and (event.xStart - event.x) >= 30 then 
-	        transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-			transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
+    if not options then
+      options = true
+      transition.to ( optionsBack, { time = 200, x = -50 } )
+      transition.to ( optionsBack, { time = 200, y = 0 } )
+			transition.to ( optionsGroup, { time = 500, alpha = 1} )
+      transition.to ( backGroup, { time = 200, x=400 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
+      decLabel:setTextColor(39, 102, 186)
+		elseif options then 
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 210, y = backEdgeY + 85} )
+      decLabel:setTextColor(255)
 			options = false
-	        return true
-	end
-	end 
+    end
+  end
 end
 
 local function resetCalc(event)
@@ -104,15 +110,16 @@ local function resetCalc(event)
     
 		continue = false
     
-    timer.performWithDelay( 10, addListeners )
-    
-    sineSize:setTextColor(0, 0, 0)
+    --timer.performWithDelay( 10, addListeners )
     
     if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 210, y = backEdgeY + 85} )
+      decLabel:setTextColor(255)
+			options = false
 		end		
 end
 
@@ -128,15 +135,15 @@ local function calcTouch( event )
 		
     Runtime:removeEventListener( "touch", onScreenTouch  )
 		whatTap = event.target.tap
---		if whatTap == 12 or whatTap == 13 or whatTap == 14 then
---			tapCount = tapCount + 1
---		end
     
     if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 210, y = backEdgeY + 85} )
+      decLabel:setTextColor(255)
+			options = false
 		end
 		
 		storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
@@ -151,7 +158,7 @@ local function measureChange( event )
 	if "ended" == phase then	
 		if measure:getLabel() == "TO METRIC" then
 			measure:setLabel("TO IMPERIAL")
-			measureLabel:setText("metric")
+			measureLabel:setText("Metric")
 			for i = 1, 2, 1 do
 				if tapTable[i].text ~= "Tap Me" then
 					tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
@@ -160,7 +167,7 @@ local function measureChange( event )
 			end
 		else
 			measure:setLabel("TO METRIC")
-			measureLabel:setText("imperial")
+			measureLabel:setText("Imperial")
 			for i = 1, 2, 1 do
 				if tapTable[i].text ~= "Tap Me" then
 					tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
@@ -168,10 +175,13 @@ local function measureChange( event )
 			end
 		end
     if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 210, y = backEdgeY + 85} )
+      decLabel:setTextColor(255)
+			options = false
 		end
 	end	
 end
@@ -224,48 +234,49 @@ function scene:createScene( event )
 		tapTable = {}
     aniTable = {}
     optionsGroup = display.newGroup ( )
+    backGroup = display.newGroup ( )
 		continue = false
-    local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="WCManoNegraBta", fontSize=24}
-    local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="WCManoNegraBta", fontSize=24}
-    local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="WCManoNegraBta", fontSize=24} 
+    local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="Berlin Sans FB", fontSize=24}
+    local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="Berlin Sans FB", fontSize=24}
+    local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="Berlin Sans FB", fontSize=24} 
     
     Runtime:addEventListener( "key", onKeyEvent )
-  Runtime:addEventListener( "touch", onScreenTouch  )
     
-    stepSheet = graphics.newImageSheet("Images/customStep_customStep.png", stepperDataFile.getSpriteSheetData() )
+    stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
     tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
     local tapAniSequenceDataFile = require("Images.tapAniv2");
     local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
 	
-		back = display.newImageRect ( screenGroup, "backgrounds/sinebar.png",  570, 360 )
+		back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
 		back.x = display.contentCenterX
 		back.y = display.contentCenterY		
     
 		backEdgeX = back.contentBounds.xMin
 		backEdgeY = back.contentBounds.yMin
     
-    menuBack = display.newImageRect( optionsGroup, "backgrounds/optionsBackS.png", 143, 294 )
-    menuBack.x = backEdgeX + 120
-    menuBack.y = backEdgeY + 180
+    rightDisplay = display.newImageRect(backGroup, "backgrounds/sinebar.png", 570, 360)
+    rightDisplay.x = display.contentCenterX
+    rightDisplay.y = display.contentCenterY
     
-      helpButt = widget.newButton
-	{
-		id = "helpButt",
-		--label = "HELP",
-		--labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "Rock Salt",
-		fontSize = 16,
-		onEvent = helpScreen,
-		defaultFile = "Images/infoButt.png",
-		overFile = "Images/infoButtOver.png",
-		}
-	optionsGroup:insert(helpButt)
-	helpButt.x = backEdgeX + 105
-	helpButt.y = backEdgeY + 85
+--  helpButt = widget.newButton
+--	{
+--		id = "helpButt",
+--    label = "HELP",
+--    labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
+--    font = "Rock Salt",
+--		fontSize = 16,
+--		onEvent = helpScreen,
+--		defaultFile = "Images/infoButt.png",
+--		overFile = "Images/infoButtOver.png",
+--		}
+--	optionsGroup:insert(helpButt)
+--	helpButt.x = backEdgeX + 105
+--	helpButt.y = backEdgeY + 85
 		
 		decStep = widget.newStepper
-    {		
+	{
+		
 		left = 0,
 		top = 0,
 		initialValue = 4,
@@ -273,112 +284,109 @@ function scene:createScene( event )
 		maximumValue = 5,
 		sheet = stepSheet,
 		defaultFrame = 1,
-		noMinusFrame = 4,
-		noPlusFrame = 5,
+		noMinusFrame = 2,
+		noPlusFrame = 3,
 		minusActiveFrame = 2,
 		plusActiveFrame = 3,
 		onPress = stepPress,		
 		}
-    optionsGroup:insert(decStep)
-    decStep.x = backEdgeX + 105
-    decStep.y = backEdgeY + 120
+	optionsGroup:insert(decStep)
+	decStep.x = 70
+	decStep.y = backEdgeY + 110
     
-    measure = widget.newButton
+	measure = widget.newButton
 	{
 		id = "measureButt",
+    width = 125,
 		label = "TO METRIC",
-		labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "Rock Salt",
-		fontSize = 16,
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		font = "Berlin Sans FB",
+		fontSize = 20,
+    defaultFile = "Images/button.png",
+    overFile = "Images/buttonOver.png",
 		onEvent = measureChange,
-		defaultFile = "Images/buttonDefault.png",
-		overFile = "Images/buttonOver.png",
 		}
-    optionsGroup:insert(measure)
-    measure.x = backEdgeX + 115
-    measure.y = backEdgeY + 170
-    
-  menu = widget.newButton
+	optionsGroup:insert(measure)
+	measure.x = 70
+	measure.y = backEdgeY + 170
+	
+	menu = widget.newButton
 	{
 		id = "menuButt",
+    width = 125,
 		label = "MENU",
-		labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "WCManoNegraBta",
-		fontSize = 16,
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		font = "Berlin Sans FB",
+		fontSize = 20,
+    defaultFile = "Images/button.png",
+    overFile = "Images/buttonOver.png",
 		onRelease = goBack,
-
-		defaultFile = "Images/buttonDefault.png",
-		overFile = "Images/buttonOver.png",
 		}
-    optionsGroup:insert(menu)
-    menu.x = backEdgeX + 115
-    menu.y = backEdgeY + 230
+	optionsGroup:insert(menu)
+	menu.x = 70
+	menu.y = backEdgeY + 230
 	
 	reset = widget.newButton
 	{
 		id = "resetButt",
+    width = 125,
 		label = "RESET",
-		labelColor = { default = {128, 0, 0, 150}, over = {192, 192, 192}},
-		--font = "Rock Salt",
-		fontSize = 18,
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		font = "Berlin Sans FB",
+		fontSize = 20,
+    defaultFile = "Images/button.png",
+    overFile = "Images/buttonOver.png",
 		onEvent = resetCalc,
-
-		defaultFile = "Images/buttonDefault.png",
-		overFile = "Images/buttonOver.png",
 		}
-    optionsGroup:insert(reset)
-    reset.x = backEdgeX + 115
-    reset.y = backEdgeY + 290
+	optionsGroup:insert(reset)
+	reset.x = 70
+	reset.y = backEdgeY + 290
     
-    optionsGroup.alpha = 0
-    transition.to ( optionsGroup, { time = 500, alpha = 1, delay = 500} )
-    transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125), delay = 1300} )
-    transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 1500} )
+	optionsGroup.alpha = 0
+	
+  optionsBack = display.newRect(screenGroup, 0, 0, 200, 365)
+  optionsBack:setFillColor(255, 255, 255)
+  optionsBack:setReferencePoint(display.TopLeftReferencePoint)
+  optionsBack.x = -170
+  optionsBack.y = -335  
+  
+  optionsButt = display.newImageRect(screenGroup, "Images/Options.png", 38, 38)
+  optionsButt.x = 15
+  optionsButt.y = 15
+  optionsButt:addEventListener ( "touch", optionsMove )
+  optionsButt.isHitTestable = true
     
-    decPlaces = display.newEmbossedText( screenGroup, "dec places:", 0, 0, "Rock Salt", 16 )
-    decPlaces:setTextColor(255)
-    decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
-    decPlaces.x = backEdgeX + 115
-    decPlaces.y = backEdgeY + 85
+	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "Berlin Sans FB", 16 )
+  decPlaces:setTextColor(255)
+  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+	decPlaces.x = backEdgeX + 150
+	decPlaces.y = backEdgeY + 85
     
---    decPlaces = display.newText( screenGroup, "dec places:", 0, 0, "Rock Salt", 16 )
---    decPlaces.x = backEdgeX + 115
---    decPlaces.y = backEdgeY + 85
-
-		places = 4
-    decLabel = display.newText( screenGroup, places, 0, 0, "WCManoNegraBta", 18 )
-    decLabel.x = backEdgeX + 178
-    decLabel.y = backEdgeY + 85
+	places = 4
+	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 22 )
+	decLabel.x = backEdgeX + 210
+	decLabel.y = backEdgeY + 85
     
-    measureLabel = display.newEmbossedText(screenGroup, "imperial", 0, 0, "Rock Salt", 16)
-    measureLabel:setTextColor(255)
-    measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
-    measureLabel.x = backEdgeX + 115
-    measureLabel.y = backEdgeY + 60
+  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "Berlin Sans FB", 20)
+  measureLabel:setTextColor(255)
+  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+	measureLabel.x = backEdgeX + 150
+	measureLabel.y = backEdgeY + 60
     
---    measureLabel = display.newText( screenGroup, "imperial", 0, 0, "Rock Salt", 16 )
---    measureLabel.x = backEdgeX + 115
---    measureLabel.y = backEdgeY + 60
-
-    sineText = display.newEmbossedText(screenGroup, "bar size:", 0, 0, "Rock Salt", 17)
-    sineText:setTextColor(255)
-    sineText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
-    sineText.rotation = 18
-    sineText.x = backEdgeX + 210
-    sineText.y = backEdgeY + 165
+  sineText = display.newEmbossedText(backGroup, "Bar Size:", 0, 0, "Berlin Sans FB", 17)
+  sineText:setTextColor(255)
+  sineText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  sineText.rotation = 18
+  sineText.x = backEdgeX + 210
+  sineText.y = backEdgeY + 165
       
---		sineText = display.newText( screenGroup, "Bar Size:", 0, 0, "Rock Salt", 14 )
---    sineText.rotation = 18
---		sineText.x = backEdgeX + 210
---		sineText.y = backEdgeY + 160
-				
 		sineSize = display.newText( textOptionsL )
-    screenGroup:insert(sineSize)
+    backGroup:insert(sineSize)
 		sineSize:setReferencePoint ( topLeftReferencePoint )
 		sineSize:addEventListener ( "touch", calcTouch )
     sineSize.rotation = 18
-		sineSize.x = backEdgeX + 310
-		sineSize.y = backEdgeY + 200
+		sineSize.x = backEdgeX + 290
+		sineSize.y = backEdgeY + 190
 		tapTable[1] = sineSize
 		sineSize.tap = 1
     sineSize.alpha = 0
@@ -387,14 +395,14 @@ function scene:createScene( event )
 		sineSizeTap.x = backEdgeX + 300
 		sineSizeTap.y = backEdgeY + 195
     sineSizeTap.rotation = 18
-		screenGroup:insert(sineSizeTap)
+		backGroup:insert(sineSizeTap)
 		sineSizeTap:addEventListener ( "touch", calcTouch )
 		sineSizeTap.tap = 11
     aniTable[1] = sineSizeTap
 		sineSizeTap:play()
 		
 		stackSize = display.newText( textOptionsL )
-    screenGroup:insert(stackSize)
+    backGroup:insert(stackSize)
 		stackSize:setReferencePoint ( topLeftReferencePoint )
 		stackSize:addEventListener ( "touch", calcTouch )
 		stackSize.x = backEdgeX + 200
@@ -406,7 +414,7 @@ function scene:createScene( event )
     stackSizeTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
 		stackSizeTap.x = backEdgeX + 180
 		stackSizeTap.y = backEdgeY + 250
-		screenGroup:insert(stackSizeTap)
+		backGroup:insert(stackSizeTap)
 		stackSizeTap:addEventListener ( "touch", calcTouch )
 		stackSizeTap.tap = 12
     aniTable[2] = stackSizeTap
@@ -414,10 +422,10 @@ function scene:createScene( event )
     stackSizeTap.alpha = 0
 		
 		angle1 = display.newText( textOptionsR )
-    screenGroup:insert(angle1)
+    backGroup:insert(angle1)
 		angle1:setReferencePoint ( topRightReferencePoint )
 		angle1:addEventListener ( "touch", calcTouch )
-		angle1.x = backEdgeX + 285
+		angle1.x = backEdgeX + 280
 		angle1.y = backEdgeY + 275
 		tapTable[3] = angle1
 		angle1.tap = 3
@@ -426,7 +434,7 @@ function scene:createScene( event )
     angle1Tap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
 		angle1Tap.x = backEdgeX + 290
 		angle1Tap.y = backEdgeY + 275
-		screenGroup:insert(angle1Tap)
+		backGroup:insert(angle1Tap)
 		angle1Tap:addEventListener ( "touch", calcTouch )
 		angle1Tap.tap = 13
     aniTable[3] = angle1Tap
@@ -434,7 +442,7 @@ function scene:createScene( event )
     angle1Tap.alpha = 0
 		
 		angle2 = display.newText( textOptionsR )
-    screenGroup:insert(angle2)
+    backGroup:insert(angle2)
 		angle2:setReferencePoint ( topRightReferencePoint )
 		angle2:addEventListener ( "touch", calcTouch )
 		angle2.x = backEdgeX + 310
@@ -446,18 +454,23 @@ function scene:createScene( event )
     angle2Tap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
 		angle2Tap.x = backEdgeX + 315
 		angle2Tap.y = backEdgeY + 155
-		screenGroup:insert(angle2Tap)
+		backGroup:insert(angle2Tap)
 		angle2Tap:addEventListener ( "touch", calcTouch )
 		angle2Tap.tap = 14
     aniTable[4] = angle2Tap
 		angle2Tap:play()
     angle2Tap.alpha = 0
     
-    for i = 1, 4, 1 do
-      tapTable[i]:setTextColor(0, 0, 0)
-    end
-    
     optionsGroup:setReferencePoint(display.CenterReferencePoint)
+    backGroup:setReferencePoint(display.CenterReferencePoint)
+    backGroup.alpha = 0
+    transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
+    optionsBack.alpha = 0
+    transition.to ( optionsBack, { time = 500, alpha = 1, delay = 600} )
+    optionsButt.alpha = 0
+    transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
+  
+    screenGroup:insert(backGroup)
 		
 end
 
@@ -472,7 +485,6 @@ end
 function scene:exitScene( event )
   local group = self.view
 
-	Runtime:removeEventListener( "touch", onScreenTouch  )
   Runtime:removeEventListener( "key", onKeyEvent )
    
 end
@@ -481,6 +493,7 @@ function scene:destroyScene( event )
   local group = self.view
 
 		optionsGroup:removeSelf()
+    backGroup:removeSelf()
    
 end
 
@@ -504,7 +517,6 @@ end
 function scene:overlayEnded( event )
     local group = self.view
     
-    Runtime:addEventListener( "touch", onScreenTouch  )
     storyboard.isOverlay = false
     
     if storyboard.number ~= "Tap Me" then
@@ -575,7 +587,12 @@ function scene:overlayEnded( event )
 				stackSize.text = math.sin(math.rad(angle1.text)) * sineSize.text
 			end
 		end
-
+    
+    if continue and whatTap == 1 then
+      angle1.text = math.deg(math.asin( stackSize.text / sineSize.text ))
+			angle2.text = 90 - angle1.text
+    end
+    
 		if continue then
 			for i =2, 4, 1 do
 				tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
@@ -589,12 +606,7 @@ function scene:overlayEnded( event )
       end
     end
     
-    if continue then
-      timer.performWithDelay( 10, removeListeners, 2 )
-      sineSize:setTextColor(255, 255, 255)
-    end
-    
-		continue = false
+		--continue = false
     
     end
 
@@ -612,18 +624,6 @@ function toInch(num)
 	
 	return num / 25.4
 	
-end
-
-function addListeners()
-  
-  sineSize:addEventListener ( "touch", calcTouch )
-  
-end
-
-function removeListeners()
-  
-  sineSize:removeEventListener ( "touch", calcTouch )
-  
 end
 
 function goBack2()

@@ -110,7 +110,7 @@ local function resetCalc(event)
     
 		continue = false
     
-    --timer.performWithDelay( 10, addListeners )
+    timer.performWithDelay( 10, addListeners )
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
@@ -606,6 +606,10 @@ function scene:overlayEnded( event )
       end
     end
     
+    if continue then
+      timer.performWithDelay( 10, removeListeners, 2 )
+    end
+    
 		--continue = false
     
     end
@@ -624,6 +628,18 @@ function toInch(num)
 	
 	return num / 25.4
 	
+end
+
+function addListeners()
+  
+  sineSize:addEventListener ( "touch", calcTouch )
+  
+end
+
+function removeListeners()
+  
+  sineSize:removeEventListener ( "touch", calcTouch )
+  
 end
 
 function goBack2()

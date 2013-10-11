@@ -91,6 +91,7 @@ local function optionsMove(event)
 			options = false
     end
   end
+  return true
 endlocal function measureChange( event )
 	local phase = event.phase
 	

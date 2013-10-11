@@ -11,7 +11,7 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local widget = require( "widget" )
 
-local answer, backButt, scrollView, answerX, answerY, diam, emailButtlocal back, numY
+local answer, backButt, scrollView, answerX, answerY, diam, emailButt, maskBacklocal back, numY
 local bolt, boltCenterX, boltCenterY, line1, line2, goBack2
 
 --Listeners
@@ -28,6 +28,10 @@ local function onKeyEvent( event )
   return true
 end
 
+local function catchStrays(event)
+   return true
+end
+
 local function emailPush( event )
 	if event.phase == "ended" then
     
@@ -41,7 +45,7 @@ local function emailPush( event )
         
     local options = {
       
-      to = "spowell83@gmail.com",
+      to = "",
       subject = "Bolt Circle Answer",
       body = "Here is the list of coordinates: \n"..text      
       }
@@ -92,7 +96,17 @@ function scene:createScene( event )
   answerX = storyboard.answerX
   answerY = storyboard.answerY
   diam = storyboard.diam
-  local textOptionsL = {parent = screenGroup, text="", x=0, y=0, width=250, height=0, fontSize=15, align="left"}	
+  local textOptionsL = {parent = screenGroup, text="", x=0, y=0, width=250, height=0, fontSize=15, align="left"}
+  
+  maskBack = display.newImageRect( screenGroup, "backgrounds/maskBack.png", 570, 360 )
+	maskBack.alpha = 0
+	maskBack.x = display.contentCenterX
+	maskBack.y = display.contentCenterY
+	transition.to ( maskBack, { time = 400, alpha = 1, delay = 300} )	
+  maskBack:addEventListener( "tap", catchStrays )
+  maskBack:addEventListener( "touch", catchStrays )
+	backEdgeX = maskBack.contentBounds.xMin
+	backEdgeY = maskBack.contentBounds.yMin	
 	back = display.newRect(screenGroup, 0, 0, display.pixelHeight, display.pixelWidth )	  back:setFillColor(255, 255, 255)
 	backEdgeX = back.contentBounds.xMin
 	backEdgeY = back.contentBounds.yMin

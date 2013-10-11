@@ -48,6 +48,10 @@ local function buttonEvent( event )
 			
 		end
 	end
+  
+local function catchStrays(event)
+   return true
+end
 	
 	local function buttonEvent2( event )
 		local phase = event.phase
@@ -111,7 +115,8 @@ function scene:createScene( event )
 	maskBack.x = display.contentCenterX
 	maskBack.y = display.contentCenterY
 	transition.to ( maskBack, { time = 400, alpha = 1, delay = 300} )	
-	
+  maskBack:addEventListener( "tap", catchStrays )
+  maskBack:addEventListener( "touch", catchStrays )
 	backEdgeX = maskBack.contentBounds.xMin
 	backEdgeY = maskBack.contentBounds.yMin
 

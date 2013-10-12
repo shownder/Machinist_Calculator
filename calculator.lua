@@ -13,7 +13,7 @@ local widget = require( "widget" )
 
 
 local num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, neg, dec, clear, enter, backButt
-local numDisplay
+local numDisplay, displayBorder
 local numBack, maskBack
 local needNeg, needDec
 local backEdgeX, backEdgeY
@@ -104,7 +104,7 @@ function scene:createScene( event )
   
   storyboard.number = "Tap Me"
   
-  local textOptionsR = {text="", x=0, y=0, width=500, height = 50, align="right", font="Digital-7Mono", fontSize=34}
+
   decPress = false
 	
 	needNeg = event.params.negTrue
@@ -120,16 +120,27 @@ function scene:createScene( event )
 	backEdgeX = maskBack.contentBounds.xMin
 	backEdgeY = maskBack.contentBounds.yMin
 
-	numDisplay = display.newText( textOptionsR )
+  numBack = display.newRect(screenGroup, 0, 0, display.contentWidth/2, display.contentHeight)
+  numBack:setFillColor(255, 255, 255)
+  numBack:setReferencePoint(display.TopLeftReferencePoint)
+  numBack.x = display.contentCenterX
+  
+  displayBorder = display.newRect(screenGroup, 0, 0, numBack.contentWidth/1.05, 75)
+  displayBorder:setFillColor(0, 0, 0, 0)
+  displayBorder.strokeWidth = 5
+  displayBorder:setStrokeColor(39, 102, 186, 200)
+  displayBorder.x = display.contentCenterX+display.contentCenterX/2
+  displayBorder.y = 45
+  
+  local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.1, height = 50, align="right", font="Digital-7Mono", fontSize=34}
+  
+  numDisplay = display.newText( textOptionsR )
   screenGroup:insert(numDisplay)
-  numDisplay.x = backEdgeX + 120
+  numDisplay.x = display.contentCenterX+display.contentCenterX/2-10
   numDisplay.y = backEdgeY + 75
-	numDisplay:setTextColor ( 255, 255, 204 )
+	numDisplay:setTextColor ( 39, 102, 186 )
   numDisplay.text = ""
-	
-	numBack = display.newImageRect ( screenGroup, "backgrounds/calcBack.png", 332, 303 )
-	numBack.x = backEdgeX + 250
-	numBack.y = backEdgeY + 180
+  print(numDisplay.x)
 
 	
 	--Create Buttons
@@ -137,156 +148,156 @@ function scene:createScene( event )
   backButt = widget.newButton
 	{
 		id = "back",
-		--label = "<-",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		label = "<-",
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent3,
-		defaultFile = "Images/backButtDef.png",
-		overFile = "Images/backButtOver.png",
+		defaultFile = "Images/calcButt.png",
+		overFile = "Images/calcButtOver.png",
 		}
-	backButt.x = backEdgeX + 330
-	backButt.y = backEdgeY + 120
+	backButt.x = display.contentCenterX+210
+	backButt.y = backEdgeY + 135
 			
 	num1 = widget.newButton
 	{
 		id = "num1",
 		label = "1",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num1.x = backEdgeX + 150
-	num1.y = backEdgeY + 120	
+	num1.x = display.contentCenterX+30
+	num1.y = backEdgeY + 135	
 		
 	num2 = widget.newButton
 	{
 		id = "num2",
 		label = "2",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num2.x = backEdgeX + 210
-	num2.y = backEdgeY + 120
+	num2.x = display.contentCenterX+90
+	num2.y = backEdgeY + 135
 		
 	num3 = widget.newButton
 	{
 		id = "num3",
 		label = "3",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num3.x = backEdgeX + 270
-	num3.y = backEdgeY + 120
+	num3.x = display.contentCenterX+150
+	num3.y = backEdgeY + 135
 		
 	num4 = widget.newButton
 	{
 		id = "num4",
 		label = "4",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num4.x = backEdgeX + 150
-	num4.y = backEdgeY + 175
+	num4.x = display.contentCenterX+30
+	num4.y = backEdgeY + 190
 		
 	num5 = widget.newButton
 	{
 		id = "num5",
 		label = "5",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num5.x = backEdgeX + 210
-	num5.y = backEdgeY + 175
+	num5.x = display.contentCenterX+90
+	num5.y = backEdgeY + 190
 		
 	num6 = widget.newButton
 	{
 		id = "num6",
 		label = "6",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num6.x = backEdgeX + 270
-	num6.y = backEdgeY + 175
+	num6.x = display.contentCenterX+150
+	num6.y = backEdgeY + 190
 		
 	num7 = widget.newButton
 	{
 		id = "num7",
 		label = "7",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num7.x = backEdgeX + 150
-	num7.y = backEdgeY + 235
+	num7.x = display.contentCenterX+30
+	num7.y = backEdgeY + 245
 		
 	num8 = widget.newButton
 	{
 		id = "num8",
 		label = "8",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num8.x = backEdgeX + 210
-	num8.y = backEdgeY + 235
+	num8.x = display.contentCenterX+90
+	num8.y = backEdgeY + 245
 		
 	num9 = widget.newButton
 	{
 		id = "num9",
 		label = "9",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num9.x = backEdgeX + 270
-	num9.y = backEdgeY + 235
+	num9.x = display.contentCenterX+150
+	num9.y = backEdgeY + 245
 		
 	dec = widget.newButton
 	{
 		id = "dec",
 		label = ".",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	dec.x = backEdgeX + 150
-	dec.y = backEdgeY + 295
+	dec.x = display.contentCenterX+30
+	dec.y = backEdgeY + 305
 		
 		if needDec then
 			dec.alpha = 1
@@ -298,29 +309,29 @@ function scene:createScene( event )
 	{
 		id = "num0",
 		label = "0",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	num0.x = backEdgeX + 210
-	num0.y = backEdgeY + 295
+	num0.x = display.contentCenterX+90
+	num0.y = backEdgeY + 305
 		
 	neg = widget.newButton
 	{
 		id = "neg",
 		label = "-",
-		labelColor = { default = {255, 255, 255}, over = {192, 192, 192}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
-		defaultFile = "Images/calcButtDef.png",
+		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
-	neg.x = backEdgeX + 270
-	neg.y = backEdgeY + 295
+	neg.x = display.contentCenterX+150
+	neg.y = backEdgeY + 305
 	
 		if needNeg then
 			neg.alpha = 1
@@ -334,33 +345,29 @@ function scene:createScene( event )
 	{
 		--left = 320,
 		--top = 90,
-		width = 57,
-		height = 50,
-		--labelColor = { default = { 2228, 228, 2285, 90 }, over = { 134, 134, 134, 255 } },
-		--label = "enter",
+		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200} },
+		label = "GO",
 		id = "enter",
-    defaultFile = "Images/goButt.png",
-    overFile = "Images/goButtOver.png",
+    defaultFile = "Images/calcButtOver.png",
+    overFile = "Images/calcButt.png",
 		onEvent = buttonEvent2
   }
-  enter.x = backEdgeX + 330
-  enter.y = backEdgeY + 175
+  enter.x = display.contentCenterX+210
+  enter.y = backEdgeY + 190
 		
 	clear = widget.newButton
 	{
 		--left = 320,
 		--top = 240,
-		width = 57,
-		height = 50,
-		--labelColor = { default = { 2228, 228, 2285, 90 }, over = { 134, 134, 134, 255 } },
-		--label = "clear",
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255} },
+		label = "C",
 		id = "clear",
-    defaultFile = "Images/cancelButt.png",
-    overFile = "Images/cancelButtOver.png",
+    defaultFile = "Images/calcButt.png",
+    overFile = "Images/calcButtOver.png",
 		onEvent = buttonEvent4
   }
-  clear.x = backEdgeX + 330
-  clear.y = backEdgeY + 295
+  clear.x = display.contentCenterX+210
+  clear.y = backEdgeY + 305
 		
 		screenGroup:insert( num1 )
 		screenGroup:insert( num2 )

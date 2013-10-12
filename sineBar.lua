@@ -380,97 +380,101 @@ function scene:createScene( event )
   sineText.x = backEdgeX + 210
   sineText.y = backEdgeY + 165
       
-		sineSize = display.newText( textOptionsL )
-    backGroup:insert(sineSize)
-		sineSize:setReferencePoint ( topLeftReferencePoint )
-		sineSize:addEventListener ( "touch", calcTouch )
-    sineSize.rotation = 18
-		sineSize.x = backEdgeX + 290
-		sineSize.y = backEdgeY + 190
-		tapTable[1] = sineSize
-		sineSize.tap = 1
-    sineSize.alpha = 0
+  sineSize = display.newText( textOptionsL )
+  backGroup:insert(sineSize)
+	sineSize:setReferencePoint ( topLeftReferencePoint )
+	sineSize:addEventListener ( "touch", calcTouch )
+  sineSize.rotation = 18
+	sineSize.x = backEdgeX + 290
+	sineSize.y = backEdgeY + 190
+	tapTable[1] = sineSize
+	sineSize.tap = 1
+  sineSize.alpha = 0
     
-    sineSizeTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-		sineSizeTap.x = backEdgeX + 300
-		sineSizeTap.y = backEdgeY + 195
-    sineSizeTap.rotation = 18
-		backGroup:insert(sineSizeTap)
-		sineSizeTap:addEventListener ( "touch", calcTouch )
-		sineSizeTap.tap = 11
-    aniTable[1] = sineSizeTap
-		sineSizeTap:play()
+  --sineSizeTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  sineSizeTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	sineSizeTap.x = backEdgeX + 260
+	sineSizeTap.y = backEdgeY + 183
+  sineSizeTap.rotation = 18
+	backGroup:insert(sineSizeTap)
+	sineSizeTap:addEventListener ( "touch", calcTouch )
+	sineSizeTap.tap = 11
+  aniTable[1] = sineSizeTap
+	--sineSizeTap:play()
 		
-		stackSize = display.newText( textOptionsL )
-    backGroup:insert(stackSize)
-		stackSize:setReferencePoint ( topLeftReferencePoint )
-		stackSize:addEventListener ( "touch", calcTouch )
-		stackSize.x = backEdgeX + 200
-		stackSize.y = backEdgeY + 250
-		tapTable[2] = stackSize
-		stackSize.tap = 2
-		stackSize.alpha = 0
+	stackSize = display.newText( textOptionsL )
+  backGroup:insert(stackSize)
+	stackSize:setReferencePoint ( topLeftReferencePoint )
+	stackSize:addEventListener ( "touch", calcTouch )
+	stackSize.x = backEdgeX + 200
+	stackSize.y = backEdgeY + 250
+	tapTable[2] = stackSize
+	stackSize.tap = 2
+	stackSize.alpha = 0
     
-    stackSizeTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-		stackSizeTap.x = backEdgeX + 180
-		stackSizeTap.y = backEdgeY + 250
-		backGroup:insert(stackSizeTap)
-		stackSizeTap:addEventListener ( "touch", calcTouch )
-		stackSizeTap.tap = 12
-    aniTable[2] = stackSizeTap
-		stackSizeTap:play()
-    stackSizeTap.alpha = 0
+  --stackSizeTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  stackSizeTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	stackSizeTap.x = backEdgeX + 155
+	stackSizeTap.y = backEdgeY + 250
+	backGroup:insert(stackSizeTap)
+	stackSizeTap:addEventListener ( "touch", calcTouch )
+	stackSizeTap.tap = 12
+  aniTable[2] = stackSizeTap
+	--stackSizeTap:play()
+  stackSizeTap.alpha = 0
 		
-		angle1 = display.newText( textOptionsR )
-    backGroup:insert(angle1)
-		angle1:setReferencePoint ( topRightReferencePoint )
-		angle1:addEventListener ( "touch", calcTouch )
-		angle1.x = backEdgeX + 280
-		angle1.y = backEdgeY + 275
-		tapTable[3] = angle1
-		angle1.tap = 3
-		angle1.alpha = 0
+	angle1 = display.newText( textOptionsR )
+  backGroup:insert(angle1)
+	angle1:setReferencePoint ( topRightReferencePoint )
+	angle1:addEventListener ( "touch", calcTouch )
+	angle1.x = backEdgeX + 280
+	angle1.y = backEdgeY + 275
+	tapTable[3] = angle1
+	angle1.tap = 3
+	angle1.alpha = 0
     
-    angle1Tap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-		angle1Tap.x = backEdgeX + 290
-		angle1Tap.y = backEdgeY + 275
-		backGroup:insert(angle1Tap)
-		angle1Tap:addEventListener ( "touch", calcTouch )
-		angle1Tap.tap = 13
-    aniTable[3] = angle1Tap
-		angle1Tap:play()
-    angle1Tap.alpha = 0
+  --angle1Tap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  angle1Tap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	angle1Tap.x = backEdgeX + 315
+	angle1Tap.y = backEdgeY + 275
+	backGroup:insert(angle1Tap)
+	angle1Tap:addEventListener ( "touch", calcTouch )
+	angle1Tap.tap = 13
+  aniTable[3] = angle1Tap
+	--angle1Tap:play()
+  angle1Tap.alpha = 0
 		
-		angle2 = display.newText( textOptionsR )
-    backGroup:insert(angle2)
-		angle2:setReferencePoint ( topRightReferencePoint )
-		angle2:addEventListener ( "touch", calcTouch )
-		angle2.x = backEdgeX + 310
-		angle2.y = backEdgeY + 155
-		tapTable[4] = angle2
-		angle2.tap = 4
-		angle2.alpha = 0
+	angle2 = display.newText( textOptionsR )
+  backGroup:insert(angle2)
+	angle2:setReferencePoint ( topRightReferencePoint )
+	angle2:addEventListener ( "touch", calcTouch )
+	angle2.x = backEdgeX + 310
+	angle2.y = backEdgeY + 155
+	tapTable[4] = angle2
+	angle2.tap = 4
+	angle2.alpha = 0
     
-    angle2Tap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-		angle2Tap.x = backEdgeX + 315
-		angle2Tap.y = backEdgeY + 155
-		backGroup:insert(angle2Tap)
-		angle2Tap:addEventListener ( "touch", calcTouch )
-		angle2Tap.tap = 14
-    aniTable[4] = angle2Tap
-		angle2Tap:play()
-    angle2Tap.alpha = 0
+  --angle2Tap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  angle2Tap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	angle2Tap.x = backEdgeX + 345
+	angle2Tap.y = backEdgeY + 155
+	backGroup:insert(angle2Tap)
+	angle2Tap:addEventListener ( "touch", calcTouch )
+	angle2Tap.tap = 14
+  aniTable[4] = angle2Tap
+	--angle2Tap:play()
+  angle2Tap.alpha = 0
     
-    optionsGroup:setReferencePoint(display.CenterReferencePoint)
-    backGroup:setReferencePoint(display.CenterReferencePoint)
-    backGroup.alpha = 0
-    transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
-    optionsBack.alpha = 0
-    transition.to ( optionsBack, { time = 500, alpha = 1, delay = 600} )
-    optionsButt.alpha = 0
-    transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
+  optionsGroup:setReferencePoint(display.CenterReferencePoint)
+  backGroup:setReferencePoint(display.CenterReferencePoint)
+  backGroup.alpha = 0
+  transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
+  optionsBack.alpha = 0
+  transition.to ( optionsBack, { time = 500, alpha = 1, delay = 600} )
+  optionsButt.alpha = 0
+  transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
   
-    screenGroup:insert(backGroup)
+  screenGroup:insert(backGroup)
 		
 end
 

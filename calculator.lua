@@ -148,13 +148,13 @@ function scene:createScene( event )
   backButt = widget.newButton
 	{
 		id = "back",
-		label = "<-",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		label = "DEL",
+		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200}},
 		--font = "WC Mano Negra Bta",
-		fontSize = 16,
+		fontSize = 14,
 		onEvent = buttonEvent3,
-		defaultFile = "Images/calcButt.png",
-		overFile = "Images/calcButtOver.png",
+		defaultFile = "Images/calcButtOver.png",
+		overFile = "Images/calcButt.png",
 		}
 	backButt.x = display.contentCenterX+210
 	backButt.y = backEdgeY + 135
@@ -359,7 +359,7 @@ function scene:createScene( event )
 	{
 		--left = 320,
 		--top = 240,
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255} },
+		labelColor = { default = {100, 0, 0}, over = {39, 102, 186, 200} },
 		label = "C",
 		id = "clear",
     defaultFile = "Images/calcButt.png",

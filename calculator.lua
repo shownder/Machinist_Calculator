@@ -149,12 +149,12 @@ function scene:createScene( event )
 	{
 		id = "back",
 		label = "DEL",
-		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200}},
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 14,
 		onEvent = buttonEvent3,
-		defaultFile = "Images/calcButtOver.png",
-		overFile = "Images/calcButt.png",
+		defaultFile = "Images/calcButt.png",
+		overFile = "Images/calcButtOver.png",
 		}
 	backButt.x = display.contentCenterX+210
 	backButt.y = backEdgeY + 135
@@ -345,11 +345,11 @@ function scene:createScene( event )
 	{
 		--left = 320,
 		--top = 90,
-		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200} },
+		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255} },
 		label = "GO",
 		id = "enter",
-    defaultFile = "Images/calcButtOver.png",
-    overFile = "Images/calcButt.png",
+    defaultFile = "Images/calcButt.png",
+    overFile = "Images/calcButtOver.png",
 		onEvent = buttonEvent2
   }
   enter.x = display.contentCenterX+210

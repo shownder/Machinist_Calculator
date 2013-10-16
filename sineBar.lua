@@ -133,8 +133,9 @@ end
 local function calcTouch( event )
 	if event.phase == "ended" then
 		
-    Runtime:removeEventListener( "touch", onScreenTouch  )
 		whatTap = event.target.tap
+    
+    local isDegree
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
@@ -146,7 +147,13 @@ local function calcTouch( event )
 			options = false
 		end
 		
-		storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true}  )
+    if whatTap == 3 or whatTap == 4 or whatTap == 13 or whatTap == 14 then isDegree = true else isDegree = false end
+		
+    if isDegree then
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true }  )
+    else
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
+    end
 		
 		return true
 	end

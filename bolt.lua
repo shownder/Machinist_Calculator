@@ -14,7 +14,7 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
 local stepperDataFile = require("Images.stepSheet_stepSheet")
-local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
+--local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
 
 --Local forward references
 
@@ -137,16 +137,22 @@ local function calcTouch( event )
 		
     whatTap = event.target.tap
     
+    local isDegree
+    
     calcClick = true
     
     if whatTap >= 6 then
       whatTap = whatTap - 10
     end
     
+    if whatTap == 5 then isDegree = true end
+    
 		if whatTap == 3 or whatTap == 4 then
-			storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = true, needDec = true }, isModal = true}  )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = true, needDec = true }, isModal = true}  )
 		elseif whatTap == 1 then
-			storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = false }, isModal = true} )		else			storyboard.showOverlay( "calculator", { effect="fromTop", time=400, params = { negTrue = false, needDec = true }, isModal = true} )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = false }, isModal = true} )		elseif isDegree then			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true} )
+     else
+       storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true} )
 		end		
 		return true
 	end
@@ -161,9 +167,9 @@ local function resetCalc(event)
     transition.to(circleX, {time = 300, alpha = 0})
 		transition.to(circleY, {time = 300, alpha = 0})
 		transition.to(firstHole, {time = 300, alpha = 0})
-    transition.to(circleXtext, {time = 300, alpha = 0})
-		transition.to(circleYtext, {time = 300, alpha = 0})
-		transition.to(firstHoleText, {time = 300, alpha = 0})
+    --transition.to(circleXtext, {time = 300, alpha = 0})
+		--transition.to(circleYtext, {time = 300, alpha = 0})
+		--transition.to(firstHoleText, {time = 300, alpha = 0})
     transition.to(circleXTap, {time = 300, alpha = 0})
 		transition.to(circleYTap, {time = 300, alpha = 0})
 		transition.to(firstHoleTap, {time = 300, alpha = 0})
@@ -234,13 +240,13 @@ function scene:createScene( event )
   
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup()
-  local textOptionsL = {parent = screenGroup, text="Tap Me", x=0, y=0, width=80, height=0, font="Berlin Sans FB", fontSize=24, align="left"}
+  local textOptionsL = {parent = backGroup, text="Tap Me", x=0, y=0, width=80, height=0, font="Berlin Sans FB", fontSize=24, align="left"}
   
   stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
-	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
-	local tapAniSequenceDataFile = require("Images.tapAniv2");
-	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
+--	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
+--	local tapAniSequenceDataFile = require("Images.tapAniv2");
+--	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
 	
   back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
 	back.x = display.contentCenterX
@@ -373,6 +379,7 @@ function scene:createScene( event )
 	numHolesText.y = backEdgeY + 140
 	
 	numHoles = display.newText( textOptionsL )
+  backGroup:insert(numHoles)
 	numHoles:addEventListener ( "touch", calcTouch )
 	numHoles:setReferencePoint(display.topLeftReferencePoint)
 	numHoles.x = backEdgeX + 200
@@ -381,14 +388,14 @@ function scene:createScene( event )
 	tapTable[1] = numHoles
   numHoles.alpha = 0
   
-  numHolesTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	numHolesTap.x = backEdgeX + 190
+  --numHolesTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  numHolesTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	numHolesTap.x = backEdgeX + 170
 	numHolesTap.y = backEdgeY + 140
-	backGroup:insert(numHolesTap)
 	numHolesTap:addEventListener ( "touch", calcTouch )
 	numHolesTap.tap = 11
   aniTable[1] = numHolesTap
-	numHolesTap:play()
+	--numHolesTap:play()
 	
 	diamText = display.newEmbossedText(backGroup, "Circle Diameter:", 0, 0, "Berlin Sans FB", 18)
   diamText:setTextColor(255)
@@ -405,14 +412,15 @@ function scene:createScene( event )
 	tapTable[2] = diam
   diam.alpha = 0
   
-  diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	diamTap.x = backEdgeX + 220
+  --diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  diamTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	diamTap.x = backEdgeX + 190
 	diamTap.y = backEdgeY + 185
 	backGroup:insert(diamTap)
 	diamTap:addEventListener ( "touch", calcTouch )
 	diamTap.tap = 12
   aniTable[2] = diamTap
-	diamTap:play()
+	--diamTap:play()
 	
 	circleXtext = display.newEmbossedText(backGroup, "Circle Centre - X:", 0, 0, "Berlin Sans FB", 18)
   circleXtext:setTextColor(255)
@@ -430,8 +438,9 @@ function scene:createScene( event )
 	tapTable[3] = circleX
 	circleX.alpha = 0
   
-  circleXTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	circleXTap.x = backEdgeX + 225
+  --circleXTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  circleXTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	circleXTap.x = backEdgeX + 205
 	circleXTap.y = backEdgeY + 230
 	backGroup:insert(circleXTap)
 	circleXTap:addEventListener ( "touch", calcTouch )
@@ -456,8 +465,9 @@ function scene:createScene( event )
 	tapTable[4] = circleY
 	circleY.alpha = 0
   
-  circleYTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	circleYTap.x = backEdgeX + 225
+  --circleYTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  circleYTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	circleYTap.x = backEdgeX + 205
 	circleYTap.y = backEdgeY + 275
 	backGroup:insert(circleYTap)
 	circleYTap:addEventListener ( "touch", calcTouch )
@@ -482,8 +492,9 @@ function scene:createScene( event )
 	tapTable[5] = firstHole
 	firstHole.alpha = 0
   
-  firstHoleTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	firstHoleTap.x = backEdgeX + 225
+  --firstHoleTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  firstHoleTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	firstHoleTap.x = backEdgeX + 200
 	firstHoleTap.y = backEdgeY + 320
 	backGroup:insert(firstHoleTap)
 	firstHoleTap:addEventListener ( "touch", calcTouch )

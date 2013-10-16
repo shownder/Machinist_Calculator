@@ -14,7 +14,7 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
 local stepperDataFile = require("Images.stepSheet_stepSheet")
-local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
+--local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
 
 --Local forward references
 
@@ -201,7 +201,7 @@ local function calcTouch( event )
     if not continue then
       native.showAlert ("Continue?", "Press OK to reset all values and continue.", { "OK", "Cancel" }, alertListener )
     else
-      storyboard.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
     end
 		
 		return true
@@ -273,9 +273,9 @@ function scene:createScene( event )
   
 	stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
-	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
-	local tapAniSequenceDataFile = require("Images.tapAniv2");
-	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
+--	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
+--	local tapAniSequenceDataFile = require("Images.tapAniv2");
+--	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
 	
 	back = display.newImageRect ( screenGroup, "backgrounds/background.png",  570, 360 )
 	back.x = display.contentCenterX
@@ -410,13 +410,14 @@ function scene:createScene( event )
 	rpm.tap = 1
   rpm.alpha = 0
   
-  rpmTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	rpmTap.x = backEdgeX + 295
+  --rpmTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  rpmTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	rpmTap.x = backEdgeX + 320
 	rpmTap.y = backEdgeY + 170
 	backGroup:insert(rpmTap)
 	rpmTap:addEventListener ( "touch", calcTouch )
 	rpmTap.tap = 11
-	rpmTap:play()
+	--rpmTap:play()
   aniTable[1] = rpmTap 
 	
 	diam = display.newText( textOptionsR )
@@ -428,13 +429,14 @@ function scene:createScene( event )
 	diam.tap = 2
   diam.alpha = 0
   
-  diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	diamTap.x = backEdgeX + 315
+  --diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  diamTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	diamTap.x = backEdgeX + 330
 	diamTap.y = backEdgeY + 260
 	backGroup:insert(diamTap)
 	diamTap:addEventListener ( "touch", calcTouch )
 	diamTap.tap = 12
-	diamTap:play()
+	--diamTap:play()
   aniTable[2] = diamTap 
 	
 	surfaceSpeed = display.newText( textOptionsR )
@@ -446,13 +448,14 @@ function scene:createScene( event )
 	tapTable[3] = surfaceSpeed
 	surfaceSpeed.tap = 3
   
-  surfaceSpeedTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	surfaceSpeedTap.x = backEdgeX + 330
+  --surfaceSpeedTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  surfaceSpeedTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	surfaceSpeedTap.x = backEdgeX + 355
 	surfaceSpeedTap.y = backEdgeY + 310
 	backGroup:insert(surfaceSpeedTap)
 	surfaceSpeedTap:addEventListener ( "touch", calcTouch )
 	surfaceSpeedTap.tap = 13
-	surfaceSpeedTap:play()
+	--surfaceSpeedTap:play()
   surfaceSpeedTap.alpha = 0
   aniTable[3] = surfaceSpeedTap
 
@@ -465,13 +468,14 @@ function scene:createScene( event )
 	tapTable[4] = rev
 	rev.tap = 4
   
-  revTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	revTap.x = backEdgeX + 140
+  --revTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  revTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	revTap.x = backEdgeX + 120
 	revTap.y = backEdgeY + 270
 	backGroup:insert(revTap)
 	revTap:addEventListener ( "touch", calcTouch )
 	revTap.tap = 14
-	revTap:play()
+	--revTap:play()
   revTap.alpha = 0
 
 	minute = display.newText( textOptionsL )
@@ -483,13 +487,14 @@ function scene:createScene( event )
 	tapTable[5] = minute
 	minute.tap = 5
   
-  minuteTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	minuteTap.x = backEdgeX + 140
+  --minuteTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  minuteTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	minuteTap.x = backEdgeX + 120
 	minuteTap.y = backEdgeY + 220
 	backGroup:insert(minuteTap)
 	minuteTap:addEventListener ( "touch", calcTouch )
 	minuteTap.tap = 15
-	minuteTap:play()
+	--minuteTap:play()
   minuteTap.alpha = 0
 	
 	speedText = display.newText( textOptionsL2 )
@@ -575,7 +580,11 @@ function scene:overlayEnded( event )
     else
       tapTable[whatTap].text = storyboard.number
     end
-        
+    
+    if diam.text ~= "Tap Me" and rpm.text == "Tap Me" then
+      surfaceSpeedTap.alpha = 1
+    end
+            
     if rpm.text ~= "Tap Me" and (rev.text ~= "Tap Me" or minute.text ~= "Tap Me") then
     	feedFlag = true
     else 

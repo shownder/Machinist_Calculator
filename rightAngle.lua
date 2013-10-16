@@ -14,14 +14,14 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
 local stepperDataFile = require("Images.stepSheet_stepSheet")
-local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
+--local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
 
 display.setStatusBar(display.HiddenStatusBar)
 
 --Local forward references
 
 
-local back
+local back, isDegree
 local angleAtext, angleBtext, sideAtext, sideBtext, sideCtext
 local whatTap
 local tapTable, aniTable
@@ -119,7 +119,12 @@ local function alertListener2 ( event )
 		end
 			tapCount = tapCount + 1
       whatTap = whatTap + 10
-      storyboard.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
+      if whatTap == 14 or whatTap == 15 then isDegree = true else isDegree = false end
+        if isDegree then
+          storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true }  )
+        else
+          storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = fasle }, isModal = true }  )
+        end
     elseif 2 == i then
       print("Cancel was pressed")
     end
@@ -197,11 +202,15 @@ local function calcTouch( event )
 			tapCount = tapCount + 1
 		end
     
+    if whatTap == 4 or whatTap == 5 or whatTap == 14 or whatTap == 15 then isDegree = true else isDegree = false end
+    
     if not continue then
       native.showAlert ("Continue?", "Press OK to reset all values and continue.", { "OK", "Cancel" }, alertListener2 )
+    elseif isDegree then
+		storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true }  )
     else
-		storyboard.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
-  end
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
+    end
 		
 		return true
 	end
@@ -305,9 +314,9 @@ function scene:createScene( event )
   
 	stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
-	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
-	local tapAniSequenceDataFile = require("Images.tapAniv2");
-	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
+--	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
+--	local tapAniSequenceDataFile = require("Images.tapAniv2");
+--	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
 	
 	tapCount = 0
 	continue = false
@@ -457,14 +466,15 @@ function scene:createScene( event )
 	tapTable[1] = sideCtext
 	sideCtext.alpha = 0
 
-	sideCtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	sideCtap.x = backEdgeX + 290
-	sideCtap.y = backEdgeY + 145
+	--sideCtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  sideCtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	sideCtap.x = backEdgeX + 280
+	sideCtap.y = backEdgeY + 140
 	backGroup:insert(sideCtap)
 	sideCtap:addEventListener ( "touch", calcTouch )
 	sideCtap.tap = 11
 	aniTable[11] = sideCtap
-	sideCtap:play()
+	--sideCtap:play()
 
 	sideAtext = display.newText( textOptionsC )
 	sideAtext:addEventListener ( "touch", calcTouch )
@@ -475,14 +485,15 @@ function scene:createScene( event )
 	tapTable[2] = sideAtext
 	sideAtext.alpha = 0
 	
-	sideAtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+	--sideAtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  sideAtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
 	sideAtap.x = backEdgeX + 330
-	sideAtap.y = backEdgeY + 275
+	sideAtap.y = backEdgeY + 270
 	backGroup:insert(sideAtap)
 	sideAtap:addEventListener ( "touch", calcTouch )
 	sideAtap.tap = 12
 	aniTable[12] = sideAtap
-	sideAtap:play()
+	--sideAtap:play()
 	
 	sideBtext = display.newText( textOptionsR )
 	sideBtext:addEventListener ( "touch", calcTouch )
@@ -493,32 +504,34 @@ function scene:createScene( event )
 	tapTable[3] = sideBtext
 	sideBtext.alpha = 0
 	
-	sideBtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	sideBtap.x = backEdgeX + 450
+	--sideBtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  sideBtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	sideBtap.x = backEdgeX + 460
 	sideBtap.y = backEdgeY + 180
 	backGroup:insert(sideBtap)
 	sideBtap:addEventListener ( "touch", calcTouch )
 	sideBtap.tap = 13
 	aniTable[13] = sideBtap
-	sideBtap:play()
+	--sideBtap:play()
 		
 	angleAtext = display.newText( textOptionsR )
 	angleAtext:addEventListener ( "touch", calcTouch )
   backGroup:insert(angleAtext)
-	angleAtext.x = backEdgeX + 405
+	angleAtext.x = backEdgeX + 395
 	angleAtext.y = backEdgeY + 70
 	angleAtext.tap = 4
 	tapTable[4] = angleAtext
 	angleAtext.alpha = 0
 	
-	angleAtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	angleAtap.x = backEdgeX + 400
+	--angleAtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  angleAtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	angleAtap.x = backEdgeX + 430
 	angleAtap.y = backEdgeY + 70
 	backGroup:insert(angleAtap)
 	angleAtap:addEventListener ( "touch", calcTouch )
 	angleAtap.tap = 14
 	aniTable[14] = angleAtap
-	angleAtap:play()
+	--angleAtap:play()
 	
 	angleBtext = display.newText( textOptionsL )
 	angleBtext:addEventListener ( "touch", calcTouch )
@@ -529,14 +542,15 @@ function scene:createScene( event )
 	tapTable[5] = angleBtext
 	angleBtext.alpha = 0
 	
-	angleBtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-	angleBtap.x = backEdgeX + 170
+	--angleBtap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
+  angleBtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+	angleBtap.x = backEdgeX + 160
 	angleBtap.y = backEdgeY + 290
 	backGroup:insert(angleBtap)
 	angleBtap:addEventListener ( "touch", calcTouch )
 	angleBtap.tap = 15
 	aniTable[15] = angleBtap
-	angleBtap:play()
+	--angleBtap:play()
 
 	optionsGroup:setReferencePoint(display.CenterReferencePoint)
   backGroup:setReferencePoint(display.CenterReferencePoint)

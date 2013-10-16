@@ -13,11 +13,12 @@ local widget = require( "widget" )
 
 
 local num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, neg, dec, clear, enter, backButt
+local deg, degText, degBorder, min, minText, minBorder, sec, secText, secBorder
 local numDisplay, displayBorder
-local numBack, maskBack
+local numBack, maskBack, convert
 local needNeg, needDec
 local backEdgeX, backEdgeY
-local decPress
+local decPress, count, isFocus, degreeGroup, isDegree
 
 local deleteChar
 
@@ -26,28 +27,47 @@ local function buttonEvent( event )
 		
 		if "ended" == phase then
       
-    if event.target:getLabel() == "." and decPress == false then
-      if numDisplay.text == "" then
-        numDisplay.text = "0."
-      elseif numDisplay.text == "-" then
-        numDisplay.text = "-0."
+    local focusD
+      
+    if isFocus == 1 then
+      focusD = numDisplay
+    elseif isFocus == 2 then
+      focusD = hoursText
+    elseif isFocus == 3 then
+      focusD = minText
+    elseif isFocus == 4 then
+      focusD = secText
+    end
+      
+    if isFocus == 1 and focusD.count <= 11 or isFocus ~= 1 and focusD.count <= 9 then
+    
+    if event.target:getLabel() == "." and decPress == false and isFocus == 1 then
+      if focusD.text == "-" then
+        focusD.text = "-0."
       else
-       numDisplay.text = numDisplay.text .. event.target:getLabel()
+       focusD.text = focusD.text .. event.target:getLabel()
       end
       decPress = true
     end
     		
-		if numDisplay.text ~= "" and event.target:getLabel() == "-" then
+		if focusD.text ~= "0" and event.target:getLabel() == "-" then
 			--do nothing
+      focusD.count = focusD.count - 1
     elseif event.target:getLabel() == "." then
       --do nothing
+      focusD.count = focusD.count - 1
+    elseif focusD.text == "0" and event.target:getLabel() == "-" then
+      focusD.text = "-"
+    elseif focusD.text == "0" then
+      focusD.text = ""
+      focusD.text = focusD.text .. event.target:getLabel()
     else
-      numDisplay.text = numDisplay.text .. event.target:getLabel()
+      focusD.text = focusD.text .. event.target:getLabel()
 		end
-      
-			
-		end
-	end
+      focusD.count = focusD.count +1
+		end	
+  end    
+end
   
 local function catchStrays(event)
    return true
@@ -56,36 +76,53 @@ end
 	local function buttonEvent2( event )
 		local phase = event.phase
 		
-		if "ended" == phase then
+		if "ended" == phase then 
 		
 			if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." then
          numDisplay.text = numDisplay.text .. "0"
          storyboard.number = numDisplay.text 		
          transition.to ( maskBack, { time = 10, alpha = 0 } )
-         storyboard.hideOverlay(true, "slideUp", 200 )
-      elseif numDisplay.text ~= "" then
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text ~= "0" then
          storyboard.number = numDisplay.text 
          transition.to ( maskBack, { time = 10, alpha = 0 } )
-         storyboard.hideOverlay(true, "slideUp", 200 )
-      elseif numDisplay.text == "" then
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text == "0" then
           --do nothing
+          count = count - 1
       end
-      
-		end
+      count = count + 1
+    end 
 	end
   
-  local function buttonEvent3( event )
+local function buttonEvent3( event )
 		local phase = event.phase
 		
 		if "ended" == phase then
+      
+    local focusD
+    
+    if isFocus == 1 then
+      focusD = numDisplay
+    elseif isFocus == 2 then
+      focusD = hoursText
+    elseif isFocus == 3 then
+      focusD = minText
+    elseif isFocus == 4 then
+      focusD = secText
+    end
 		
-    if numDisplay.text == "" then
+    if focusD.text == "0" then
       --do nothing
     else
-      numDisplay.text = deleteChar(numDisplay.text)			
+      focusD.text = deleteChar(focusD.text)
+			focusD.count = focusD.count - 1
 		end
+    
+    if focusD.text == "" then focusD.text = "0" end
+    
     end
-	end
+end
   
   local function buttonEvent4( event )
 		local phase = event.phase
@@ -94,22 +131,67 @@ end
 		
       storyboard.number = "Tap Me"
       transition.to ( maskBack, { time = 10, alpha = 0 } )
-			storyboard.hideOverlay(true, "slideUp", 200 )
+			storyboard.hideOverlay(true, "slideRight", 200 )
     
     end
 	end
+  
+local function focusTouch( event )
+	if event.phase == "ended" then
+    
+      local focus = event.target.focus
+      
+      if focus == 1 then
+        isFocus = 1
+        displayBorder.strokeWidth = 5
+        hoursBorder.strokeWidth = 2
+        minBorder.strokeWidth = 2
+        secBorder.strokeWidth = 2
+      elseif focus == 2 then
+        isFocus = 2
+        displayBorder.strokeWidth = 2
+        hoursBorder.strokeWidth = 5
+        minBorder.strokeWidth = 2
+        secBorder.strokeWidth = 2
+      elseif focus == 3 then
+        isFocus = 3
+        displayBorder.strokeWidth = 2
+        hoursBorder.strokeWidth = 2
+        minBorder.strokeWidth = 5
+        secBorder.strokeWidth = 2
+      elseif focus == 4 then
+        isFocus = 4
+        displayBorder.strokeWidth = 2
+        hoursBorder.strokeWidth = 2
+        minBorder.strokeWidth = 2
+        secBorder.strokeWidth = 5
+      end 
+      
+      if hoursText.text ~= "0" and minText.text ~= "0" and secText.text ~= "0" then
+        local temp = toHours(hoursText.text, minText.text, secText.text)
+        numDisplay.text = math.round(temp * math.pow(10, 5)) / math.pow(10, 5)
+      end 
+    		
+		return true
+	end
+end
 
 function scene:createScene( event )
 	local screenGroup = self.view
   
   storyboard.number = "Tap Me"
+  degreeGroup = display.newGroup()
   
-
+  count = 0
   decPress = false
+  isFocus = 1
 	
 	needNeg = event.params.negTrue
 	needDec = event.params.needDec
-	
+  isDegree = event.params.isDegree
+  print(isDegree)
+  
+
   maskBack = display.newImageRect( screenGroup, "backgrounds/maskBack.png", 570, 360 )
 	maskBack.alpha = 0
 	maskBack.x = display.contentCenterX
@@ -125,22 +207,116 @@ function scene:createScene( event )
   numBack:setReferencePoint(display.TopLeftReferencePoint)
   numBack.x = display.contentCenterX
   
+  convert = display.newRect(degreeGroup, 0, 0, display.contentWidth/2, display.contentHeight/2)
+  convert:setFillColor(255, 255, 255)
+  convert:setReferencePoint(display.TopLeftReferencePoint)
+  convert.x = 0
+  
+  local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.1, height = 50, align="right", font="Digital-7Mono", fontSize=34}
+    
+  local textOptionsR2 = {text="", x=0, y=0, width = 100, height = 50, align="right", font="Digital-7Mono", fontSize=22}
+  local textOptionsL = {parent = degreeGroup, text="", x=0, y=0, width=50, align="left", font="Berlin Sans FB", fontSize=14}
+  
+  hours = display.newText(textOptionsL)
+  hours.text = "Whole Degrees"
+  hours:setTextColor(39, 102, 186, 200)
+  hours.x = display.contentCenterX-70
+  hours.y = 30
+  
+  hoursBorder = display.newRect(degreeGroup, 0, 0, numBack.contentWidth/2.10, 36)
+  hoursBorder:setFillColor(0, 0, 0, 0)
+  hoursBorder.strokeWidth = 2
+  hoursBorder:setStrokeColor(39, 102, 186, 200)
+  hoursBorder:setReferencePoint(display.TopLeftReferencePoint)
+  hoursBorder.x = 20
+  hoursBorder.y = 15
+  hoursBorder:addEventListener ( "touch", focusTouch )
+  hoursBorder.isHitTestable = true
+  hoursBorder.focus = 2
+  
+  hoursText = display.newText( textOptionsR2 )
+  degreeGroup:insert(hoursText)
+  hoursText.x = 80
+  hoursText.y = 45
+	hoursText:setTextColor ( 39, 102, 186 )
+  hoursText.text = "0"
+  hoursText.count = 0
+  
+  min = display.newText(textOptionsL)
+  min.text = "Minutes"
+  min:setTextColor(39, 102, 186, 200)
+  min.x = display.contentCenterX-70
+  min.y = 85
+  
+  minBorder = display.newRect(degreeGroup, 0, 0, numBack.contentWidth/2.10, 36)
+  minBorder.strokeWidth = 2
+  minBorder:setStrokeColor(39, 102, 186, 200)
+  minBorder:setReferencePoint(display.TopLeftReferencePoint)
+  minBorder.x = 20
+  minBorder.y = 65
+  minBorder:addEventListener ( "touch", focusTouch )
+  minBorder.isHitTestable = true
+  minBorder.focus = 3
+  minBorder.count = 0
+  
+  minText = display.newText( textOptionsR2 )
+  degreeGroup:insert(minText)
+  minText.x = 80
+  minText.y = 95
+	minText:setTextColor ( 39, 102, 186 )
+  minText.text = "0"
+  minText.count = 0
+  
+  sec = display.newText(textOptionsL)
+  sec.text = "Seconds"
+  sec:setTextColor(39, 102, 186, 200)
+  sec.x = display.contentCenterX-70
+  sec.y = 135
+  
+  secBorder = display.newRect(degreeGroup, 0, 0, numBack.contentWidth/2.10, 36)
+  secBorder:setFillColor(0, 0, 0, 0)
+  secBorder.strokeWidth = 2
+  secBorder:setStrokeColor(39, 102, 186, 200)
+  secBorder:setReferencePoint(display.TopLeftReferencePoint)
+  secBorder.x = 20
+  secBorder.y = 115
+  secBorder:addEventListener ( "touch", focusTouch )
+  secBorder.isHitTestable = true
+  secBorder.focus = 4
+  secBorder.count = 0
+  
+  secText = display.newText( textOptionsR2 )
+  degreeGroup:insert(secText)
+  secText.x = 80
+  secText.y = 145
+	secText:setTextColor ( 39, 102, 186 )
+  secText.text = "0"
+  secText.count = 0
+  
   displayBorder = display.newRect(screenGroup, 0, 0, numBack.contentWidth/1.05, 75)
   displayBorder:setFillColor(0, 0, 0, 0)
   displayBorder.strokeWidth = 5
   displayBorder:setStrokeColor(39, 102, 186, 200)
   displayBorder.x = display.contentCenterX+display.contentCenterX/2
   displayBorder.y = 45
-  
-  local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.1, height = 50, align="right", font="Digital-7Mono", fontSize=34}
+  displayBorder:addEventListener ( "touch", focusTouch )
+  displayBorder.isHitTestable = true
+  displayBorder.focus = 1
+  displayBorder.count = 0
   
   numDisplay = display.newText( textOptionsR )
   screenGroup:insert(numDisplay)
   numDisplay.x = display.contentCenterX+display.contentCenterX/2-10
   numDisplay.y = backEdgeY + 75
 	numDisplay:setTextColor ( 39, 102, 186 )
-  numDisplay.text = ""
-  print(numDisplay.x)
+  numDisplay.text = "0"
+  numDisplay.count = 0
+  
+  screenGroup:insert(degreeGroup)
+  
+  if not isDegree then 
+    degreeGroup.alpha = 0 
+  end
 
 	
 	--Create Buttons
@@ -338,9 +514,7 @@ function scene:createScene( event )
 		else
 			neg.alpha = 0
 		end
-
-
-		
+	
 	enter = widget.newButton
 	{
 		--left = 320,
@@ -414,6 +588,14 @@ function deleteChar(s)
   s = s:sub(1,length - 1)
   return s
   
+end
+
+function toHours(h, m, s)
+
+  print("called")
+  return h + m/60 + s/3600
+  
+
 end
 
 scene:addEventListener( "createScene", scene )

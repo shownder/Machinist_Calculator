@@ -94,14 +94,14 @@ end
 
 function scene:createScene( event )
 	local screenGroup = self.view
-  
+
   timesOpen = loadsave.loadTable("timesOpen.json")
   
   if timesOpen.opened == 5 then
-    native.showAlert ( "Rate Us? We appreciate your feedback!", "Help Us Improve", { "Never", "Later", "OK" }, alertListener )
+    native.showAlert ( "Rate Us? We appreciate your feedback!", "Help Us Improve by leaving a review.", { "Never", "Later", "OK" }, alertListener )
   end
     
-  print(timesOpen.opened)
+  print("Times Opened "..timesOpen.opened)
   print("this is a \n new line")
   	
 	back = display.newImageRect ( screenGroup, "backgrounds/menuBack.png",  570, 360 )

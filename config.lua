@@ -19,7 +19,8 @@ if string.sub(system.getInfo("model"),1,4) == "iPad" then
                 ["@2x"] = 1.5,
                 ["@4x"] = 3.0,
             },
-        },        SpriteHelperSettings = 
+        },
+        SpriteHelperSettings = 
 		{
 			imagesSubfolder = "Images",
 		},
@@ -48,7 +49,8 @@ elseif string.sub(system.getInfo("model"),1,2) == "iP" and display.pixelHeight >
                 ["@2x"] = 1.5,
                 ["@4x"] = 3.0,
             },
-        },        SpriteHelperSettings = 
+        },
+        SpriteHelperSettings = 
 		{
 			imagesSubfolder = "Images",
 		},

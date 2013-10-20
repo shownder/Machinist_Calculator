@@ -389,10 +389,10 @@ function scene:createScene( event )
     options = false
 		optionsGroup = display.newGroup ( )
     backGroup = display.newGroup ( )
-    local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="Berlin Sans FB", fontSize=24}
-    local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="Berlin Sans FB", fontSize=24}
-    local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="Berlin Sans FB", fontSize=24}
-    local textOptionsL2 = {text="", x=0, y=0, width=120, align="left", font="Berlin Sans FB", fontSize=24}
+    local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
+    local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="BerlinSansFB-Reg", fontSize=24}
+    local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=24}
+    local textOptionsL2 = {text="", x=0, y=0, width=120, align="left", font="BerlinSansFB-Reg", fontSize=24}
     
     Runtime:addEventListener( "key", onKeyEvent )
 		
@@ -454,7 +454,7 @@ function scene:createScene( event )
     width = 125,
 		label = "TO METRIC",
 		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
@@ -470,7 +470,7 @@ function scene:createScene( event )
     width = 125,
 		label = "MENU",
 		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
@@ -486,7 +486,7 @@ function scene:createScene( event )
     width = 125,
 		label = "RESET",
 		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
@@ -510,18 +510,18 @@ function scene:createScene( event )
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 		
-	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "Berlin Sans FB", 16 )
+	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
   decPlaces:setTextColor(255)
   decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	decPlaces.x = backEdgeX + 115
 	decPlaces.y = backEdgeY + 127
 	
 	places = 4
-	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 22 )
+	decLabel = display.newText( backGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 125
   
-  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "Berlin Sans FB", 20)
+  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
   measureLabel:setTextColor(255)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	measureLabel.x = backEdgeX + 115
@@ -536,7 +536,7 @@ function scene:createScene( event )
  		  fontSize = 18,
   		id = "info",
   		label = "Input",
-      font = "Berlin Sans FB",
+      font = "BerlinSansFB-Reg",
   		emboss = true,
  		  onEvent = infoPress,
 		}
@@ -545,13 +545,13 @@ function scene:createScene( event )
 		infoButt.y = backEdgeY + 60
 		infoButt.info = 1
     
-    infoText = display.newEmbossedText( backGroup, "1 Side, 2 Angles", 0, 0, "Berlin Sans FB", 18 )
+    infoText = display.newEmbossedText( backGroup, "1 Side, 2 Angles", 0, 0, "BerlinSansFB-Reg", 18 )
 		infoText:setTextColor(255)
     infoText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
     infoText.x = backEdgeX + 335
     infoText.y = backEdgeY + 185
 
-  area = display.newEmbossedText(backGroup, "Area:", 0, 0, "Berlin Sans FB", 20)
+  area = display.newEmbossedText(backGroup, "Area:", 0, 0, "BerlinSansFB-Reg", 20)
   area:setTextColor(255)
   area:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	area.x = backEdgeX + 280

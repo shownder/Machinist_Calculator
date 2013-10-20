@@ -242,7 +242,7 @@ function scene:createScene( event )
   
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup()
-  local textOptionsL = {parent = backGroup, text="Tap Me", x=0, y=0, width=80, height=0, font="Berlin Sans FB", fontSize=24, align="left"}
+  local textOptionsL = {parent = backGroup, text="Tap Me", x=0, y=0, width=80, height=0, font="BerlinSansFB-Reg", fontSize=24, align="left"}
   
   stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
@@ -301,7 +301,7 @@ function scene:createScene( event )
     width = 125,
 		label = "TO METRIC",
 		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
@@ -317,7 +317,7 @@ function scene:createScene( event )
     width = 125,
 		label = "MENU",
 		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
@@ -333,7 +333,7 @@ function scene:createScene( event )
     width = 125,
 		label = "RESET",
 		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
@@ -357,24 +357,24 @@ function scene:createScene( event )
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 	
-	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "Berlin Sans FB", 16 )
+	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
   decPlaces:setTextColor(255)
   decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	decPlaces.x = backEdgeX + 115
 	decPlaces.y = backEdgeY + 100
 	
 	places = 4
-	decLabel = display.newText( backGroup, places, 0, 0, "Berlin Sans FB", 22 )
+	decLabel = display.newText( backGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 100
   
-  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "Berlin Sans FB", 20)
+  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
   measureLabel:setTextColor(255)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	measureLabel.x = backEdgeX + 115
 	measureLabel.y = backEdgeY + 75
 	
-	numHolesText = display.newEmbossedText(backGroup, "No. of Holes:", 0, 0, "Berlin Sans FB", 18)
+	numHolesText = display.newEmbossedText(backGroup, "No. of Holes:", 0, 0, "BerlinSansFB-Reg", 18)
   numHolesText:setTextColor(255)
   numHolesText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	numHolesText.x = backEdgeX + 100
@@ -399,7 +399,7 @@ function scene:createScene( event )
   aniTable[1] = numHolesTap
 	--numHolesTap:play()
 	
-	diamText = display.newEmbossedText(backGroup, "Circle Diameter:", 0, 0, "Berlin Sans FB", 18)
+	diamText = display.newEmbossedText(backGroup, "Circle Diameter:", 0, 0, "BerlinSansFB-Reg", 18)
   diamText:setTextColor(255)
   diamText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	diamText.x = backEdgeX + 111
@@ -424,7 +424,7 @@ function scene:createScene( event )
   aniTable[2] = diamTap
 	--diamTap:play()
 	
-	circleXtext = display.newEmbossedText(backGroup, "Circle Centre - X:", 0, 0, "Berlin Sans FB", 18)
+	circleXtext = display.newEmbossedText(backGroup, "Circle Centre - X:", 0, 0, "BerlinSansFB-Reg", 18)
   circleXtext:setTextColor(255)
   circleXtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	circleXtext.x = backEdgeX + 116
@@ -451,7 +451,7 @@ function scene:createScene( event )
   circleXTap.alpha = 0
   aniTable[3] = circleXTap
 	
-	circleYtext = display.newEmbossedText(backGroup, "Circle Centre - Y:", 0, 0, "Berlin Sans FB", 18)
+	circleYtext = display.newEmbossedText(backGroup, "Circle Centre - Y:", 0, 0, "BerlinSansFB-Reg", 18)
   circleYtext:setTextColor(255)
   circleYtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	circleYtext.x = backEdgeX + 116
@@ -478,7 +478,7 @@ function scene:createScene( event )
   circleYTap.alpha = 0
   aniTable[4] = circleYTap
 	
-	firstHoleText = display.newEmbossedText(backGroup, "First Hole Angle:", 0, 0, "Berlin Sans FB", 18)
+	firstHoleText = display.newEmbossedText(backGroup, "First Hole Angle:", 0, 0, "BerlinSansFB-Reg", 18)
   firstHoleText:setTextColor(255)
   firstHoleText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
 	firstHoleText.x = backEdgeX + 116
@@ -510,7 +510,7 @@ function scene:createScene( event )
 		top = 0,
 		width = 150,
 		height = 35,
-		font = "Berlin Sans FB",
+		font = "BerlinSansFB-Reg",
     fontSize = 20,
 		label = "CALCULATE",
 		id = "answer",

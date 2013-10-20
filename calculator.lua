@@ -226,7 +226,7 @@ function scene:createScene( event )
   local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.05-20, height = 50, align="right", font="Digital-7Mono", fontSize=34}
     
   local textOptionsR2 = {text="", x=0, y=0, width = 100, height = 50, align="right", font="Digital-7Mono", fontSize=22}
-  local textOptionsL = {parent = degreeGroup, text="", x=0, y=0, width=50, align="left", font="Berlin Sans FB", fontSize=14}
+  local textOptionsL = {parent = degreeGroup, text="", x=0, y=0, width=50, align="left", font="BerlinSansFB-Reg", fontSize=14}
   
   hours = display.newText(textOptionsL)
   hours.text = "Whole Degrees"
@@ -318,7 +318,7 @@ function scene:createScene( event )
   numDisplay = display.newText( textOptionsR )
   screenGroup:insert(numDisplay)
   numDisplay.x = display.contentCenterX+display.contentCenterX/2-10
-  numDisplay.y = backEdgeY + 75
+  numDisplay.y = 60
 	numDisplay:setTextColor ( 39, 102, 186 )
   numDisplay.text = "0"
   numDisplay.count = 0

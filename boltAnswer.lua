@@ -11,7 +11,8 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local widget = require( "widget" )
 
-local answer, backButt, scrollView, answerX, answerY, diam, emailButt, maskBacklocal back, numY
+local answer, backButt, scrollView, answerX, answerY, diam, emailButt, maskBack
+local back, numY
 local bolt, boltCenterX, boltCenterY, line1, line2, goBack2
 
 --Listeners
@@ -54,12 +55,16 @@ local function emailPush( event )
 		return true
 	end
 end
-local function goBack( event )
+
+local function goBack( event )
 	if event.phase == "ended" then
 		
-		storyboard.hideOverlay(true, "slideRight", 300 )		
+		storyboard.hideOverlay(true, "slideRight", 300 )
+		
 	end
-end	local function scrollListener( event )
+end
+
+	local function scrollListener( event )
 		local phase = event.phase
 		local direction = event.direction
 		
@@ -106,8 +111,10 @@ function scene:createScene( event )
   maskBack:addEventListener( "tap", catchStrays )
   maskBack:addEventListener( "touch", catchStrays )
 	backEdgeX = maskBack.contentBounds.xMin
-	backEdgeY = maskBack.contentBounds.yMin	
-	back = display.newRect(screenGroup, 0, 0, display.pixelHeight, display.pixelWidth )	  back:setFillColor(255, 255, 255)
+	backEdgeY = maskBack.contentBounds.yMin
+	
+	back = display.newRect(screenGroup, 0, 0, display.pixelHeight, display.pixelWidth )	
+  back:setFillColor(255, 255, 255)
 	backEdgeX = back.contentBounds.xMin
 	backEdgeY = back.contentBounds.yMin
   
@@ -118,7 +125,11 @@ function scene:createScene( event )
   bolt = display.newCircle(screenGroup, boltCenterX, boltCenterY, 98)
   bolt:setFillColor(0, 0, 0, 0)
   bolt.strokeWidth = 2
-  bolt:setStrokeColor(0, 0, 0)		if #answer > 7 then		scrollView = widget.newScrollView{			left = 0,
+  bolt:setStrokeColor(0, 0, 0)
+	
+	if #answer > 7 then
+		scrollView = widget.newScrollView{
+			left = 0,
 			top = 50,
 			width = 240,
 			height = 265,
@@ -127,11 +138,23 @@ function scene:createScene( event )
 			horizontalScrollingDisabled = true,
 			verticalScrollingDisabled = false,
       isBounceEnabled = false,
-			listener = scrollListener,				}		screenGroup:insert(scrollView)	end		for i = 0, #answer, 1 do	
+			listener = scrollListener,		
+		}
+		screenGroup:insert(scrollView)
+	end
+	
+	for i = 0, #answer, 1 do	
 		local temp = display.newText( textOptionsL )
     temp:setTextColor(0,0,0)
-    temp.text = answer[i]		temp.y = backEdgeY + numY		temp.x = backEdgeX + 140				if #answer > 7 then			scrollView:insert(temp)		end
-    		numY = numY + 30
+    temp.text = answer[i]
+		temp.y = backEdgeY + numY
+		temp.x = backEdgeX + 140
+		
+		if #answer > 7 then
+			scrollView:insert(temp)
+		end
+    
+		numY = numY + 30
 	end
   
   for i = 0, #answer, 1 do
@@ -169,8 +192,9 @@ function scene:createScene( event )
   backButt.y = 15
   
   emailButt = display.newImageRect(screenGroup, "Images/email.png", 40, 23)
-  --emailButt.x = topBar.contentBounds.xMax
-  emailButt.x = display.pixelHeight/2-25
+  emailButt.x = display.contentWidth - 20
+  print(display.pixelHeight)
+  print(display.pixelWidth)
   emailButt.y = 26
   emailButt:addEventListener("touch", emailPush)
   emailButt.isHitTestable = true

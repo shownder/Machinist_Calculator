@@ -153,9 +153,13 @@ end
 local function goBack (event)
 	if event.phase == "ended" then
     
-    transition.to (optionsGroup, { time = 100, alpha = 0 } )
-		storyboard.gotoScene( "menu", { effect="slideRight", time=800})
-    
+	transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    transition.to ( backGroup, { time = 100, alpha = 0 } )
+    transition.to ( optionsBack, { time = 500, x = -170 } )
+    transition.to ( optionsBack, { time = 500, y = -335 } )
+	options = false
+	storyboard.gotoScene( "menu", { effect="slideRight", time=800})
+	return true   
 	end
 end
 

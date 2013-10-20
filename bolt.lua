@@ -92,7 +92,9 @@ local function optionsMove(event)
     end
   end
   return true
-endlocal function measureChange( event )
+end
+
+local function measureChange( event )
 	local phase = event.phase
 	
 	if "ended" == phase then	
@@ -118,7 +120,8 @@ endlocal function measureChange( event )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
       decLabel:setTextColor(255)
 			options = false
-		endend
+		end
+end
 
 local function stepPress( event )
 	local phase = event.phase
@@ -150,7 +153,9 @@ local function calcTouch( event )
 		if whatTap == 3 or whatTap == 4 then
 			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = true, needDec = true }, isModal = true}  )
 		elseif whatTap == 1 then
-			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = false }, isModal = true} )		elseif isDegree then			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true} )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = false }, isModal = true} )
+		elseif isDegree then
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true} )
      else
        storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true} )
 		end		
@@ -196,16 +201,13 @@ end
 local function goBack (event)
 	if event.phase == "ended" then
     
-      transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setTextColor(255)
-			options = false
-    transition.to (optionsGroup, { time = 100, alpha = 0 } )
-		storyboard.gotoScene( "menu", { effect="slideRight", time=800})
-    
+	transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    transition.to ( backGroup, { time = 100, alpha = 0 } )
+    transition.to ( optionsBack, { time = 500, x = -170 } )
+    transition.to ( optionsBack, { time = 500, y = -335 } )
+	options = false
+	storyboard.gotoScene( "menu", { effect="slideRight", time=800})
+	return true
 	end
 end
 
@@ -389,7 +391,7 @@ function scene:createScene( event )
   numHoles.alpha = 0
   
   --numHolesTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-  numHolesTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  numHolesTap = display.newImageRect(backGroup, "Images/tapTarget.png", 33, 33)
 	numHolesTap.x = backEdgeX + 170
 	numHolesTap.y = backEdgeY + 140
 	numHolesTap:addEventListener ( "touch", calcTouch )
@@ -413,7 +415,7 @@ function scene:createScene( event )
   diam.alpha = 0
   
   --diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-  diamTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  diamTap = display.newImageRect(backGroup, "Images/tapTarget.png", 33, 33)
 	diamTap.x = backEdgeX + 190
 	diamTap.y = backEdgeY + 185
 	backGroup:insert(diamTap)
@@ -533,7 +535,8 @@ function scene:createScene( event )
 end
 
 -- Called immediately after scene has moved onscreen:
-function scene:enterScene( event )	local group = self.view
+function scene:enterScene( event )
+	local group = self.view
         
 		storyboard.purgeScene( "menu" )
 
@@ -544,7 +547,9 @@ function scene:exitScene( event )
 
     Runtime:removeEventListener( "key", onKeyEvent )
    
-endfunction scene:destroyScene( event )
+end
+
+function scene:destroyScene( event )
    local group = self.view
 
 		optionsGroup:removeSelf()
@@ -556,7 +561,9 @@ scene:addEventListener( "createScene", scene )
 
 scene:addEventListener( "enterScene", scene )
 
-scene:addEventListener( "exitScene", scene )scene:addEventListener( "destroyScene", scene )
+scene:addEventListener( "exitScene", scene )
+
+scene:addEventListener( "destroyScene", scene )
 
 --Overlay
 -- the following event is dispatched once overlay is enabled
@@ -574,7 +581,19 @@ function scene:overlayEnded( event )
     
     if calcClick == true then
     
-    tapTable[whatTap].text = storyboard.number        if whatTap == 1 then    	if tonumber(numHoles.text)  <= 0 then    		native.showAlert ( "Error", "You need more than 0 holes!", { "OK" }, alertListener )    		numHoles.text = "Tap Me"    	end    elseif whatTap == 2 then      	  if tonumber(diam.text)  <= 0 then    		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )    		diam.text = "Tap Me"      	  end    end
+    tapTable[whatTap].text = storyboard.number
+    
+    if whatTap == 1 then
+    	if tonumber(numHoles.text)  <= 0 then
+    		native.showAlert ( "Error", "You need more than 0 holes!", { "OK" }, alertListener )
+    		numHoles.text = "Tap Me"
+    	end
+    elseif whatTap == 2 then    
+  	  if tonumber(diam.text)  <= 0 then
+    		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )
+    		diam.text = "Tap Me"    
+  	  end
+    end
         
     if diam.text ~= "Tap Me" and numHoles.text ~= "Tap Me" then
     	circleXtext.alpha = 1
@@ -614,7 +633,20 @@ function toInch(num)
 end
 
 function bolts(numHoles, diam, circleX, circleY, firstHole)
-		local temp = {}		if circleX == "Tap Me" then		circleX = 0	end		if circleY == "Tap Me" then		circleY = 0	end		if firstHole == "Tap Me" then		firstHole = 0	end
+	
+	local temp = {}
+	
+	if circleX == "Tap Me" then
+		circleX = 0
+	end
+	
+	if circleY == "Tap Me" then
+		circleY = 0
+	end
+	
+	if firstHole == "Tap Me" then
+		firstHole = 0
+	end
 	
 	local radius = diam / 2
   local degree

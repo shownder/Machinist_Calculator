@@ -38,6 +38,13 @@ local function buttonEvent( event )
     elseif isFocus == 4 then
       focusD = secText
     end
+
+    if isFocus == 2 or isFocus == 3 or isFocus == 4 then
+    	if hoursText.text ~= "0" and minText.text ~= "0" or secText.text ~= "0" then
+    		numDisplay.text = toHours(hoursText.text, minText.text, secText.text)
+    		numDisplay.text = math.round(numDisplay.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
+    end
       
     if isFocus == 1 and focusD.count <= 11 or isFocus ~= 1 and focusD.count <= 9 then
     
@@ -78,7 +85,7 @@ end
 		
 		if "ended" == phase then 
 		
-			if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." then
+		if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." then
          numDisplay.text = numDisplay.text .. "0"
          storyboard.number = numDisplay.text 		
          transition.to ( maskBack, { time = 10, alpha = 0 } )
@@ -167,10 +174,10 @@ local function focusTouch( event )
         secBorder.strokeWidth = 5
       end 
       
-      if hoursText.text ~= "0" and minText.text ~= "0" and secText.text ~= "0" then
-        local temp = toHours(hoursText.text, minText.text, secText.text)
-        numDisplay.text = math.round(temp * math.pow(10, 5)) / math.pow(10, 5)
-      end 
+      -- if hoursText.text ~= "0" and minText.text ~= "0" and secText.text ~= "0" then
+      --   local temp = toHours(hoursText.text, minText.text, secText.text)
+      --   numDisplay.text = math.round(temp * math.pow(10, 5)) / math.pow(10, 5)
+      -- end 
     		
 		return true
 	end
@@ -204,15 +211,19 @@ function scene:createScene( event )
 
   numBack = display.newRect(screenGroup, 0, 0, display.contentWidth/2, display.contentHeight)
   numBack:setFillColor(255, 255, 255)
+  numBack.strokeWidth = 2
+  numBack:setStrokeColor(39, 102, 186, 200)
   numBack:setReferencePoint(display.TopLeftReferencePoint)
   numBack.x = display.contentCenterX
   
   convert = display.newRect(degreeGroup, 0, 0, display.contentWidth/2, display.contentHeight/2)
   convert:setFillColor(255, 255, 255)
+  convert.strokeWidth = 2
+  convert:setStrokeColor(39, 102, 186, 200)
   convert:setReferencePoint(display.TopLeftReferencePoint)
   convert.x = 0
   
-  local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.1, height = 50, align="right", font="Digital-7Mono", fontSize=34}
+  local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.05-20, height = 50, align="right", font="Digital-7Mono", fontSize=34}
     
   local textOptionsR2 = {text="", x=0, y=0, width = 100, height = 50, align="right", font="Digital-7Mono", fontSize=22}
   local textOptionsL = {parent = degreeGroup, text="", x=0, y=0, width=50, align="left", font="Berlin Sans FB", fontSize=14}
@@ -321,20 +332,6 @@ function scene:createScene( event )
 	
 	--Create Buttons
   
-  backButt = widget.newButton
-	{
-		id = "back",
-		label = "DEL",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
-		--font = "WC Mano Negra Bta",
-		fontSize = 14,
-		onEvent = buttonEvent3,
-		defaultFile = "Images/calcButt.png",
-		overFile = "Images/calcButtOver.png",
-		}
-	backButt.x = display.contentCenterX+210
-	backButt.y = backEdgeY + 135
-			
 	num1 = widget.newButton
 	{
 		id = "num1",
@@ -519,25 +516,39 @@ function scene:createScene( event )
 	{
 		--left = 320,
 		--top = 90,
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255} },
+		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200} },
 		label = "GO",
 		id = "enter",
-    defaultFile = "Images/calcButt.png",
-    overFile = "Images/calcButtOver.png",
+    defaultFile = "Images/calcButtOver.png",
+    overFile = "Images/calcButt.png",
 		onEvent = buttonEvent2
   }
   enter.x = display.contentCenterX+210
   enter.y = backEdgeY + 190
+
+    backButt = widget.newButton
+	{
+		id = "back",
+		label = "DEL",
+		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200}},
+		--font = "WC Mano Negra Bta",
+		fontSize = 14,
+		onEvent = buttonEvent3,
+		defaultFile = "Images/calcButtOver.png",
+		overFile = "Images/calcButt.png",
+		}
+	backButt.x = display.contentCenterX+210
+	backButt.y = backEdgeY + 135
 		
 	clear = widget.newButton
 	{
 		--left = 320,
 		--top = 240,
-		labelColor = { default = {100, 0, 0}, over = {39, 102, 186, 200} },
+		labelColor = { default = {198, 68, 68}, over = {255, 255, 255} },
 		label = "C",
 		id = "clear",
-    defaultFile = "Images/calcButt.png",
-    overFile = "Images/calcButtOver.png",
+    defaultFile = "Images/cancButt.png",
+    overFile = "Images/cancButtOver.png",
 		onEvent = buttonEvent4
   }
   clear.x = display.contentCenterX+210
@@ -592,10 +603,8 @@ end
 
 function toHours(h, m, s)
 
-  print("called")
   return h + m/60 + s/3600
   
-
 end
 
 scene:addEventListener( "createScene", scene )

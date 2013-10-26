@@ -52,24 +52,7 @@ local timesOpen = loadsave.loadTable("timesOpen.json")
       loadsave.saveTable(timesOpen, "timesOpen.json")
     end
   end
-  
---The below is for iOS
-
---local timesOpen = loadsave.loadTable("timesOpen.json")
---timesOpen.opened = 0
-  
---   if (loadsave.loadTable("timesOpen.json") == nil) then
---     timesOpen = {}
---     timesOpen.opened = 0
---     loadsave.saveTable(timesOpen, "timesOpen.json")
---   elseif timesOpen.opened ~= "never" then
---     --timesOpen.opened = 0
---     if timesOpen.opened < 7 then
---       timesOpen.opened = timesOpen.opened + 1
---       loadsave.saveTable(timesOpen, "timesOpen.json")
---     end
---   end  
-  
+ 
 
 storyboard.gotoScene( "menu", "fade", 800 )
 

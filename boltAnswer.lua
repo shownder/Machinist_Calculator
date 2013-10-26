@@ -118,7 +118,9 @@ function scene:createScene( event )
 	backEdgeX = back.contentBounds.xMin
 	backEdgeY = back.contentBounds.yMin
   
+  
   numY = backEdgeY + 10
+  --numY = 60
   
   boltCenterX = backEdgeX + 360
   boltCenterY = backEdgeY + 180
@@ -127,34 +129,31 @@ function scene:createScene( event )
   bolt.strokeWidth = 2
   bolt:setStrokeColor(0, 0, 0)
 	
-	if #answer > 7 then
-		scrollView = widget.newScrollView{
-			left = 0,
-			top = 50,
-			width = 240,
-			height = 265,
-			id = "answerScroll",
-			hideBackground = false,
-			horizontalScrollingDisabled = true,
-			verticalScrollingDisabled = false,
-      isBounceEnabled = false,
-			listener = scrollListener,		
-		}
-		screenGroup:insert(scrollView)
-	end
+scrollView = widget.newScrollView
+	{
+		left = 0,
+		top = 50,
+		width = 240,
+		height = 265,
+		scrollWidth = 0,
+		--scrollHeight = display.pixelHeight-50,
+		id = "answerScroll",
+		hideBackground = false,
+		horizontalScrollDisabled = true,
+		verticalScrollDisabled = false,
+    	isBounceEnabled = false,
+		listener = scrollListener,		
+	}
+	screenGroup:insert(scrollView)
 	
 	for i = 0, #answer, 1 do	
 		local temp = display.newText( textOptionsL )
-    temp:setTextColor(0,0,0)
-    temp.text = answer[i]
-		temp.y = backEdgeY + numY
+    	temp:setTextColor(0,0,0)
+    	temp.text = answer[i]
+		temp.y = numY
 		temp.x = backEdgeX + 140
-		
-		if #answer > 7 then
-			scrollView:insert(temp)
-		end
-    
-		numY = numY + 30
+		scrollView:insert(temp)  
+		numY = numY + 30 
 	end
   
   for i = 0, #answer, 1 do
@@ -172,7 +171,7 @@ function scene:createScene( event )
     temp:setFillColor(0, 0, 0, 0)
     temp.strokeWidth = 2
     if i == 0 then
-      temp:setStrokeColor(128, 0, 0)
+      temp:setStrokeColor(198, 68, 68)
     else
       temp:setStrokeColor(0, 0, 0)
     end
@@ -180,6 +179,8 @@ function scene:createScene( event )
   
   line1 = display.newLine(screenGroup, boltCenterX - 110, boltCenterY, boltCenterX + 110, boltCenterY)
   line2 = display.newLine(screenGroup, boltCenterX, boltCenterY - 110, boltCenterX, boltCenterY + 110)
+  line1:setColor(0, 0, 0)
+  line2:setColor(0, 0, 0)
   
   topBar = display.newRect( screenGroup, 0, 0, display.pixelHeight, 50 )	
   topBar:setFillColor(39, 102, 186)

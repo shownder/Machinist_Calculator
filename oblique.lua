@@ -396,15 +396,11 @@ function scene:createScene( event )
     
     Runtime:addEventListener( "key", onKeyEvent )
 		
-		stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
-		
---		tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
---		local tapAniSequenceDataFile = require("Images.tapAniv2");
---		local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
+	stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
-		back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
-		back.x = display.contentCenterX
-		back.y = display.contentCenterY	
+	back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
+	back.x = display.contentCenterX
+	back.y = display.contentCenterY	
     
     backEdgeX = back.contentBounds.xMin
 		backEdgeY = back.contentBounds.yMin
@@ -412,21 +408,6 @@ function scene:createScene( event )
     rightDisplay = display.newImageRect(backGroup, "backgrounds/Oblique.png", 570, 360)
     rightDisplay.x = display.contentCenterX
     rightDisplay.y = display.contentCenterY
-    
---  helpButt = widget.newButton
---	{
---		id = "helpButt",
---		--label = "HELP",
---		--labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
---		--font = "Rock Salt",
---		fontSize = 16,
---		onEvent = helpScreen,
---		defaultFile = "Images/infoButt.png",
---		overFile = "Images/infoButtOver.png",
---		}
---	optionsGroup:insert(helpButt)
---	helpButt.x = backEdgeX + 105
---	helpButt.y = backEdgeY + 85
 		
 		decStep = widget.newStepper
 	{

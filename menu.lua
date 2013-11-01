@@ -102,7 +102,6 @@ function scene:createScene( event )
   end
     
   print("Times Opened "..timesOpen.opened)
-  print("this is a \n new line")
   	
 	back = display.newImageRect ( screenGroup, "backgrounds/menuBack.png",  570, 360 )
 	back.x = display.contentCenterX

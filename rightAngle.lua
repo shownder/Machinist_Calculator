@@ -155,26 +155,6 @@ local function optionsMove(event)
   end
 end
 
-local function helpScreen(event)
-	local phase = event.phase
-  
-  if "ended" == phase then	
-
-    if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				--transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
-    end
-    
-    --Runtime:removeEventListener( "touch", onScreenTouch  )
-    
-    storyboard.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "rightAngle" }, isModal = true}  )
-    
-  end
-      
-end
-
 local function calcTouch( event )
 	if event.phase == "ended" then
     
@@ -314,10 +294,6 @@ function scene:createScene( event )
   
 	stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
---	tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
---	local tapAniSequenceDataFile = require("Images.tapAniv2");
---	local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
-	
 	tapCount = 0
 	continue = false
 	
@@ -330,22 +306,6 @@ function scene:createScene( event )
   rightDisplay = display.newImageRect(backGroup, "backgrounds/rightangle.png", 570, 360)
   rightDisplay.x = display.contentCenterX
   rightDisplay.y = display.contentCenterY  
-
-
---  helpButt = widget.newButton
---	{
---		id = "helpButt",
---		--label = "HELP",
---		--labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
---		--font = "Rock Salt",
---		fontSize = 16,
---		onEvent = helpScreen,
---		defaultFile = "Images/infoButt.png",
---		overFile = "Images/infoButtOver.png",
---		}
---	optionsGroup:insert(helpButt)
---	helpButt.x = backEdgeX + 105
---	helpButt.y = backEdgeY + 85
 
 		decStep = widget.newStepper
 	{
@@ -827,24 +787,6 @@ function angBcalc()
 		sideCtext.text = math.sqrt(( sideAtext.text * sideAtext.text) + ( sideBtext.text * sideBtext.text))
 	end
 end
-
---function addListeners()
---  print("adding event listeners")
---  sideAtext:addEventListener( "touch", calcTouch )
---  sideBtext:addEventListener( "touch", calcTouch )
---  sideCtext:addEventListener( "touch", calcTouch )
---  angleAtext:addEventListener( "touch", calcTouch )
---  angleBtext:addEventListener( "touch", calcTouch )
---end
-
---function removeListeners()
---  print("removing event listeners")
---  sideAtext:removeEventListener( "touch", calcTouch )
---  sideBtext:removeEventListener( "touch", calcTouch )
---  sideCtext:removeEventListener( "touch", calcTouch )
---  angleAtext:removeEventListener( "touch", calcTouch )
---  angleBtext:removeEventListener( "touch", calcTouch )
---end
 
 function goBack2()
 	

@@ -47,26 +47,6 @@ local function onKeyEvent( event )
    return true
 end
 
-local function helpScreen(event)
-	local phase = event.phase
-  
-  if "ended" == phase then	
-
-    if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
-    end
-    
-    Runtime:removeEventListener( "touch", onScreenTouch  )
-    
-    storyboard.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "sine" }, isModal = true}  )
-    
-  end
-      
-end
-
 local function optionsMove(event)
 	local phase = event.phase
   if "ended" == phase then
@@ -269,21 +249,6 @@ function scene:createScene( event )
     rightDisplay = display.newImageRect(backGroup, "backgrounds/sinebar.png", 570, 360)
     rightDisplay.x = display.contentCenterX
     rightDisplay.y = display.contentCenterY
-    
---  helpButt = widget.newButton
---	{
---		id = "helpButt",
---    label = "HELP",
---    labelColor = { default = {0, 0, 0, 150}, over = {192, 192, 192}},
---    font = "Rock Salt",
---		fontSize = 16,
---		onEvent = helpScreen,
---		defaultFile = "Images/infoButt.png",
---		overFile = "Images/infoButtOver.png",
---		}
---	optionsGroup:insert(helpButt)
---	helpButt.x = backEdgeX + 105
---	helpButt.y = backEdgeY + 85
 		
 		decStep = widget.newStepper
 	{
@@ -493,7 +458,7 @@ end
 function scene:enterScene( event )
   local group = self.view
         
-		storyboard.purgeScene( "menu" )
+	storyboard.purgeScene( "menu" )
 
 end
 
@@ -507,7 +472,7 @@ end
 function scene:destroyScene( event )
   local group = self.view
 
-		optionsGroup:removeSelf()
+	optionsGroup:removeSelf()
     backGroup:removeSelf()
    
 end
@@ -519,8 +484,6 @@ scene:addEventListener( "enterScene", scene )
 scene:addEventListener( "exitScene", scene )
 
 scene:addEventListener( "destroyScene", scene )
-
-Runtime:addEventListener ( "accelerometer", shakeListen )
 
 --Overlay
 -- the following event is dispatched once overlay is enabled

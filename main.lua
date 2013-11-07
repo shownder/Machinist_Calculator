@@ -14,7 +14,11 @@ local physicalH = math.round( (display.contentHeight - display.screenOriginY*2) 
 --Require
 local storyboard = require( "storyboard" )
 local loadsave = require("loadsave")
+local device = require("device")
 local licensing = require( "licensing" )
+
+if not device.isApple then
+
 licensing.init( "google" )
 
 local function alertListener ( event )
@@ -37,6 +41,7 @@ local function licensingListener( event )
 end
 
 licensing.verify( licensingListener )
+end
 
 local timesOpen = loadsave.loadTable("timesOpen.json")
 --timesOpen.opened = 0

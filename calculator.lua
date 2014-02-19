@@ -163,6 +163,10 @@ local function buttonEvent3( event )
     	end
     end
 
+    if not decPushed then
+    	decTemp = numDisplay.text
+    end
+
     if isFocus == 1 then
     	if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
     		hoursText.text = decTemp + 1 - 1

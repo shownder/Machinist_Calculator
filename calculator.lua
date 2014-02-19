@@ -19,13 +19,14 @@ local numBack, maskBack, convert
 local needNeg, needDec
 local backEdgeX, backEdgeY
 local decPress, count, isFocus, degreeGroup, isDegree
+local tempDec, decPlace
 
 local deleteChar
 
 local function buttonEvent( event )
 		local phase = event.phase
 		
-		if "ended" == phase then
+	if "ended" == phase then
       
     local focusD
       
@@ -39,13 +40,13 @@ local function buttonEvent( event )
       focusD = secText
     end
 
-    if isFocus == 2 or isFocus == 3 or isFocus == 4 then
-    	if hoursText.text ~= "0" and minText.text ~= "0" or secText.text ~= "0" then
-    		numDisplay.text = toHours(hoursText.text, minText.text, secText.text)
-    		numDisplay.text = math.round(numDisplay.text * math.pow(10, 5)) / math.pow(10, 5)
-    	end
+    if isFocus == 1 and event.target:getLabel() == "." then decPushed = true end	
+
+    if not decPushed then
+    	decTemp = numDisplay.text .. event.target:getLabel()
     end
-      
+    print(decTemp)
+    
     if isFocus == 1 and focusD.count <= 11 or isFocus ~= 1 and focusD.count <= 9 then
     
     if event.target:getLabel() == "." and decPress == false and isFocus == 1 then
@@ -57,7 +58,7 @@ local function buttonEvent( event )
       decPress = true
     end
     		
-		if focusD.text ~= "0" and event.target:getLabel() == "-" then
+	if focusD.text ~= "0" and event.target:getLabel() == "-" then
 			--do nothing
       focusD.count = focusD.count - 1
     elseif event.target:getLabel() == "." then
@@ -72,7 +73,34 @@ local function buttonEvent( event )
       focusD.text = focusD.text .. event.target:getLabel()
 		end
       focusD.count = focusD.count +1
-		end	
+	end	
+
+	if isFocus == 2 or isFocus == 3 or isFocus == 4 then
+    	if hoursText.text ~= "0" or minText.text ~= "0" or secText.text ~= "0" then
+    		numDisplay.text = toHours(hoursText.text, minText.text, secText.text)
+    		numDisplay.text = math.round(numDisplay.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
+    end
+
+    --if decPlace ~= nil then
+
+
+    if isFocus == 1 then
+    	if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
+    		hoursText.text = decTemp + 1 - 1
+    		minText.text = (numDisplay.text - decTemp) * 60
+    	end
+    	if string.find(minText.text, ".") == nil then
+    		--do nothing
+    	else
+    		local temp = minText.text
+    		decPlace = string.find(minText.text, ".")
+    		minText.text = minText.text:sub(1, decPlace+1)
+    		secText.text = (temp - minText.text) * 60
+    		secText.text = math.round(secText.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
+    end
+
   end    
 end
   
@@ -127,6 +155,29 @@ local function buttonEvent3( event )
 		end
     
     if focusD.text == "" then focusD.text = "0" end
+
+    if isFocus == 2 or isFocus == 3 or isFocus == 4 then
+    	if hoursText.text ~= "0" or minText.text ~= "0" or secText.text ~= "0" then
+    		numDisplay.text = toHours(hoursText.text, minText.text, secText.text)
+    		numDisplay.text = math.round(numDisplay.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
+    end
+
+    if isFocus == 1 then
+    	if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
+    		hoursText.text = decTemp + 1 - 1
+    		minText.text = (numDisplay.text - decTemp) * 60
+    	end
+    	if string.find(minText.text, ".") == nil then
+    		--do nothing
+    	else
+    		local temp = minText.text
+    		decPlace = string.find(minText.text, ".")
+    		minText.text = minText.text:sub(1, decPlace+1)
+    		secText.text = (temp - minText.text) * 60
+    		secText.text = math.round(secText.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
+    end
     
     end
 end
@@ -137,6 +188,7 @@ end
 		if "ended" == phase then
 		
       storyboard.number = "Tap Me"
+      decPushed = false
       transition.to ( maskBack, { time = 10, alpha = 0 } )
 			storyboard.hideOverlay(true, "slideRight", 200 )
     
@@ -594,6 +646,7 @@ function deleteChar(s)
   local length = s:len()
   if s:sub(length, length) == "." then
     decPress = false
+    decPushed = false
   end
   
   s = s:sub(1,length - 1)
@@ -603,7 +656,7 @@ end
 
 function toHours(h, m, s)
 
-  return h + m/60 + s/3600
+  return h + (m/60) + (s/3600)
   
 end
 

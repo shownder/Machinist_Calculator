@@ -113,8 +113,9 @@ function scene:createScene( event )
 	backEdgeX = maskBack.contentBounds.xMin
 	backEdgeY = maskBack.contentBounds.yMin
 	
-	back = display.newRect(screenGroup, 0, 0, display.pixelHeight, display.pixelWidth )	
-  back:setFillColor(255, 255, 255)
+	back = display.newRect(screenGroup, 0, 0, display.pixelHeight, display.pixelWidth )
+	back.anchorX = 0; back.anchorY = 0; 
+  back:setFillColor(1)
 	backEdgeX = back.contentBounds.xMin
 	backEdgeY = back.contentBounds.yMin
   
@@ -125,9 +126,9 @@ function scene:createScene( event )
   boltCenterX = backEdgeX + 360
   boltCenterY = backEdgeY + 180
   bolt = display.newCircle(screenGroup, boltCenterX, boltCenterY, 98)
-  bolt:setFillColor(0, 0, 0, 0)
+  bolt:setFillColor(0, 0)
   bolt.strokeWidth = 2
-  bolt:setStrokeColor(0, 0, 0)
+  bolt:setStrokeColor(0)
 	
 scrollView = widget.newScrollView
 	{
@@ -148,7 +149,7 @@ scrollView = widget.newScrollView
 	
 	for i = 0, #answer, 1 do	
 		local temp = display.newText( textOptionsL )
-    	temp:setTextColor(0,0,0)
+    	temp:setFillColor(0)
     	temp.text = answer[i]
 		temp.y = numY
 		temp.x = backEdgeX + 140
@@ -171,22 +172,23 @@ scrollView = widget.newScrollView
     temp:setFillColor(0, 0, 0, 0)
     temp.strokeWidth = 2
     if i == 0 then
-      temp:setStrokeColor(198, 68, 68)
+      temp:setStrokeColor(0.777, 0.267, 0.267)
     else
-      temp:setStrokeColor(0, 0, 0)
+      temp:setStrokeColor(0)
     end
   end
   
   line1 = display.newLine(screenGroup, boltCenterX - 110, boltCenterY, boltCenterX + 110, boltCenterY)
   line2 = display.newLine(screenGroup, boltCenterX, boltCenterY - 110, boltCenterX, boltCenterY + 110)
-  line1:setColor(0, 0, 0)
-  line2:setColor(0, 0, 0)
+  line1:setColor(0)
+  line2:setColor(0)
   
-  topBar = display.newRect( screenGroup, 0, 0, display.pixelHeight, 50 )	
-  topBar:setFillColor(39, 102, 186)
+  topBar = display.newRect( screenGroup, 0, 0, display.pixelHeight, 50 )
+	topBar.anchorX = 0; topBar.anchorY = 0; 
+  topBar:setFillColor(0.153, 0.4, 0.729)
 
   backButt = display.newImageRect(screenGroup, "Images/backButt.png", 54, 22)
-  backButt:setReferencePoint(display.TopLeftReferencePoint)
+  backButt.anchorX = 0; backButt.anchorY = 0; 
   backButt:addEventListener("touch", goBack)
   backButt.isHitTestable = true
   backButt.x = 10

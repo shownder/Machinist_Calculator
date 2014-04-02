@@ -20,6 +20,7 @@ local needNeg, needDec
 local backEdgeX, backEdgeY
 local decPress, count, isFocus, degreeGroup, isDegree
 local tempDec, decPlace
+local needNeg, needDec, isDegree, isBolt
 
 local deleteChar
 
@@ -84,8 +85,7 @@ local function buttonEvent( event )
 
     --if decPlace ~= nil then
 
-
-    if isFocus == 1 then
+    if isFocus == 1 and degreeGroup.alpha ~= 0 then
     	if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
     		hoursText.text = decTemp + 1 - 1
     		minText.text = (numDisplay.text - decTemp) * 60
@@ -111,22 +111,35 @@ end
 	local function buttonEvent2( event )
 		local phase = event.phase
 		
-		if "ended" == phase then 
+		if "ended" == phase then
 		
-		if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." then
+		if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." and not isBolt then
          numDisplay.text = numDisplay.text .. "0"
          storyboard.number = numDisplay.text 		
          transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text ~= "0" and isBolt==true then
+        if numDisplay.text == "-0." or numDisplay.text == "-" or numDisplay.text == "-0.0" or numDisplay.text == "0." or numDisplay.text == "0.0" then storyboard.number = 0 else storyboard.number = numDisplay.text end
+         transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
          storyboard.hideOverlay(true, "slideRight", 200 )
       elseif numDisplay.text ~= "0" then
          storyboard.number = numDisplay.text 
          transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text == "0" and isBolt==true then
+         storyboard.number = numDisplay.text 
+         transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
          storyboard.hideOverlay(true, "slideRight", 200 )
       elseif numDisplay.text == "0" then
           --do nothing
           count = count - 1
       end
       count = count + 1
+      decPushed = false
     end 
 	end
   
@@ -167,7 +180,7 @@ local function buttonEvent3( event )
     	decTemp = numDisplay.text
     end
 
-    if isFocus == 1 then
+    if isFocus == 1 and degreeGroup.alpha ~= 0 then
     	if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
     		hoursText.text = decTemp + 1 - 1
     		minText.text = (numDisplay.text - decTemp) * 60
@@ -193,6 +206,7 @@ end
 		
       storyboard.number = "Tap Me"
       decPushed = false
+      decTemp = 0
       transition.to ( maskBack, { time = 10, alpha = 0 } )
 			storyboard.hideOverlay(true, "slideRight", 200 )
     
@@ -252,7 +266,8 @@ function scene:createScene( event )
 	needNeg = event.params.negTrue
 	needDec = event.params.needDec
   isDegree = event.params.isDegree
-  print(isDegree)
+  if isDegree ~= true then isDegree = false end
+  isBolt = event.params.isBolt
   
 
   maskBack = display.newImageRect( screenGroup, "backgrounds/maskBack.png", 570, 360 )
@@ -269,14 +284,14 @@ function scene:createScene( event )
   numBack:setFillColor(255, 255, 255)
   numBack.strokeWidth = 2
   numBack:setStrokeColor(39, 102, 186, 200)
-  numBack:setReferencePoint(display.TopLeftReferencePoint)
+  numBack.anchorX = 0; numBack.anchorY = 0
   numBack.x = display.contentCenterX
   
   convert = display.newRect(degreeGroup, 0, 0, display.contentWidth/2, display.contentHeight/2)
   convert:setFillColor(255, 255, 255)
   convert.strokeWidth = 2
   convert:setStrokeColor(39, 102, 186, 200)
-  convert:setReferencePoint(display.TopLeftReferencePoint)
+  convert.anchorX = 0; convert.anchorY = 0
   convert.x = 0
   
   local textOptionsR = {text="", x=0, y=0, width=numBack.contentWidth/1.05-20, height = 50, align="right", font="Digital-7Mono", fontSize=34}
@@ -286,15 +301,15 @@ function scene:createScene( event )
   
   hours = display.newText(textOptionsL)
   hours.text = "Whole Degrees"
-  hours:setTextColor(39, 102, 186, 200)
+  hours:setFillColor( 0.153, 0.4, 0.729 )
   hours.x = display.contentCenterX-70
   hours.y = 30
   
   hoursBorder = display.newRect(degreeGroup, 0, 0, numBack.contentWidth/2.10, 36)
-  hoursBorder:setFillColor(0, 0, 0, 0)
+  hoursBorder:setFillColor(1, 0)
   hoursBorder.strokeWidth = 2
-  hoursBorder:setStrokeColor(39, 102, 186, 200)
-  hoursBorder:setReferencePoint(display.TopLeftReferencePoint)
+  hoursBorder:setStrokeColor(0.153, 0.4, 0.729)
+  hoursBorder.anchorX = 0; hoursBorder.anchorY = 0
   hoursBorder.x = 20
   hoursBorder.y = 15
   hoursBorder:addEventListener ( "touch", focusTouch )
@@ -305,20 +320,20 @@ function scene:createScene( event )
   degreeGroup:insert(hoursText)
   hoursText.x = 80
   hoursText.y = 45
-	hoursText:setTextColor ( 39, 102, 186 )
+	hoursText:setFillColor( 0.153, 0.4, 0.729 )
   hoursText.text = "0"
   hoursText.count = 0
   
   min = display.newText(textOptionsL)
   min.text = "Minutes"
-  min:setTextColor(39, 102, 186, 200)
+  min:setFillColor( 0.153, 0.4, 0.729 )
   min.x = display.contentCenterX-70
   min.y = 85
   
   minBorder = display.newRect(degreeGroup, 0, 0, numBack.contentWidth/2.10, 36)
   minBorder.strokeWidth = 2
-  minBorder:setStrokeColor(39, 102, 186, 200)
-  minBorder:setReferencePoint(display.TopLeftReferencePoint)
+  minBorder:setStrokeColor(0.153, 0.4, 0.729)
+  minBorder.anchorX = 0; minBorder.anchorY = 0
   minBorder.x = 20
   minBorder.y = 65
   minBorder:addEventListener ( "touch", focusTouch )
@@ -330,21 +345,21 @@ function scene:createScene( event )
   degreeGroup:insert(minText)
   minText.x = 80
   minText.y = 95
-	minText:setTextColor ( 39, 102, 186 )
+	minText:setFillColor( 0.153, 0.4, 0.729 )
   minText.text = "0"
   minText.count = 0
   
   sec = display.newText(textOptionsL)
   sec.text = "Seconds"
-  sec:setTextColor(39, 102, 186, 200)
+  sec:setFillColor( 0.153, 0.4, 0.729 )
   sec.x = display.contentCenterX-70
   sec.y = 135
   
   secBorder = display.newRect(degreeGroup, 0, 0, numBack.contentWidth/2.10, 36)
-  secBorder:setFillColor(0, 0, 0, 0)
+  secBorder:setFillColor(1, 0)
   secBorder.strokeWidth = 2
-  secBorder:setStrokeColor(39, 102, 186, 200)
-  secBorder:setReferencePoint(display.TopLeftReferencePoint)
+  secBorder:setStrokeColor(0.153, 0.4, 0.729)
+  secBorder.anchorX = 0; secBorder.anchorY = 0
   secBorder.x = 20
   secBorder.y = 115
   secBorder:addEventListener ( "touch", focusTouch )
@@ -356,14 +371,14 @@ function scene:createScene( event )
   degreeGroup:insert(secText)
   secText.x = 80
   secText.y = 145
-	secText:setTextColor ( 39, 102, 186 )
+	secText:setFillColor( 0.153, 0.4, 0.729 )
   secText.text = "0"
   secText.count = 0
   
   displayBorder = display.newRect(screenGroup, 0, 0, numBack.contentWidth/1.05, 75)
-  displayBorder:setFillColor(0, 0, 0, 0)
+  displayBorder:setFillColor(1, 0)
   displayBorder.strokeWidth = 5
-  displayBorder:setStrokeColor(39, 102, 186, 200)
+  displayBorder:setStrokeColor(0.153, 0.4, 0.729)
   displayBorder.x = display.contentCenterX+display.contentCenterX/2
   displayBorder.y = 45
   displayBorder:addEventListener ( "touch", focusTouch )
@@ -375,7 +390,7 @@ function scene:createScene( event )
   screenGroup:insert(numDisplay)
   numDisplay.x = display.contentCenterX+display.contentCenterX/2-10
   numDisplay.y = 60
-	numDisplay:setTextColor ( 39, 102, 186 )
+	numDisplay:setFillColor( 0.153, 0.4, 0.729 )
   numDisplay.text = "0"
   numDisplay.count = 0
   
@@ -392,7 +407,7 @@ function scene:createScene( event )
 	{
 		id = "num1",
 		label = "1",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -406,7 +421,7 @@ function scene:createScene( event )
 	{
 		id = "num2",
 		label = "2",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -420,7 +435,7 @@ function scene:createScene( event )
 	{
 		id = "num3",
 		label = "3",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -434,7 +449,7 @@ function scene:createScene( event )
 	{
 		id = "num4",
 		label = "4",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -448,7 +463,7 @@ function scene:createScene( event )
 	{
 		id = "num5",
 		label = "5",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -462,7 +477,7 @@ function scene:createScene( event )
 	{
 		id = "num6",
 		label = "6",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -476,7 +491,7 @@ function scene:createScene( event )
 	{
 		id = "num7",
 		label = "7",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -490,7 +505,7 @@ function scene:createScene( event )
 	{
 		id = "num8",
 		label = "8",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -504,7 +519,7 @@ function scene:createScene( event )
 	{
 		id = "num9",
 		label = "9",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -518,7 +533,7 @@ function scene:createScene( event )
 	{
 		id = "dec",
 		label = ".",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -538,7 +553,7 @@ function scene:createScene( event )
 	{
 		id = "num0",
 		label = "0",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -552,7 +567,7 @@ function scene:createScene( event )
 	{
 		id = "neg",
 		label = "-",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 16,
 		onEvent = buttonEvent,
@@ -572,7 +587,7 @@ function scene:createScene( event )
 	{
 		--left = 320,
 		--top = 90,
-		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200} },
+		labelColor = { default = {1}, over = {0.153, 0.4, 0.729} },
 		label = "GO",
 		id = "enter",
     defaultFile = "Images/calcButtOver.png",
@@ -586,7 +601,7 @@ function scene:createScene( event )
 	{
 		id = "back",
 		label = "DEL",
-		labelColor = { default = {255, 255, 255}, over = {39, 102, 186, 200}},
+		labelColor = { default = {1}, over = {0.153, 0.4, 0.729}},
 		--font = "WC Mano Negra Bta",
 		fontSize = 14,
 		onEvent = buttonEvent3,
@@ -600,7 +615,7 @@ function scene:createScene( event )
 	{
 		--left = 320,
 		--top = 240,
-		labelColor = { default = {198, 68, 68}, over = {255, 255, 255} },
+		labelColor = { default = {0.777, 0.267, 0.267}, over = {1} },
 		label = "C",
 		id = "clear",
     defaultFile = "Images/cancButt.png",

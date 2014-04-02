@@ -58,16 +58,16 @@ local function optionsMove(event)
       transition.to ( optionsBack, { time = 200, x = -50 } )
       transition.to ( optionsBack, { time = 200, y = 0 } )
 			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=400 } )
+      transition.to ( backGroup, { time = 200, x=160 } )
       transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
-      decLabel:setTextColor(39, 102, 186)
+      decLabel:setFillColor(0.15, 0.4, 0.729)
 		elseif options then 
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
     end
   end
@@ -94,11 +94,11 @@ local function measureChange( event )
 	end
 	if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
 		end
 end
@@ -131,11 +131,11 @@ local function calcTouch( event )
     if whatTap == 5 then isDegree = true end
     
 		if whatTap == 3 or whatTap == 4 then
-			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = true, needDec = true }, isModal = true}  )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = true, needDec = true, isBolt = true}, isModal = true}  )
 		elseif whatTap == 1 then
 			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = false }, isModal = true} )
 		elseif isDegree then
-			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true} )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true, isBolt = true }, isModal = true} )
      else
        storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true} )
 		end		
@@ -169,11 +169,11 @@ local function resetCalc(event)
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
 		end		
 end
@@ -261,7 +261,7 @@ function scene:createScene( event )
 		id = "measureButt",
     width = 125,
 		label = "TO METRIC",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -277,7 +277,7 @@ function scene:createScene( event )
 		id = "menuButt",
     width = 125,
 		label = "MENU",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -293,7 +293,7 @@ function scene:createScene( event )
 		id = "resetButt",
     width = 125,
 		label = "RESET",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -307,8 +307,8 @@ function scene:createScene( event )
 	optionsGroup.alpha = 0
   
   optionsBack = display.newRect(screenGroup, 0, 0, 200, 365)
-  optionsBack:setFillColor(255, 255, 255)
-  optionsBack:setReferencePoint(display.TopLeftReferencePoint)
+  optionsBack:setFillColor(1)
+  optionsBack.anchorX = 0; optionsBack.anchorY = 0;
   optionsBack.x = -170
   optionsBack.y = -335  
   
@@ -319,8 +319,8 @@ function scene:createScene( event )
   optionsButt.isHitTestable = true
 	
 	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
-  decPlaces:setTextColor(255)
-  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  decPlaces:setFillColor(1)
+  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	decPlaces.x = backEdgeX + 115
 	decPlaces.y = backEdgeY + 100
 	
@@ -330,21 +330,21 @@ function scene:createScene( event )
 	decLabel.y = backEdgeY + 100
   
   measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
-  measureLabel:setTextColor(255)
-  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  measureLabel:setFillColor(1)
+  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 115
 	measureLabel.y = backEdgeY + 75
 	
 	numHolesText = display.newEmbossedText(backGroup, "No. of Holes:", 0, 0, "BerlinSansFB-Reg", 18)
-  numHolesText:setTextColor(255)
-  numHolesText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  numHolesText:setFillColor(1)
+  numHolesText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	numHolesText.x = backEdgeX + 100
 	numHolesText.y = backEdgeY + 140
 	
 	numHoles = display.newText( textOptionsL )
   backGroup:insert(numHoles)
 	numHoles:addEventListener ( "touch", calcTouch )
-	numHoles:setReferencePoint(display.topLeftReferencePoint)
+	numHoles.anchorX = 0.5; numHoles.anchorY = 0.5; 
 	numHoles.x = backEdgeX + 200
 	numHoles.y = backEdgeY + 140
 	numHoles.tap = 1
@@ -361,14 +361,14 @@ function scene:createScene( event )
 	--numHolesTap:play()
 	
 	diamText = display.newEmbossedText(backGroup, "Circle Diameter:", 0, 0, "BerlinSansFB-Reg", 18)
-  diamText:setTextColor(255)
-  diamText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  diamText:setFillColor(1)
+  diamText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	diamText.x = backEdgeX + 111
 	diamText.y = backEdgeY + 185
 	
 	diam = display.newText( textOptionsL )
 	diam:addEventListener ( "touch", calcTouch )
-	diam:setReferencePoint(display.topLeftReferencePoint)
+	diam.anchorX = 0.5; diam.anchorY = 0.5; 
 	diam.x = backEdgeX + 220
 	diam.y = backEdgeY + 185
 	diam.tap = 2
@@ -386,15 +386,15 @@ function scene:createScene( event )
 	--diamTap:play()
 	
 	circleXtext = display.newEmbossedText(backGroup, "Circle Centre - X:", 0, 0, "BerlinSansFB-Reg", 18)
-  circleXtext:setTextColor(255)
-  circleXtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  circleXtext:setFillColor(1)
+  circleXtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	circleXtext.x = backEdgeX + 116
 	circleXtext.y = backEdgeY + 230
 	circleXtext.alpha = 1
 	
 	circleX = display.newText( textOptionsL )
 	circleX:addEventListener ( "touch", calcTouch )
-	circleX:setReferencePoint(display.topLeftReferencePoint)
+	circleX.anchorX = 0.5; circleX.anchorY = 0.5; 
 	circleX.x = backEdgeX + 225
 	circleX.y = backEdgeY + 230
 	circleX.tap = 3
@@ -413,15 +413,15 @@ function scene:createScene( event )
   aniTable[3] = circleXTap
 	
 	circleYtext = display.newEmbossedText(backGroup, "Circle Centre - Y:", 0, 0, "BerlinSansFB-Reg", 18)
-  circleYtext:setTextColor(255)
-  circleYtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  circleYtext:setFillColor(1)
+  circleYtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	circleYtext.x = backEdgeX + 116
 	circleYtext.y = backEdgeY + 275
 	circleYtext.alpha = 1
 	
 	circleY = display.newText( textOptionsL )
 	circleY:addEventListener ( "touch", calcTouch )
-	circleY:setReferencePoint(display.topLeftReferencePoint)
+	circleY.anchorX = 0.5; circleY.anchorY = 0.5; 
 	circleY.x = backEdgeX + 225
 	circleY.y = backEdgeY + 275
 	circleY.tap = 4
@@ -440,15 +440,15 @@ function scene:createScene( event )
   aniTable[4] = circleYTap
 	
 	firstHoleText = display.newEmbossedText(backGroup, "First Hole Angle:", 0, 0, "BerlinSansFB-Reg", 18)
-  firstHoleText:setTextColor(255)
-  firstHoleText:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  firstHoleText:setFillColor(1)
+  firstHoleText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	firstHoleText.x = backEdgeX + 116
 	firstHoleText.y = backEdgeY + 320
 	firstHoleText.alpha = 1
 	
 	firstHole = display.newText( textOptionsL )
 	firstHole:addEventListener ( "touch", calcTouch )
-	firstHole:setReferencePoint(display.topLeftReferencePoint)
+	firstHole.anchorX = 0.5; firstHole.anchorY = 0.5; 
 	firstHole.x = backEdgeX + 225
 	firstHole.y = backEdgeY + 320
 	firstHole.tap = 5
@@ -482,8 +482,8 @@ function scene:createScene( event )
 	answer.y = backEdgeY + 300
 	answer.alpha = 0
   
-	optionsGroup:setReferencePoint(display.CenterReferencePoint)
-  backGroup:setReferencePoint(display.CenterReferencePoint)
+	optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
+  backGroup.anchorX = 0.5; backGroup.anchorY = 0.5; 
   backGroup.alpha = 0
   transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
   optionsBack.alpha = 0
@@ -552,7 +552,9 @@ function scene:overlayEnded( event )
     elseif whatTap == 2 then    
   	  if tonumber(diam.text)  <= 0 then
     		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )
-    		diam.text = "Tap Me"    
+    		diam.text = "Tap Me"
+        diam.alpha = 0
+        diamTap.alpha = 1
   	  end
     end
         

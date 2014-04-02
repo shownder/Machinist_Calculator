@@ -86,11 +86,11 @@ local function resetCalc(event)
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
 		end		
 end
@@ -140,16 +140,16 @@ local function optionsMove(event)
       transition.to ( optionsBack, { time = 200, x = -50 } )
       transition.to ( optionsBack, { time = 200, y = 0 } )
 			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=400 } )
+      transition.to ( backGroup, { time = 200, x=160 } )
       transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
-      decLabel:setTextColor(39, 102, 186)
+      decLabel:setFillColor(0.15, 0.4, 0.729)
 		elseif options then 
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
     end
   end
@@ -168,11 +168,11 @@ local function calcTouch( event )
     
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
 		end
 		
@@ -226,11 +226,11 @@ local function measureChange( event )
 		end
     if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=display.contentCenterX } )
+      transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setTextColor(255)
+      decLabel:setFillColor(1)
 			options = false
 		end
 	end
@@ -332,7 +332,7 @@ function scene:createScene( event )
 		id = "measureButt",
     width = 125,
 		label = "TO METRIC",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -348,7 +348,7 @@ function scene:createScene( event )
 		id = "menuButt",
     width = 125,
 		label = "MENU",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -364,7 +364,7 @@ function scene:createScene( event )
 		id = "resetButt",
     width = 125,
 		label = "RESET",
-		labelColor = { default = {39, 102, 186, 200}, over = {255, 255, 255}},
+		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
     defaultFile = "Images/button.png",
@@ -378,8 +378,9 @@ function scene:createScene( event )
 	optionsGroup.alpha = 0
   
   optionsBack = display.newRect(screenGroup, 0, 0, 200, 365)
-  optionsBack:setFillColor(255, 255, 255)
-  optionsBack:setReferencePoint(display.TopLeftReferencePoint)
+  optionsBack:setFillColor(1)
+  optionsBack.anchorX = 0
+  optionsBack.anchorY = 0
   optionsBack.x = -170
   optionsBack.y = -335  
   
@@ -390,8 +391,8 @@ function scene:createScene( event )
   optionsButt.isHitTestable = true
 	
 	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
-  decPlaces:setTextColor(255)
-  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  decPlaces:setFillColor(1)
+  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	decPlaces.x = backEdgeX + 115
 	decPlaces.y = backEdgeY + 117
 	
@@ -401,14 +402,14 @@ function scene:createScene( event )
 	decLabel.y = backEdgeY + 115
   
   measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
-  measureLabel:setTextColor(255)
-  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  measureLabel:setFillColor(1)
+  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 115
 	measureLabel.y = backEdgeY + 95
 
   area = display.newEmbossedText(backGroup, "Area:", 0, 0, "BerlinSansFB-Reg", 20)
-  area:setTextColor(255)
-  area:setEmbossColor({highlight = {r=0, g=0, b=0, a=200}, shadow = {r=0,g=0,b=0, a=0}})
+  area:setFillColor(1)
+  area:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	area.x = backEdgeX + 320
 	area.y = backEdgeY + 230
   
@@ -512,8 +513,8 @@ function scene:createScene( event )
 	aniTable[15] = angleBtap
 	--angleBtap:play()
 
-	optionsGroup:setReferencePoint(display.CenterReferencePoint)
-  backGroup:setReferencePoint(display.CenterReferencePoint)
+	optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5;
+  backGroup.anchorX = 0.5; backGroup.anchorY = 0.5; 
   backGroup.alpha = 0
   transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
   optionsBack.alpha = 0

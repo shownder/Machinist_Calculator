@@ -1,14 +1,22 @@
-local composer = require( "composer" )
-local scene = composer.newScene()
-local widget = require ( "widget" )
-local stepperDataFile = require("Images.stepSheet_stepSheet")
-display.setStatusBar(display.HiddenStatusBar)
-local myData = require("myData")
+--
+-- Project: Trades Math Calculator
+-- Description: 
+--
+-- Version: 1.0
+-- Managed with http://CoronaProjectManager.com
+--
+-- Copyright 2013 . All Rights Reserved.
+-- 
 
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
+--Require
+local widget = require ( "widget" )
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
+
+local stepperDataFile = require("Images.stepSheet_stepSheet")
+--local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
+
+--Local forward references
 
 local optionsGroup, backGroup
 local back, menuBack, backEdgeX, backEdgeY
@@ -25,8 +33,10 @@ local stepSheet, buttSheet, tapSheet
 local rpmTap, diamTap, revTap, surfaceSpeedTap, minuteTap
 local options
 
-local calc, clac2, addListeners, removeListeners, toMill, toInch, goBack2, calculate
+local calc, clac2
+local addListeners, removeListeners, toMill, toInch, goBack2
 
+--Listeners
 local function onKeyEvent( event )
 
    local phase = event.phase
@@ -54,7 +64,7 @@ local function helpScreen(event)
     
     Runtime:removeEventListener( "touch", onScreenTouch  )
     
-    composer.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "speed" }, isModal = true}  )
+    storyboard.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "speed" }, isModal = true}  )
     
   end
       
@@ -133,7 +143,7 @@ local function alertListener ( event )
 		end
 			--tapCount = tapCount + 1
       whatTap = whatTap + 10
-      composer.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
+      storyboard.showOverlay( "calculator", { effect="fromTop", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
     elseif 2 == i then
       print("Cancel was pressed")
     end
@@ -148,7 +158,7 @@ local function goBack (event)
     transition.to ( optionsBack, { time = 500, x = -170 } )
     transition.to ( optionsBack, { time = 500, y = -335 } )
 	options = false
-	composer.gotoScene( "menu", { effect="slideRight", time=800})
+	storyboard.gotoScene( "menu", { effect="slideRight", time=800})
 	return true   
 	end
 end
@@ -195,7 +205,7 @@ local function calcTouch( event )
     if not continue then
       native.showAlert ("Continue?", "Press OK to reset all values and continue.", { "OK", "Cancel" }, alertListener )
     else
-      composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true }, isModal = true }  )
     end
 		
 		return true
@@ -245,170 +255,10 @@ local function measureChange( event )
 	
 end
 
----------------------------------------------------
---Functions used after overlay
----------------------------------------------------
+--End Listeners
 
-function scene:calculate()
-  local screenGroup = self.view
-  
-      myData.isOverlay = false
-    
-  if myData.number ~= "Tap Me" then    
-          	
-    if whatTap > 5 then
-      tapTable[whatTap - 10].text = myData.number
-    else
-      tapTable[whatTap].text = myData.number
-    end
-    
-    if diam.text ~= "Tap Me" and rpm.text == "Tap Me" then
-      surfaceSpeedTap.alpha = 1
-    end
-            
-    if rpm.text ~= "Tap Me" and (rev.text ~= "Tap Me" or minute.text ~= "Tap Me") then
-    	feedFlag = true
-    else 
-    	feedFlag = false
-    end
-    
-    if diam.text ~= "Tap Me" and (rpm.text ~= "Tap Me" or surfaceSpeed.text ~= "Tap Me") then
-    	speedFlag = true
-    else
-    	speedFlag = false
-    end
-    
-    if rpm.text ~= "Tap Me" and diam.text ~= "Tap Me" and surfaceSpeed.text ~= "Tap Me" then
-      --do nothing
-    else
-      calc()
-    end
-    
-    if rev.text ~= "Tap Me" or minute.text ~= "Tap Me" then
-      calc2()
-    end
-    
-    if rpm.text ~= "Tap Me" then
-      revTap.alpha = 1
-      minuteTap.alpha = 1
-    end
-    
-    if rev.text ~= "Tap Me" or minute.text ~= "Tap Me" then
-      revTap.alpha = 0
-      rev.alpha = 1
-      minuteTap.alpha = 0
-      minute.alpha = 1
-    end
-    
-    for i = 1, 3, 1 do
-      if tapTable[i].text ~= "Tap Me"then
-        tapTable[i].alpha = 1
-        aniTable[i].alpha = 0
-      end
-    end
-    
-  end
-end
-
-calc = function()
-	
-	if speedFlag then
-    	if measure:getLabel() == "TO METRIC" then
-    		if rpm.text ~= "Tap Me" then
-          surfaceSpeed.text = rpm.text * diam.text / 3.8197
-          surfaceSpeed.alpha = 1
-          surfaceSpeedTap.alpha = 0
-          print("surface speed")
-    		elseif surfaceSpeed.text ~= "Tap Me" then
-          rpm.text = 3.8197 * surfaceSpeed.text / diam.text
-          rpmTap.alpha = 0
-          rpm.alpha = 1
-    		end
-    	elseif measure:getLabel() == "TO IMPERIAL" then
-    		if rpm.text ~= "Tap Me" then
-          surfaceSpeed.text = diam.text * rpm.text / 318.31
-          surfaceSpeed.alpha = 1
-          surfaceSpeedTap.alpha = 0
-    		elseif surfaceSpeed.text ~= "Tap Me" then
-          rpm.text = 318.31 * surfaceSpeed.text / diam.text
-          rpmTap.alpha = 0
-          rpm.alpha = 1
-    		end    			
-    	end
-      
-      for i = 1, 5, 1 do
-			if tapTable[i].text ~= "Tap Me" then
-				if i == 1 then
-					tapTable[1].text = math.round(tapTable[1].text * math.pow(10, 0)) / math.pow(10, 0)
-				else
-				tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
-				end
-			end
-      end
-    
-      timer.performWithDelay( 10, removeListeners, 2 )
-      for i = 1, 3, 1 do
-        tapTable[i]:setFillColor(1)
-      end
-    end	
-	
-end
-
-calc2 = function()
-  
-      if feedFlag then
-    	if (minute.text ~= "Tap Me") and (whatTap == 5 or whatTap == 15) then
-    		rev.text = minute.text / rpm.text
-        tapTable[4].text = math.round(tapTable[4].text * math.pow(10, places)) / math.pow(10, places)
-    	elseif (rev.text ~= "Tap Me") and (whatTap == 4 or whatTap == 14) then
-    		minute.text = rev.text * rpm.text
-        tapTable[5].text = math.round(tapTable[5].text * math.pow(10, places)) / math.pow(10, places)
-    	end
-    end
-end
-
-addListeners = function()
-  
-  surfaceSpeed:addEventListener ( "touch", calcTouch )
-  
-end
-
-removeListeners = function()
-  
-  surfaceSpeed:removeEventListener ( "touch", calcTouch )
-  
-end
-  
-
-toMill = function(num)
-
-	return num * 25.4	
-
-end
-
-toInch = function(num)
-	
-	return num / 25.4
-	
-end
-
-goBack2 = function()
-	
-  if (myData.isOverlay) then
-    myData.number = "Tap Me"
-    composer.hideOverlay()
-  else
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
-  end
-		
-end
-
----------------------------------------------------------------------------------
-
--- "scene:create()"
-function scene:create( event )
-
-   local screenGroup = self.view
+function scene:createScene( event )
+	local screenGroup = self.view
 	
 	tapTable = {}
   aniTable = {}
@@ -662,59 +512,203 @@ function scene:create( event )
   transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
   
   screenGroup:insert(backGroup)
+	
+end
+
+-- Called immediately after scene has moved onscreen:
+function scene:enterScene( event )
+  local group = self.view
+        
+		storyboard.purgeScene( "menu" )
+
+end
+
+function scene:exitScene( event )
+  local group = self.view
+
+  Runtime:removeEventListener( "key", onKeyEvent )
+   
+end
+
+function scene:destroyScene( event )
+  local group = self.view
+
+		optionsGroup:removeSelf()
+    backGroup:removeSelf()
+   
+end
+
+scene:addEventListener( "createScene", scene )
+
+scene:addEventListener( "enterScene", scene )
+
+scene:addEventListener( "exitScene", scene )
+
+scene:addEventListener( "destroyScene", scene )
+
+--Overlay
+-- the following event is dispatched once overlay is enabled
+function scene:overlayBegan( event )
+    print( "Showing overlay: " .. event.sceneName )
+end
+
+-- the following event is dispatched once overlay is removed
+function scene:overlayEnded( event )
+    local group = self.view
+    
+    storyboard.isOverlay = false
+    
+  if storyboard.number ~= "Tap Me" then    
+          	
+    if whatTap > 5 then
+      tapTable[whatTap - 10].text = storyboard.number
+    else
+      tapTable[whatTap].text = storyboard.number
+    end
+    
+    if diam.text ~= "Tap Me" and rpm.text == "Tap Me" then
+      surfaceSpeedTap.alpha = 1
+    end
+            
+    if rpm.text ~= "Tap Me" and (rev.text ~= "Tap Me" or minute.text ~= "Tap Me") then
+    	feedFlag = true
+    else 
+    	feedFlag = false
+    end
+    
+    if diam.text ~= "Tap Me" and (rpm.text ~= "Tap Me" or surfaceSpeed.text ~= "Tap Me") then
+    	speedFlag = true
+    else
+    	speedFlag = false
+    end
+    
+    if rpm.text ~= "Tap Me" and diam.text ~= "Tap Me" and surfaceSpeed.text ~= "Tap Me" then
+      --do nothing
+    else
+      calc()
+    end
+    
+    if rev.text ~= "Tap Me" or minute.text ~= "Tap Me" then
+      calc2()
+    end
+    
+    if rpm.text ~= "Tap Me" then
+      revTap.alpha = 1
+      minuteTap.alpha = 1
+    end
+    
+    if rev.text ~= "Tap Me" or minute.text ~= "Tap Me" then
+      revTap.alpha = 0
+      rev.alpha = 1
+      minuteTap.alpha = 0
+      minute.alpha = 1
+    end
+    
+    for i = 1, 3, 1 do
+      if tapTable[i].text ~= "Tap Me"then
+        tapTable[i].alpha = 1
+        aniTable[i].alpha = 0
+      end
+    end
+    
+  end
+end
+
+function calc ()
+	
+	if speedFlag then
+    	if measure:getLabel() == "TO METRIC" then
+    		if rpm.text ~= "Tap Me" then
+          surfaceSpeed.text = rpm.text * diam.text / 3.8197
+          surfaceSpeed.alpha = 1
+          surfaceSpeedTap.alpha = 0
+          print("surface speed")
+    		elseif surfaceSpeed.text ~= "Tap Me" then
+          rpm.text = 3.8197 * surfaceSpeed.text / diam.text
+          rpmTap.alpha = 0
+          rpm.alpha = 1
+    		end
+    	elseif measure:getLabel() == "TO IMPERIAL" then
+    		if rpm.text ~= "Tap Me" then
+          surfaceSpeed.text = diam.text * rpm.text / 318.31
+          surfaceSpeed.alpha = 1
+          surfaceSpeedTap.alpha = 0
+    		elseif surfaceSpeed.text ~= "Tap Me" then
+          rpm.text = 318.31 * surfaceSpeed.text / diam.text
+          rpmTap.alpha = 0
+          rpm.alpha = 1
+    		end    			
+    	end
+      
+      for i = 1, 5, 1 do
+			if tapTable[i].text ~= "Tap Me" then
+				if i == 1 then
+					tapTable[1].text = math.round(tapTable[1].text * math.pow(10, 0)) / math.pow(10, 0)
+				else
+				tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
+				end
+			end
+      end
+    
+      timer.performWithDelay( 10, removeListeners, 2 )
+      for i = 1, 3, 1 do
+        tapTable[i]:setFillColor(1)
+      end
+    end	
+	
+end
+
+function calc2()
+  
+      if feedFlag then
+    	if (minute.text ~= "Tap Me") and (whatTap == 5 or whatTap == 15) then
+    		rev.text = minute.text / rpm.text
+        tapTable[4].text = math.round(tapTable[4].text * math.pow(10, places)) / math.pow(10, places)
+    	elseif (rev.text ~= "Tap Me") and (whatTap == 4 or whatTap == 14) then
+    		minute.text = rev.text * rpm.text
+        tapTable[5].text = math.round(tapTable[5].text * math.pow(10, places)) / math.pow(10, places)
+    	end
+    end
+end
+
+function addListeners()
+  
+  surfaceSpeed:addEventListener ( "touch", calcTouch )
   
 end
 
--- "scene:show()"
-function scene:show( event )
+function removeListeners()
+  
+  surfaceSpeed:removeEventListener ( "touch", calcTouch )
+  
+end
+  
 
-   local sceneGroup = self.view
-   local phase = event.phase
+function toMill(num)
 
-   if ( phase == "will" ) then
-      -- Called when the scene is still off screen (but is about to come on screen).
-   elseif ( phase == "did" ) then
-      composer.removeScene( "menu", true)
-   end
+	return num * 25.4	
+
 end
 
--- "scene:hide()"
-function scene:hide( event )
-
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
-      Runtime:removeEventListener( "key", onKeyEvent )
-   elseif ( phase == "did" ) then
-      -- Called immediately after scene goes off screen.
-   end
+function toInch(num)
+	
+	return num / 25.4
+	
 end
 
--- "scene:destroy()"
-function scene:destroy( event )
-
-   local sceneGroup = self.view
-   
-   	optionsGroup:removeSelf()
-    backGroup:removeSelf()
-
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
+function goBack2()
+	
+  if (storyboard.isOverlay) then
+    storyboard.number = "Tap Me"
+    storyboard.hideOverlay()
+  else
+		storyboard.gotoScene( "menu", { effect="slideRight", time=800})
+  end
+		
 end
 
----------------------------------------------------------------------------------
+scene:addEventListener( "overlayEnded" )
 
--- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
-
----------------------------------------------------------------------------------
+scene:addEventListener( "overlayBegan" )
 
 return scene

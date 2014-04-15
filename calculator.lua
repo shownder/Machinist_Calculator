@@ -20,7 +20,7 @@ local decPress, count, isFocus, degreeGroup, isDegree
 local tempDec, decPlace
 local needNeg, needDec, isDegree, isBolt
 
-local deleteChar
+local deleteChar, toHours
 
 --Scene-wide Functions
 
@@ -261,7 +261,7 @@ local function focusTouch( event )
 	end
 end
 
-local function deleteChar(s)
+deleteChar = function(s)
   
   local length = s:len()
   if s:sub(length, length) == "." then
@@ -274,7 +274,7 @@ local function deleteChar(s)
   
 end
 
-local function toHours(h, m, s)
+toHours = function(h, m, s)
 
   return h + (m/60) + (s/3600)
   

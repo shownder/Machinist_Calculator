@@ -1,18 +1,21 @@
-local composer = require( "composer" )
-local scene = composer.newScene()
-local widget = require ( "widget" )
-local stepperDataFile = require("Images.stepSheet_stepSheet")
-display.setStatusBar(display.HiddenStatusBar)
-local myData = require("myData")
-
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
+--
+-- Project: main.lua
+-- Description: 
+--
+-- Version: 1.0
+-- Managed with http://CoronaProjectManager.com
+--
+-- Copyright 2013 . All Rights Reserved.
+-- 
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
+local widget = require( "widget" )
 
 local answer, backButt, scrollView, answerX, answerY, diam, emailButt, maskBack
 local back, numY
 local bolt, boltCenterX, boltCenterY, line1, line2, goBack2
+
+--Listeners
 
 local function onKeyEvent( event )
 
@@ -56,7 +59,7 @@ end
 local function goBack( event )
 	if event.phase == "ended" then
 		
-		composer.hideOverlay(true, "slideRight", 300 )
+		storyboard.hideOverlay(true, "slideRight", 300 )
 		
 	end
 end
@@ -89,19 +92,64 @@ end
 		return true
 	end
   
+function scene:overEnded()
+  local screenGroup = self.view
+  
+      storyboard.isOverlay = false
+    
+    if storyboard.number ~= "Tap Me" then
+    
+    if calcClick == true then
+    
+    tapTable[whatTap].text = storyboard.number
+    
+    if whatTap == 1 then
+    	if tonumber(numHoles.text)  <= 0 then
+    		native.showAlert ( "Error", "You need more than 0 holes!", { "OK" }, alertListener )
+    		numHoles.text = "Tap Me"
+    	end
+    elseif whatTap == 2 then    
+  	  if tonumber(diam.text)  <= 0 then
+    		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )
+    		diam.text = "Tap Me"
+        diam.alpha = 0
+        diamTap.alpha = 1
+  	  end
+    end
+        
+    if diam.text ~= "Tap Me" and numHoles.text ~= "Tap Me" then
+    	circleXtext.alpha = 1
+    	circleXTap.alpha = 1
+    	circleYTap.alpha = 1
+    	circleYtext.alpha = 1
+    	firstHoleText.alpha = 1
+    	firstHoleTap.alpha = 1
+    	answer.alpha = 1
+    end    
+       
+    for i = 1, 5, 1 do
+      if tapTable[i].text ~= "Tap Me" then
+        tapTable[i].alpha = 1
+        aniTable[i].alpha = 0
+      end
+    end
+    
+  end
+  
+  end
+
+end
   
 
----------------------------------------------------------------------------------
+--End Listeners
 
--- "scene:create()"
-function scene:create( event )
-
-   	local screenGroup = self.view
+function scene:createScene( event )
+	local screenGroup = self.view
 	
-	answer = myData.answer
-  answerX = myData.answerX
-  answerY = myData.answerY
-  diam = myData.diam
+	answer = storyboard.answer
+  answerX = storyboard.answerX
+  answerY = storyboard.answerY
+  diam = storyboard.diam
   local textOptionsL = {parent = screenGroup, text="", x=0, y=0, width=250, height=0, fontSize=15, align="left"}
   
   maskBack = display.newImageRect( screenGroup, "backgrounds/maskBack.png", 570, 360 )
@@ -181,8 +229,8 @@ scrollView = widget.newScrollView
   
   line1 = display.newLine(screenGroup, boltCenterX - 110, boltCenterY, boltCenterX + 110, boltCenterY)
   line2 = display.newLine(screenGroup, boltCenterX, boltCenterY - 110, boltCenterX, boltCenterY + 110)
-  line1:setStrokeColor(0)
-  line2:setStrokeColor(0)
+  line1:setColor(0)
+  line2:setColor(0)
   
   topBar = display.newRect( screenGroup, 0, 0, display.pixelHeight, 50 )
 	topBar.anchorX = 0; topBar.anchorY = 0; 
@@ -206,57 +254,28 @@ scrollView = widget.newScrollView
 	
 end
 
--- "scene:show()"
-function scene:show( event )
+function scene:enterScene( event )
+  local group = self.view
 
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is still off screen (but is about to come on screen).
-   elseif ( phase == "did" ) then
-     myData.isOverlay = true
-   end
-end
-
--- "scene:hide()"
-function scene:hide( event )
-
-   local sceneGroup = self.view
-   local phase = event.phase
-   local parent = event.parent
+    storyboard.isOverlay = true
    
-   if ( phase == "will" ) then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
-      parent:calculate()
-   elseif ( phase == "did" ) then
-    myData.answer = nil
-    myData.answerX = nil
-    myData.answerY = nil
-    myData.diam = nil
-   end
 end
 
--- "scene:destroy()"
-function scene:destroy( event )
+function scene:destroyScene( event )
+   local group = self.view
 
-   local sceneGroup = self.view
-
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
+	storyboard.answer = nil
+  storyboard.answerX = nil
+  storyboard.answerY = nil
+  storyboard.diam = nil
+	
+   
 end
 
----------------------------------------------------------------------------------
+scene:addEventListener( "createScene", scene )
 
--- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+scene:addEventListener( "enterScene", scene )
 
----------------------------------------------------------------------------------
+scene:addEventListener( "destroyScene", scene )
 
 return scene

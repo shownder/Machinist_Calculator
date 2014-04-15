@@ -30,11 +30,11 @@ local function sceneSelect ( event )
 		elseif event.target.num == 2 then
 		composer.gotoScene( "oblique", { effect="slideLeft", time=800} )
 		elseif event.target.num == 3 then
-		storyboard.gotoScene( "sineBar", { effect="slideLeft", time=800} )
+		composer.gotoScene( "sineBar", { effect="slideLeft", time=800} )
 		elseif event.target.num == 4 then
-		storyboard.gotoScene( "speedFeed", { effect="slideLeft", time=800} )
+		composer.gotoScene( "speedFeed", { effect="slideLeft", time=800} )
 		elseif event.target.num == 5 then
-		storyboard.gotoScene( "bolt", { effect="slideLeft", time=800} )
+		composer.gotoScene( "bolt", { effect="slideLeft", time=800} )
    	end
    end
 end

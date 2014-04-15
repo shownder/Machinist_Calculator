@@ -1,14 +1,22 @@
-local composer = require( "composer" )
-local scene = composer.newScene()
-local widget = require ( "widget" )
-local stepperDataFile = require("Images.stepSheet_stepSheet")
-display.setStatusBar(display.HiddenStatusBar)
-local myData = require("myData")
+--
+-- Project: Trades Math Calculator
+-- Description: 
+--
+-- Version: 1.0
+-- Managed with http://CoronaProjectManager.com
+--
+-- Copyright 2013 . All Rights Reserved.
+-- 
 
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
+--Require
+local widget = require ( "widget" )
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
+
+local stepperDataFile = require("Images.stepSheet_stepSheet")
+local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
+
+--Local forward references
 
 local optionsGroup, backGroup
 local back, menuBack, backEdgeX, backEdgeY
@@ -25,9 +33,7 @@ local stepSheet, buttSheet, tapSheet
 
 local addListeners, removeListeners, toMill, toInch, goBack2
 
-
----Listeners
-
+--Listeners
 local function onKeyEvent( event )
 
    local phase = event.phase
@@ -104,7 +110,7 @@ local function goBack(event)
     transition.to ( optionsBack, { time = 500, x = -170 } )
     transition.to ( optionsBack, { time = 500, y = -335 } )
 	options = false
-	composer.gotoScene( "menu", { effect="slideRight", time=800})
+	storyboard.gotoScene( "menu", { effect="slideRight", time=800})
 	return true
 end
 
@@ -128,9 +134,9 @@ local function calcTouch( event )
     if whatTap == 3 or whatTap == 4 or whatTap == 13 or whatTap == 14 then isDegree = true else isDegree = false end
 		
     if isDegree then
-      composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true }  )
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = true }, isModal = true }  )
     else
-      composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
+      storyboard.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
     end
 		
 		return true
@@ -188,6 +194,14 @@ local function sineBarSize( event )
 	sineSize.text = values[1].value
 end
 
+local function shakeListen (event)
+	if event.isShake then		
+		storyboard.reloadScene()
+			
+	end
+	return true
+end
+
 local function alertListener ( event )
 	if "clicked" == event.action then
 		stackSize.text = "Tap Me"
@@ -202,151 +216,11 @@ local function alertListener2 ( event )
 		tapCount = 0
 	end
 end
+--End Listeners
 
---Local Functions
-
-toMill = function(num)
-
-	return num * 25.4	
-
-end
-
-toInch = function(num)
+function scene:createScene( event )
+	local screenGroup = self.view
 	
-	return num / 25.4
-	
-end
-
-addListeners = function()
-  
-  sineSize:addEventListener ( "touch", calcTouch )
-  
-end
-
-removeListeners = function()
-  
-  sineSize:removeEventListener ( "touch", calcTouch )
-  
-end
-
-goBack2 = function()
-	
-  if (myData.isOverlay) then
-    myData.number = "Tap Me"
-    composer.hideOverlay()
-  else
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
-  end
-		
-end
-
-function scene:calculate()
-  local screenGroup = self.view
-  
-      myData.isOverlay = false
-    
-    if myData.number ~= "Tap Me" then
-    
-    if whatTap == 11 then
-      sineSize.alpha = 1
-      sineSizeTap.alpha = 0
-      tapTable[1].text = myData.number
-      stackSizeTap.alpha = 1
-			angle1Tap.alpha = 1
-			angle2Tap.alpha = 1
-    elseif whatTap > 11 then
-      tapTable[whatTap - 10].text = myData.number
-      aniTable[whatTap - 10].alpha = 0
-      tapTable[whatTap -10].alpha = 1
-    else
-      tapTable[whatTap].text = myData.number
-    end
-		
-		if whatTap == 2 or whatTap == 12 then
-			if tonumber(stackSize.text) >= tonumber(sineSize.text) then
-				continue = false
-        for i = 2, 4, 1 do
-          aniTable[i].alpha = 1
-          tapTable[i].alpha = 0
-        end
-				native.showAlert ( "Error", "Stack size cannot be greater than Sine Bar length!", { "OK" }, alertListener )
-			else
-				continue = true
-			end
-		end
-
-		if (whatTap == 3) or (whatTap == 4) then
-			if tonumber(myData.number) >= 90 then
-				continue = false
-        for i = 2, 4, 1 do
-          aniTable[i].alpha = 1
-          tapTable[i].alpha = 0
-        end
-				native.showAlert ( "Error", "Stack size cannot be greater than Sine Bar length!", { "OK" }, alertListener2 )
-			else
-				continue = true
-			end
-		end
-    
-    if (whatTap == 13) or (whatTap == 14) then
-			if tonumber(myData.number) >= 90 then
-				continue = false
-        for i = 2, 4, 1 do
-          aniTable[i].alpha = 1
-          tapTable[i].alpha = 0
-        end
-				native.showAlert ( "Error", "Stack size cannot be greater than Sine Bar length!", { "OK" }, alertListener2 )
-			else
-				continue = true
-			end
-		end
-    
-    if continue then
-			if (stackSize.text ~= "Tap Me") and (whatTap == 2 or whatTap == 12) then
-				angle1.text = math.deg(math.asin( stackSize.text / sineSize.text ))
-				angle2.text = 90 - angle1.text
-			elseif (angle1.text ~= "Tap Me") and (whatTap == 3 or whatTap == 13) then
-				angle2.text = 90 - angle1.text
-				stackSize.text = math.sin(math.rad(angle1.text)) * sineSize.text
-			elseif (angle2.text ~= "Tap Me") and (whatTap == 4 or whatTap == 14) then
-				angle1.text = 90 - angle2.text
-				stackSize.text = math.sin(math.rad(angle1.text)) * sineSize.text
-			end
-		end
-    
-    if continue and whatTap == 1 then
-      angle1.text = math.deg(math.asin( stackSize.text / sineSize.text ))
-			angle2.text = 90 - angle1.text
-    end
-    
-		if continue then
-			for i =2, 4, 1 do
-				tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
-			end
-		end
-    
-    if continue then
-      for i = 2, 4, 1 do
-        aniTable[i].alpha = 0
-        tapTable[i].alpha = 1
-      end
-    end
-    
-    if continue then
-      timer.performWithDelay( 10, removeListeners, 2 )
-    end
-    
-    end
-
-end
-
----------------------------------------------------------------------------------
-
--- "scene:create()"
-function scene:create( event )
-
-   local screenGroup = self.view
-
 		tapCount = 0
 		tapTable = {}
     aniTable = {}
@@ -361,9 +235,9 @@ function scene:create( event )
     
     stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
---    tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
---    local tapAniSequenceDataFile = require("Images.tapAniv2");
---    local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
+    tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
+    local tapAniSequenceDataFile = require("Images.tapAniv2");
+    local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
 	
 		back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
 		back.x = display.contentCenterX
@@ -580,56 +454,185 @@ function scene:create( event )
 		
 end
 
--- "scene:show()"
-function scene:show( event )
+-- Called immediately after scene has moved onscreen:
+function scene:enterScene( event )
+  local group = self.view
+        
+	storyboard.purgeScene( "menu" )
 
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is still off screen (but is about to come on screen).
-   elseif ( phase == "did" ) then
-      composer.removeScene( "menu", true)
-   end
 end
 
--- "scene:hide()"
-function scene:hide( event )
+function scene:exitScene( event )
+  local group = self.view
 
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
-      Runtime:removeEventListener( "key", onKeyEvent )
-   elseif ( phase == "did" ) then
-      -- Called immediately after scene goes off screen.
-   end
-end
-
--- "scene:destroy()"
-function scene:destroy( event )
-
-   local sceneGroup = self.view
+  Runtime:removeEventListener( "key", onKeyEvent )
    
-   	optionsGroup:removeSelf()
-    backGroup:removeSelf()
-
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
 end
 
----------------------------------------------------------------------------------
+function scene:destroyScene( event )
+  local group = self.view
 
--- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+	optionsGroup:removeSelf()
+    backGroup:removeSelf()
+   
+end
 
----------------------------------------------------------------------------------
+scene:addEventListener( "createScene", scene )
+
+scene:addEventListener( "enterScene", scene )
+
+scene:addEventListener( "exitScene", scene )
+
+scene:addEventListener( "destroyScene", scene )
+
+--Overlay
+-- the following event is dispatched once overlay is enabled
+function scene:overlayBegan( event )
+    print( "Showing overlay: " .. event.sceneName )
+end
+
+-- the following event is dispatched once overlay is removed
+function scene:overlayEnded( event )
+    local group = self.view
+    
+    storyboard.isOverlay = false
+    
+    if storyboard.number ~= "Tap Me" then
+    
+    if whatTap == 11 then
+      sineSize.alpha = 1
+      sineSizeTap.alpha = 0
+      tapTable[1].text = storyboard.number
+      stackSizeTap.alpha = 1
+			angle1Tap.alpha = 1
+			angle2Tap.alpha = 1
+    elseif whatTap > 11 then
+      tapTable[whatTap - 10].text = storyboard.number
+      aniTable[whatTap - 10].alpha = 0
+      tapTable[whatTap -10].alpha = 1
+    else
+      tapTable[whatTap].text = storyboard.number
+    end
+		
+		if whatTap == 2 or whatTap == 12 then
+			if tonumber(stackSize.text) >= tonumber(sineSize.text) then
+				continue = false
+        for i = 2, 4, 1 do
+          aniTable[i].alpha = 1
+          tapTable[i].alpha = 0
+        end
+				native.showAlert ( "Error", "Stack size cannot be greater than Sine Bar length!", { "OK" }, alertListener )
+			else
+				continue = true
+			end
+		end
+
+		if (whatTap == 3) or (whatTap == 4) then
+			if tonumber(storyboard.number) >= 90 then
+				continue = false
+        for i = 2, 4, 1 do
+          aniTable[i].alpha = 1
+          tapTable[i].alpha = 0
+        end
+				native.showAlert ( "Error", "Stack size cannot be greater than Sine Bar length!", { "OK" }, alertListener2 )
+			else
+				continue = true
+			end
+		end
+    
+    if (whatTap == 13) or (whatTap == 14) then
+			if tonumber(storyboard.number) >= 90 then
+				continue = false
+        for i = 2, 4, 1 do
+          aniTable[i].alpha = 1
+          tapTable[i].alpha = 0
+        end
+				native.showAlert ( "Error", "Stack size cannot be greater than Sine Bar length!", { "OK" }, alertListener2 )
+			else
+				continue = true
+			end
+		end
+    
+    if continue then
+			if (stackSize.text ~= "Tap Me") and (whatTap == 2 or whatTap == 12) then
+				angle1.text = math.deg(math.asin( stackSize.text / sineSize.text ))
+				angle2.text = 90 - angle1.text
+			elseif (angle1.text ~= "Tap Me") and (whatTap == 3 or whatTap == 13) then
+				angle2.text = 90 - angle1.text
+				stackSize.text = math.sin(math.rad(angle1.text)) * sineSize.text
+			elseif (angle2.text ~= "Tap Me") and (whatTap == 4 or whatTap == 14) then
+				angle1.text = 90 - angle2.text
+				stackSize.text = math.sin(math.rad(angle1.text)) * sineSize.text
+			end
+		end
+    
+    if continue and whatTap == 1 then
+      angle1.text = math.deg(math.asin( stackSize.text / sineSize.text ))
+			angle2.text = 90 - angle1.text
+    end
+    
+		if continue then
+			for i =2, 4, 1 do
+				tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
+			end
+		end
+    
+    if continue then
+      for i = 2, 4, 1 do
+        aniTable[i].alpha = 0
+        tapTable[i].alpha = 1
+      end
+    end
+    
+    if continue then
+      timer.performWithDelay( 10, removeListeners, 2 )
+    end
+    
+		--continue = false
+    
+    end
+
+end
+
+	--Inches/Mill Functions
+	
+function toMill(num)
+
+	return num * 25.4	
+
+end
+
+function toInch(num)
+	
+	return num / 25.4
+	
+end
+
+function addListeners()
+  
+  sineSize:addEventListener ( "touch", calcTouch )
+  
+end
+
+function removeListeners()
+  
+  sineSize:removeEventListener ( "touch", calcTouch )
+  
+end
+
+function goBack2()
+	
+  if (storyboard.isOverlay) then
+    storyboard.number = "Tap Me"
+    storyboard.hideOverlay()
+  else
+		storyboard.gotoScene( "menu", { effect="slideRight", time=800})
+  end
+		
+end
+
+scene:addEventListener( "overlayEnded" )
+
+scene:addEventListener( "overlayBegan" )
 
 return scene

@@ -1,14 +1,22 @@
-local composer = require( "composer" )
-local scene = composer.newScene()
-local widget = require ( "widget" )
-local stepperDataFile = require("Images.stepSheet_stepSheet")
-display.setStatusBar(display.HiddenStatusBar)
-local myData = require("myData")
+--
+-- Project: Trades Math Calculator
+-- Description: 
+--
+-- Version: 1.0
+-- Managed with http://CoronaProjectManager.com
+--
+-- Copyright 2013 . All Rights Reserved.
+-- 
 
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
+--Require
+local widget = require ( "widget" )
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
+
+local stepperDataFile = require("Images.stepSheet_stepSheet")
+--local tapAniDataFile = require("Images.tapSheetv2_tapSheetv2")
+
+--Local forward references
 
 local back, menuBack, backEdgeX, backEdgeY, optionsGroup, backGroup
 
@@ -28,7 +36,6 @@ local toMill, toInch
 local bolts, bolts2, goBack2
 
 --Listeners
-
 local function onKeyEvent( event )
 
    local phase = event.phase
@@ -124,13 +131,13 @@ local function calcTouch( event )
     if whatTap == 5 then isDegree = true end
     
 		if whatTap == 3 or whatTap == 4 then
-			composer.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = true, needDec = true, isBolt = true}, isModal = true}  )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = true, needDec = true, isBolt = true}, isModal = true}  )
 		elseif whatTap == 1 then
-			composer.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = false }, isModal = true} )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = false }, isModal = true} )
 		elseif isDegree then
-			composer.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true, isBolt = true }, isModal = true} )
+			storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = true, isBolt = true }, isModal = true} )
      else
-       composer.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true} )
+       storyboard.showOverlay( "calculator", { effect="fromRight", time=400, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true} )
 		end		
 		return true
 	end
@@ -179,7 +186,7 @@ local function goBack (event)
     transition.to ( optionsBack, { time = 500, x = -170 } )
     transition.to ( optionsBack, { time = 500, y = -335 } )
 	options = false
-	composer.gotoScene( "menu", { effect="slideRight", time=800})
+	storyboard.gotoScene( "menu", { effect="slideRight", time=800})
 	return true
 	end
 end
@@ -187,164 +194,25 @@ end
 local function answerScene( event )
 	if event.phase == "ended" then
 		
-		myData.answer = bolts(numHoles.text, diam.text, circleX.text, circleY.text, firstHole.text)
+		storyboard.answer = bolts(numHoles.text, diam.text, circleX.text, circleY.text, firstHole.text)
     bolts2(numHoles.text, diam.text, circleX.text, circleY.text, firstHole.text)
-    myData.answerX = answerX
-    myData.answerY = answerY
-    myData.diam = diam.text
+    storyboard.answerX = answerX
+    storyboard.answerY = answerY
+    storyboard.diam = diam.text
     
     calcClick = false
     
-		composer.showOverlay( "boltAnswer", { effect="fromRight", time=400, isModal = true }  )
+		storyboard.showOverlay( "boltAnswer", { effect="fromRight", time=400, isModal = true }  )
 				
 		return true
 	end
 end
 
---Local Functions
+--End Listeners
 
-toMill = function(num)
-
-	return num * 25.4	
-
-end
-
-toInch = function(num)
+function scene:createScene( event )
+	local screenGroup = self.view
 	
-	return num / 25.4
-	
-end
-
-bolts = function(numHoles, diam, circleX, circleY, firstHole)
-	
-	local temp = {}
-	
-	if circleX == "Tap Me" then
-		circleX = 0
-	end
-	
-	if circleY == "Tap Me" then
-		circleY = 0
-	end
-	
-	if firstHole == "Tap Me" then
-		firstHole = 0
-	end
-	
-	local radius = diam / 2
-  local degree
-	local xpoint, ypoint
-	
-	for i = 0, numHoles-1, 1 do
-    degree = i * (360 / numHoles) + firstHole
-		xpoint = radius * math.cos(math.rad(degree)) + circleX
-		ypoint = radius * math.sin(math.rad(degree)) + circleY
-		xpoint = math.round(xpoint * math.pow(10, places)) / math.pow(10, places)
-		ypoint = math.round(ypoint * math.pow(10, places)) / math.pow(10, places)
-		temp[i] = "#" .. i+1 .. "  " .. "X: " .. xpoint .. ", Y: " .. ypoint
-		--firstHole = firstHole + angle	
-	end
-	
-	return temp
-end
-
-bolts2 = function(numHoles, diam, circleX, circleY, firstHole)
-	
-	if circleX == "Tap Me" then
-		circleX = 0
-	end
-	
-	if circleY == "Tap Me" then
-		circleY = 0
-	end
-	
-	if firstHole == "Tap Me" then
-		firstHole = 0
-	end
-	
-	local radius = 15 / 2
-	local degree
-	local xpoint, ypoint
-	
-	for i = 0, numHoles-1, 1 do
-    degree = i * (360 / numHoles) + firstHole
-		xpoint = radius * math.cos(math.rad(degree)) + circleX
-		ypoint = radius * math.sin(math.rad(degree)) + circleY
-		xpoint = math.round(xpoint * math.pow(10, places)) / math.pow(10, places)
-		ypoint = math.round(ypoint * math.pow(10, places)) / math.pow(10, places)
-		answerX[i] = xpoint
-    answerY[i] = ypoint
-		--firstHole = firstHole + angle	
-	end
-	
-	return temp
-end
-
-goBack2 = function()
-	
-  if (myData.isOverlay) then
-    myData.number = "Tap Me"
-    composer.hideOverlay()
-  else
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
-  end
-		
-end
-
-function scene:calculate()
-  local screenGroup = self.view
-  
-  myData.isOverlay = false
-    
-    if myData.number ~= "Tap Me" then
-    
-    if calcClick == true then
-    
-    tapTable[whatTap].text = myData.number
-    
-    if whatTap == 1 then
-    	if tonumber(numHoles.text)  <= 0 then
-    		native.showAlert ( "Error", "You need more than 0 holes!", { "OK" }, alertListener )
-    		numHoles.text = "Tap Me"
-    	end
-    elseif whatTap == 2 then    
-  	  if tonumber(diam.text)  <= 0 then
-    		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )
-    		diam.text = "Tap Me"
-        diam.alpha = 0
-        diamTap.alpha = 1
-  	  end
-    end
-        
-    if diam.text ~= "Tap Me" and numHoles.text ~= "Tap Me" then
-    	circleXtext.alpha = 1
-    	circleXTap.alpha = 1
-    	circleYTap.alpha = 1
-    	circleYtext.alpha = 1
-    	firstHoleText.alpha = 1
-    	firstHoleTap.alpha = 1
-    	answer.alpha = 1
-    end    
-       
-    for i = 1, 5, 1 do
-      if tapTable[i].text ~= "Tap Me" then
-        tapTable[i].alpha = 1
-        aniTable[i].alpha = 0
-      end
-    end
-    
-  end
-  
-  end
-
-end
-
----------------------------------------------------------------------------------
-
--- "scene:create()"
-function scene:create( event )
-local screenGroup = self.view
-
 	tapTable = {}
   aniTable = {}
   answerX = {}
@@ -627,58 +495,184 @@ local screenGroup = self.view
 	
 end
 
--- "scene:show()"
-function scene:show( event )
+-- Called immediately after scene has moved onscreen:
+function scene:enterScene( event )
+	local group = self.view
+        
+		storyboard.purgeScene( "menu" )
 
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is still off screen (but is about to come on screen).
-   elseif ( phase == "did" ) then
-      -- Called when the scene is now on screen.
-      -- Insert code here to make the scene come alive.
-      -- Example: start timers, begin animation, play audio, etc.
-      composer.removeScene( "menu", true)
-   end
 end
 
--- "scene:hide()"
-function scene:hide( event )
+function scene:exitScene( event )
+   local group = self.view
 
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
-      Runtime:removeEventListener( "key", onKeyEvent )
-   elseif ( phase == "did" ) then
-      -- Called immediately after scene goes off screen.
-   end
+    Runtime:removeEventListener( "key", onKeyEvent )
+   
 end
 
--- "scene:destroy()"
-function scene:destroy( event )
+function scene:destroyScene( event )
+   local group = self.view
 
-   local sceneGroup = self.view
-
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
-   optionsGroup:removeSelf()
-   backGroup:removeSelf()
+		optionsGroup:removeSelf()
+    backGroup:removeSelf()
+   
 end
 
----------------------------------------------------------------------------------
+scene:addEventListener( "createScene", scene )
 
--- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+scene:addEventListener( "enterScene", scene )
 
----------------------------------------------------------------------------------
+scene:addEventListener( "exitScene", scene )
+
+scene:addEventListener( "destroyScene", scene )
+
+--Overlay
+-- the following event is dispatched once overlay is enabled
+function scene:overlayBegan( event )
+    print( "Showing overlay: " .. event.sceneName )
+end
+
+-- the following event is dispatched once overlay is removed
+function scene:overlayEnded( event )
+    local group = self.view
+    
+    storyboard.isOverlay = false
+    
+    if storyboard.number ~= "Tap Me" then
+    
+    if calcClick == true then
+    
+    tapTable[whatTap].text = storyboard.number
+    
+    if whatTap == 1 then
+    	if tonumber(numHoles.text)  <= 0 then
+    		native.showAlert ( "Error", "You need more than 0 holes!", { "OK" }, alertListener )
+    		numHoles.text = "Tap Me"
+    	end
+    elseif whatTap == 2 then    
+  	  if tonumber(diam.text)  <= 0 then
+    		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )
+    		diam.text = "Tap Me"
+        diam.alpha = 0
+        diamTap.alpha = 1
+  	  end
+    end
+        
+    if diam.text ~= "Tap Me" and numHoles.text ~= "Tap Me" then
+    	circleXtext.alpha = 1
+    	circleXTap.alpha = 1
+    	circleYTap.alpha = 1
+    	circleYtext.alpha = 1
+    	firstHoleText.alpha = 1
+    	firstHoleTap.alpha = 1
+    	answer.alpha = 1
+    end    
+       
+    for i = 1, 5, 1 do
+      if tapTable[i].text ~= "Tap Me" then
+        tapTable[i].alpha = 1
+        aniTable[i].alpha = 0
+      end
+    end
+    
+  end
+  
+  end
+
+end
+	
+	--Inches/Mill Functions
+	
+function toMill(num)
+
+	return num * 25.4	
+
+end
+
+function toInch(num)
+	
+	return num / 25.4
+	
+end
+
+function bolts(numHoles, diam, circleX, circleY, firstHole)
+	
+	local temp = {}
+	
+	if circleX == "Tap Me" then
+		circleX = 0
+	end
+	
+	if circleY == "Tap Me" then
+		circleY = 0
+	end
+	
+	if firstHole == "Tap Me" then
+		firstHole = 0
+	end
+	
+	local radius = diam / 2
+  local degree
+	local xpoint, ypoint
+	
+	for i = 0, numHoles-1, 1 do
+    degree = i * (360 / numHoles) + firstHole
+		xpoint = radius * math.cos(math.rad(degree)) + circleX
+		ypoint = radius * math.sin(math.rad(degree)) + circleY
+		xpoint = math.round(xpoint * math.pow(10, places)) / math.pow(10, places)
+		ypoint = math.round(ypoint * math.pow(10, places)) / math.pow(10, places)
+		temp[i] = "#" .. i+1 .. "  " .. "X: " .. xpoint .. ", Y: " .. ypoint
+		--firstHole = firstHole + angle	
+	end
+	
+	return temp
+end
+
+function bolts2(numHoles, diam, circleX, circleY, firstHole)
+	
+	if circleX == "Tap Me" then
+		circleX = 0
+	end
+	
+	if circleY == "Tap Me" then
+		circleY = 0
+	end
+	
+	if firstHole == "Tap Me" then
+		firstHole = 0
+	end
+	
+	local radius = 15 / 2
+	local degree
+	local xpoint, ypoint
+	
+	for i = 0, numHoles-1, 1 do
+    degree = i * (360 / numHoles) + firstHole
+		xpoint = radius * math.cos(math.rad(degree)) + circleX
+		ypoint = radius * math.sin(math.rad(degree)) + circleY
+		xpoint = math.round(xpoint * math.pow(10, places)) / math.pow(10, places)
+		ypoint = math.round(ypoint * math.pow(10, places)) / math.pow(10, places)
+		answerX[i] = xpoint
+    answerY[i] = ypoint
+		--firstHole = firstHole + angle	
+	end
+	
+	return temp
+end
+
+function goBack2()
+	
+  if (storyboard.isOverlay) then
+    storyboard.number = "Tap Me"
+    storyboard.hideOverlay()
+  else
+		storyboard.gotoScene( "menu", { effect="slideRight", time=800})
+  end
+		
+end
+	
+scene:addEventListener( "overlayEnded" )
+
+scene:addEventListener( "overlayBegan" )
 
 return scene

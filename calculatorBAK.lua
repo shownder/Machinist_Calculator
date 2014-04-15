@@ -1,14 +1,16 @@
-local composer = require( "composer" )
-local scene = composer.newScene()
-local widget = require ( "widget" )
-local myData = require("myData")
+--
+-- Project: Trades Math Calculator
+-- Description: 
+--
+-- Version: 1.0
+-- Managed with http://CoronaProjectManager.com
+--
+-- Copyright 2013 . All Rights Reserved.
+-- 
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
+local widget = require( "widget" )
 
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
-
--- local forward references should go here
 
 local num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, neg, dec, clear, enter, backButt
 local deg, degText, degBorder, min, minText, minBorder, sec, secText, secBorder
@@ -22,12 +24,8 @@ local needNeg, needDec, isDegree, isBolt
 
 local deleteChar
 
---Scene-wide Functions
-
---Called when a number or . or - is pushed
-
-local function numPushed( event )
-	local phase = event.phase
+local function buttonEvent( event )
+		local phase = event.phase
 		
 	if "ended" == phase then
       
@@ -43,119 +41,112 @@ local function numPushed( event )
       focusD = secText
     end
 
-    if isFocus == 1 and event.target:getLabel() == "." then 
-      decPushed = true 
-    end	
+    if isFocus == 1 and event.target:getLabel() == "." then decPushed = true end	
 
     if not decPushed then
-      decTemp = numDisplay.text .. event.target:getLabel()
+    	decTemp = numDisplay.text .. event.target:getLabel()
     end
-      
     print(decTemp)
     
     if isFocus == 1 and focusD.count <= 11 or isFocus ~= 1 and focusD.count <= 9 then
     
-      if event.target:getLabel() == "." and decPress == false and isFocus == 1 then
-        if focusD.text == "-" then
-          focusD.text = "-0."
-        else
-          focusD.text = focusD.text .. event.target:getLabel()
-        end
-        
-      decPress = true
-        
-      end
-    		
-      if focusD.text ~= "0" and event.target:getLabel() == "-" then
-        --do nothing
-        focusD.count = focusD.count - 1
-      elseif event.target:getLabel() == "." then
-        --do nothing
-        focusD.count = focusD.count - 1
-      elseif focusD.text == "0" and event.target:getLabel() == "-" then
-        focusD.text = "-"
-      elseif focusD.text == "0" then
-        focusD.text = ""
-        focusD.text = focusD.text .. event.target:getLabel()
+    if event.target:getLabel() == "." and decPress == false and isFocus == 1 then
+      if focusD.text == "-" then
+        focusD.text = "-0."
       else
-        focusD.text = focusD.text .. event.target:getLabel()
+       focusD.text = focusD.text .. event.target:getLabel()
       end
-        
-        focusD.count = focusD.count +1
-    end	
-
-    if isFocus == 2 or isFocus == 3 or isFocus == 4 then
-      if hoursText.text ~= "0" or minText.text ~= "0" or secText.text ~= "0" then
-        numDisplay.text = toHours(hoursText.text, minText.text, secText.text)
-        numDisplay.text = math.round(numDisplay.text * math.pow(10, 5)) / math.pow(10, 5)
-      end
+      decPress = true
     end
+    		
+	if focusD.text ~= "0" and event.target:getLabel() == "-" then
+			--do nothing
+      focusD.count = focusD.count - 1
+    elseif event.target:getLabel() == "." then
+      --do nothing
+      focusD.count = focusD.count - 1
+    elseif focusD.text == "0" and event.target:getLabel() == "-" then
+      focusD.text = "-"
+    elseif focusD.text == "0" then
+      focusD.text = ""
+      focusD.text = focusD.text .. event.target:getLabel()
+    else
+      focusD.text = focusD.text .. event.target:getLabel()
+		end
+      focusD.count = focusD.count +1
+	end	
+
+	if isFocus == 2 or isFocus == 3 or isFocus == 4 then
+    	if hoursText.text ~= "0" or minText.text ~= "0" or secText.text ~= "0" then
+    		numDisplay.text = toHours(hoursText.text, minText.text, secText.text)
+    		numDisplay.text = math.round(numDisplay.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
+    end
+
+    --if decPlace ~= nil then
 
     if isFocus == 1 and degreeGroup.alpha ~= 0 then
-      if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
-        hoursText.text = decTemp + 1 - 1
-        minText.text = (numDisplay.text - decTemp) * 60
-      end
-        
-      if string.find(minText.text, ".") == nil then
-        --do nothing
-      else
-        local temp = minText.text
-        decPlace = string.find(minText.text, ".")
-        minText.text = minText.text:sub(1, decPlace+1)
-        secText.text = (temp - minText.text) * 60
-        secText.text = math.round(secText.text * math.pow(10, 5)) / math.pow(10, 5)
-      end
+    	if numDisplay.text ~= "0" or numDisplay.text ~= "0." then
+    		hoursText.text = decTemp + 1 - 1
+    		minText.text = (numDisplay.text - decTemp) * 60
+    	end
+    	if string.find(minText.text, ".") == nil then
+    		--do nothing
+    	else
+    		local temp = minText.text
+    		decPlace = string.find(minText.text, ".")
+    		minText.text = minText.text:sub(1, decPlace+1)
+    		secText.text = (temp - minText.text) * 60
+    		secText.text = math.round(secText.text * math.pow(10, 5)) / math.pow(10, 5)
+    	end
     end
-  end     
+
+  end    
 end
-
---Called when GO is pushed
-
-local function goEvent( event )
-	local phase = event.phase
+  
+local function catchStrays(event)
+   return true
+end
+	
+	local function buttonEvent2( event )
+		local phase = event.phase
 		
-	if "ended" == phase then
+		if "ended" == phase then
 		
-    if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." and not isBolt then
-      numDisplay.text = numDisplay.text .. "0"
-      myData.number = numDisplay.text 		
-      transition.to ( maskBack, { time = 10, alpha = 0 } )
-      decTemp = 0
-      composer.hideOverlay(true, "slideRight", 200 )
-    elseif numDisplay.text ~= "0" and isBolt then
-      if numDisplay.text == "-0." or numDisplay.text == "-" or numDisplay.text == "-0.0" or numDisplay.text == "0." or numDisplay.text == "0.0" then 
-        myData.number = 0 else myData.number = numDisplay.text 
+		if numDisplay.text:sub(numDisplay.text:len(),numDisplay.text:len()) == "." and not isBolt then
+         numDisplay.text = numDisplay.text .. "0"
+         storyboard.number = numDisplay.text 		
+         transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text ~= "0" and isBolt==true then
+        if numDisplay.text == "-0." or numDisplay.text == "-" or numDisplay.text == "-0.0" or numDisplay.text == "0." or numDisplay.text == "0.0" then storyboard.number = 0 else storyboard.number = numDisplay.text end
+         transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text ~= "0" then
+         storyboard.number = numDisplay.text 
+         transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text == "0" and isBolt==true then
+         storyboard.number = numDisplay.text 
+         transition.to ( maskBack, { time = 10, alpha = 0 } )
+         decTemp = 0
+         storyboard.hideOverlay(true, "slideRight", 200 )
+      elseif numDisplay.text == "0" then
+          --do nothing
+          count = count - 1
       end
-        transition.to ( maskBack, { time = 10, alpha = 0 } )
-        decTemp = 0
-        composer.hideOverlay(true, "slideRight", 200 )
-    elseif numDisplay.text ~= "0" then
-      myData.number = numDisplay.text 
-      transition.to ( maskBack, { time = 10, alpha = 0 } )
-      decTemp = 0
-      composer.hideOverlay(true, "slideRight", 200 )
-    elseif numDisplay.text == "0" and isBolt then
-      myData.number = numDisplay.text 
-      transition.to ( maskBack, { time = 10, alpha = 0 } )
-      decTemp = 0
-      composer.hideOverlay(true, "slideRight", 200 )
-    elseif numDisplay.text == "0" then
-      --do nothing
-      count = count - 1
-    end
-      
       count = count + 1
       decPushed = false
-  end 
-end
-
---Called when Back is pushed
-
-local function deleteEvent( event )
-  local phase = event.phase
+    end 
+	end
+  
+local function buttonEvent3( event )
+		local phase = event.phase
 		
-	if "ended" == phase then
+		if "ended" == phase then
       
     local focusD
     
@@ -176,9 +167,7 @@ local function deleteEvent( event )
 			focusD.count = focusD.count - 1
 		end
     
-    if focusD.text == "" then 
-      focusD.text = "0" 
-    end
+    if focusD.text == "" then focusD.text = "0" end
 
     if isFocus == 2 or isFocus == 3 or isFocus == 4 then
     	if hoursText.text ~= "0" or minText.text ~= "0" or secText.text ~= "0" then
@@ -196,8 +185,7 @@ local function deleteEvent( event )
     		hoursText.text = decTemp + 1 - 1
     		minText.text = (numDisplay.text - decTemp) * 60
     	end
-    	
-      if string.find(minText.text, ".") == nil then
+    	if string.find(minText.text, ".") == nil then
     		--do nothing
     	else
     		local temp = minText.text
@@ -207,88 +195,68 @@ local function deleteEvent( event )
     		secText.text = math.round(secText.text * math.pow(10, 5)) / math.pow(10, 5)
     	end
     end
-  end
+    
+    end
 end
-
---Called when reset is pushed
-
-local function resetEvent( event )
-	local phase = event.phase
+  
+  local function buttonEvent4( event )
+		local phase = event.phase
 		
-	if "ended" == phase then
-		myData.number = "Tap Me"
-    decPushed = false
-    decTemp = 0
-    transition.to ( maskBack, { time = 10, alpha = 0 } )
-    composer.hideOverlay(true, "slideRight", 200 )
-  end
-end
-
---Called when the focus changes
-
+		if "ended" == phase then
+		
+      storyboard.number = "Tap Me"
+      decPushed = false
+      decTemp = 0
+      transition.to ( maskBack, { time = 10, alpha = 0 } )
+			storyboard.hideOverlay(true, "slideRight", 200 )
+    
+    end
+	end
+  
 local function focusTouch( event )
 	if event.phase == "ended" then
     
-    local focus = event.target.focus
+      local focus = event.target.focus
       
-    if focus == 1 then
-      isFocus = 1
-      displayBorder.strokeWidth = 5
-      hoursBorder.strokeWidth = 2
-      minBorder.strokeWidth = 2
-      secBorder.strokeWidth = 2
-    elseif focus == 2 then
-      isFocus = 2
-      displayBorder.strokeWidth = 2
-      hoursBorder.strokeWidth = 5
-      minBorder.strokeWidth = 2
-      secBorder.strokeWidth = 2
-    elseif focus == 3 then
-      isFocus = 3
-      displayBorder.strokeWidth = 2
-      hoursBorder.strokeWidth = 2
-      minBorder.strokeWidth = 5
-      secBorder.strokeWidth = 2
-    elseif focus == 4 then
-      isFocus = 4
-      displayBorder.strokeWidth = 2
-      hoursBorder.strokeWidth = 2
-      minBorder.strokeWidth = 2
-      secBorder.strokeWidth = 5
-    end 
+      if focus == 1 then
+        isFocus = 1
+        displayBorder.strokeWidth = 5
+        hoursBorder.strokeWidth = 2
+        minBorder.strokeWidth = 2
+        secBorder.strokeWidth = 2
+      elseif focus == 2 then
+        isFocus = 2
+        displayBorder.strokeWidth = 2
+        hoursBorder.strokeWidth = 5
+        minBorder.strokeWidth = 2
+        secBorder.strokeWidth = 2
+      elseif focus == 3 then
+        isFocus = 3
+        displayBorder.strokeWidth = 2
+        hoursBorder.strokeWidth = 2
+        minBorder.strokeWidth = 5
+        secBorder.strokeWidth = 2
+      elseif focus == 4 then
+        isFocus = 4
+        displayBorder.strokeWidth = 2
+        hoursBorder.strokeWidth = 2
+        minBorder.strokeWidth = 2
+        secBorder.strokeWidth = 5
+      end 
+      
+      -- if hoursText.text ~= "0" and minText.text ~= "0" and secText.text ~= "0" then
+      --   local temp = toHours(hoursText.text, minText.text, secText.text)
+      --   numDisplay.text = math.round(temp * math.pow(10, 5)) / math.pow(10, 5)
+      -- end 
     		
 		return true
 	end
 end
 
-local function deleteChar(s)
+function scene:createScene( event )
+	local screenGroup = self.view
   
-  local length = s:len()
-  if s:sub(length, length) == "." then
-    decPress = false
-    decPushed = false
-  end
-  
-  s = s:sub(1,length - 1)
-  return s
-  
-end
-
-local function toHours(h, m, s)
-
-  return h + (m/60) + (s/3600)
-  
-end
-
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
---Create the Scene
-
-function scene:create( event )
-
-  local screenGroup = self.view
-
-  myData.number = "Tap Me"
+  storyboard.number = "Tap Me"
   degreeGroup = display.newGroup()
   
   count = 0
@@ -307,8 +275,8 @@ function scene:create( event )
 	maskBack.x = display.contentCenterX
 	maskBack.y = display.contentCenterY
 	transition.to ( maskBack, { time = 400, alpha = 1, delay = 300} )	
---  maskBack:addEventListener( "tap", catchStrays )
---  maskBack:addEventListener( "touch", catchStrays )
+  maskBack:addEventListener( "tap", catchStrays )
+  maskBack:addEventListener( "touch", catchStrays )
 	backEdgeX = maskBack.contentBounds.xMin
 	backEdgeY = maskBack.contentBounds.yMin
 
@@ -440,8 +408,9 @@ function scene:create( event )
 		id = "num1",
 		label = "1",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -453,8 +422,9 @@ function scene:create( event )
 		id = "num2",
 		label = "2",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -466,8 +436,9 @@ function scene:create( event )
 		id = "num3",
 		label = "3",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -479,8 +450,9 @@ function scene:create( event )
 		id = "num4",
 		label = "4",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -492,8 +464,9 @@ function scene:create( event )
 		id = "num5",
 		label = "5",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -505,8 +478,9 @@ function scene:create( event )
 		id = "num6",
 		label = "6",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -518,8 +492,9 @@ function scene:create( event )
 		id = "num7",
 		label = "7",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -531,8 +506,9 @@ function scene:create( event )
 		id = "num8",
 		label = "8",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -544,8 +520,9 @@ function scene:create( event )
 		id = "num9",
 		label = "9",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -557,8 +534,9 @@ function scene:create( event )
 		id = "dec",
 		label = ".",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -576,8 +554,9 @@ function scene:create( event )
 		id = "num0",
 		label = "0",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -589,8 +568,9 @@ function scene:create( event )
 		id = "neg",
 		label = "-",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 16,
-		onEvent = numPushed,
+		onEvent = buttonEvent,
 		defaultFile = "Images/calcButt.png",
 		overFile = "Images/calcButtOver.png",
 		}
@@ -605,23 +585,26 @@ function scene:create( event )
 	
 	enter = widget.newButton
 	{
+		--left = 320,
+		--top = 90,
 		labelColor = { default = {1}, over = {0.153, 0.4, 0.729} },
 		label = "GO",
 		id = "enter",
     defaultFile = "Images/calcButtOver.png",
     overFile = "Images/calcButt.png",
-		onEvent = goEvent
+		onEvent = buttonEvent2
   }
   enter.x = display.contentCenterX+210
   enter.y = backEdgeY + 190
 
-  backButt = widget.newButton
+    backButt = widget.newButton
 	{
 		id = "back",
 		label = "DEL",
 		labelColor = { default = {1}, over = {0.153, 0.4, 0.729}},
+		--font = "WC Mano Negra Bta",
 		fontSize = 14,
-		onEvent = deleteEvent,
+		onEvent = buttonEvent3,
 		defaultFile = "Images/calcButtOver.png",
 		overFile = "Images/calcButt.png",
 		}
@@ -630,12 +613,14 @@ function scene:create( event )
 		
 	clear = widget.newButton
 	{
+		--left = 320,
+		--top = 240,
 		labelColor = { default = {0.777, 0.267, 0.267}, over = {1} },
 		label = "C",
 		id = "clear",
     defaultFile = "Images/cancButt.png",
     overFile = "Images/cancButtOver.png",
-		onEvent = resetEvent
+		onEvent = buttonEvent4
   }
   clear.x = display.contentCenterX+210
   clear.y = backEdgeY + 305
@@ -657,57 +642,47 @@ function scene:create( event )
 		screenGroup:insert( clear )
     screenGroup:insert( backButt )
 		screenGroup:insert( numDisplay )
+
 end
 
--- "scene:show()"
-function scene:show( event )
+function scene:exitScene( event )
+   local group = self.view
 
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is still off screen (but is about to come on screen).
-   elseif ( phase == "did" ) then
-      
-      myData.isOverlay = true
-      
-   end
+	maskBack:removeSelf()
+  --storyboard.purgeScene( "calculator" )	
+   
 end
 
--- "scene:hide()"
-function scene:hide( event )
-  local sceneGroup = self.view
-  local phase = event.phase
-  local parent = event.parent  --reference to the parent scene object
+function scene:enterScene( event )
+   local group = self.view
+   
+   storyboard.isOverlay = true
+   
+end
 
-  local phase = event.phase
-
-  if ( phase == "will" ) then
-    --calling the calculate function in the parent scene
-    parent:calculate()
-  elseif ( phase == "did" ) then
-      -- Called immediately after scene goes off screen.
+function deleteChar(s)
+  
+  local length = s:len()
+  if s:sub(length, length) == "." then
+    decPress = false
+    decPushed = false
   end
+  
+  s = s:sub(1,length - 1)
+  return s
+  
 end
 
--- "scene:destroy()"
-function scene:destroy( event )
+function toHours(h, m, s)
 
-   local sceneGroup = self.view
-
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
+  return h + (m/60) + (s/3600)
+  
 end
 
----------------------------------------------------------------------------------
+scene:addEventListener( "createScene", scene )
 
--- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+scene:addEventListener( "exitScene", scene )
 
----------------------------------------------------------------------------------
+scene:addEventListener( "enterScene", scene )
 
 return scene

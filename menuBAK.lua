@@ -1,14 +1,26 @@
-local composer = require( "composer" )
-local scene = composer.newScene()
+--
+-- Project: main.lua
+-- Description: 
+--
+-- Version: 1.0
+-- Managed with http://CoronaProjectManager.com
+--
+-- Copyright 2013 . All Rights Reserved.
+-- 
+
+--Require
+
+local storyboard = require( "storyboard" )
+local scene = storyboard.newScene()
 local widget = require ( "widget" )
 widget.setTheme("widget_theme_ios")
 local loadsave = require("loadsave")
-local myData = require("myData")
+local composer = require( "composer" )
+
+
 display.setStatusBar(display.HiddenStatusBar)
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
+
+--Local forward references
 
 local backEdgeX, backEdgeY
 
@@ -21,6 +33,9 @@ local timesOpen
 
 local back
 
+
+--Listeners
+
 local function sceneSelect ( event )
 	local phase = event.phase 
 
@@ -28,7 +43,7 @@ local function sceneSelect ( event )
    	if event.target.num == 1 then
 		composer.gotoScene( "rightAngle", { effect="slideLeft", time=800} )
 		elseif event.target.num == 2 then
-		composer.gotoScene( "oblique", { effect="slideLeft", time=800} )
+		storyboard.gotoScene( "oblique", { effect="slideLeft", time=800} )
 		elseif event.target.num == 3 then
 		storyboard.gotoScene( "sineBar", { effect="slideLeft", time=800} )
 		elseif event.target.num == 4 then
@@ -75,12 +90,11 @@ local function alertListener ( event )
 	end
 end
 
----------------------------------------------------------------------------------
 
--- "scene:create()"
-function scene:create( event )
+--Called when the scene view doesn't exist
 
-   local screenGroup = self.view
+function scene:createScene( event )
+	local screenGroup = self.view
 
   timesOpen = loadsave.loadTable("timesOpen.json")
   
@@ -185,59 +199,57 @@ function scene:create( event )
 	boltButt.x = backEdgeX + 430
 	boltButt.y = backEdgeY + 300
 		
+
 end
 
--- "scene:show()"
-function scene:show( event )
-
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-      -- Called when the scene is still off screen (but is about to come on screen).
-   elseif ( phase == "did" ) then
-    local sceneName = composer.getSceneName( "previous" )
+-- Called immediately after scene has moved onscreen:
+function scene:enterScene( event )
+  local group = self.view
+        
+    local sceneName = storyboard.getPrevious()
 			
 			if sceneName ~= nil then
-				composer.removeScene( sceneName, true )
+				storyboard.purgeScene( sceneName )
 			end
       
-      myData.number = nil
-   end
+      storyboard.number = nil
+
 end
 
--- "scene:hide()"
-function scene:hide( event )
-
-   local sceneGroup = self.view
-   local phase = event.phase
-
-   if ( phase == "will" ) then
-    Runtime:removeEventListener( "key", onKeyEvent )
-    
-   elseif ( phase == "did" ) then
-      
-   end
+function scene:exitScene( event )
+   local group = self.view
+   
+   Runtime:removeEventListener( "key", onKeyEvent )
+	
 end
 
--- "scene:destroy()"
-function scene:destroy( event )
+function scene:destroyScene( event )
+   local group = self.view
+   
+   --Runtime:removeEventListener( "key", onKeyEvent )
 
-   local sceneGroup = self.view
-
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
 end
 
----------------------------------------------------------------------------------
+--[[
+----------------------------------------------------------------
+-- CALLED PRIOR TO THE REMOVAL OF SCENE'S "VIEW" (DISPLAY GROUP)
+----------------------------------------------------------------
+function Scene:destroyScene( event )
+		
+	-- REMOVE ALL WIDGETS HERE
+	_G.GUI.GetHandle("rightAngleButt"):destroy()
+	
+end
+--]]
+scene:addEventListener( "createScene", scene )
 
--- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+scene:addEventListener( "enterScene", scene )
 
----------------------------------------------------------------------------------
+scene:addEventListener( "exitScene", scene )
+
+scene:addEventListener( "destroyScene", scene )
+
 
 return scene
+
+

@@ -12,10 +12,10 @@ local physicalW = math.round( (display.contentWidth  - display.screenOriginX*2) 
 local physicalH = math.round( (display.contentHeight - display.screenOriginY*2) / display.contentScaleY)
 
 --Require
-local storyboard = require( "storyboard" )
 local loadsave = require("loadsave")
 local device = require("device")
 local licensing = require( "licensing" )
+local composer = require( "composer" )
 
 if not device.isApple then
 
@@ -59,7 +59,7 @@ local timesOpen = loadsave.loadTable("timesOpen.json")
   end
  
 
-storyboard.gotoScene( "menu", "fade", 800 )
+composer.gotoScene( "menu", "fade", 800 )
 
 
 

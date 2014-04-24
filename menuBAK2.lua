@@ -16,7 +16,7 @@ local rightButt
 local obliqueButt
 local sineButt
 local boltButt
-local speedButt
+local speedButt, testButt
 local timesOpen
 
 local back
@@ -35,6 +35,8 @@ local function sceneSelect ( event )
 		composer.gotoScene( "speedFeed", { effect="slideLeft", time=800} )
 		elseif event.target.num == 5 then
 		composer.gotoScene( "bolt", { effect="slideLeft", time=800} )
+    elseif event.target.num == 6 then
+		composer.gotoScene( "menu2", { effect="slideLeft", time=800} )
    	end
    end
 end
@@ -184,6 +186,23 @@ function scene:create( event )
 	screenGroup:insert(boltButt)
 	boltButt.x = backEdgeX + 430
 	boltButt.y = backEdgeY + 300
+  
+  	testButt = widget.newButton
+	{
+		left = 0,
+		top = 0,
+		width = 180,
+		height = 50,
+    --font = "BadBlocksTT",
+    fontSize = 16,
+		id = "testButt",
+		label = "TEST",
+		onRelease = sceneSelect,		
+		}
+	testButt.num = 6
+	screenGroup:insert(testButt)
+	testButt.x = backEdgeX + 230
+	testButt.y = backEdgeY + 300
 		
 end
 

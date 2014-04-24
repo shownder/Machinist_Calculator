@@ -36,7 +36,7 @@ local function licensingListener( event )
    local verified = event.isVerified
    if not event.isVerified then
       --failed verify app from the play store, we print a message
-      native.showAlert ( "Not Authorized", "The app was not purchased from Google Play.", { "Close" }, alertListener)
+      native.showAlert ( "Could Not Authorized", "There was a problem contacting the Google licensing servers. Please check your internet connection and try again.", { "Close" }, alertListener)
    end
 end
 
@@ -59,7 +59,7 @@ local timesOpen = loadsave.loadTable("timesOpen.json")
   end
  
 
-composer.gotoScene( "menu", "fade", 800 )
+composer.gotoScene( "menu")
 
 
 

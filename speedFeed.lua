@@ -70,7 +70,7 @@ local function optionsMove(event)
       transition.to ( optionsBack, { time = 200, y = 0 } )
 			transition.to ( optionsGroup, { time = 500, alpha = 1} )
       transition.to ( backGroup, { time = 200, x=160 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX - 43, y = backEdgeY + 110} )
+      transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
       decLabel:setFillColor(0.15, 0.4, 0.729)
 		elseif options then 
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
@@ -148,7 +148,7 @@ local function goBack (event)
     transition.to ( optionsBack, { time = 500, x = -170 } )
     transition.to ( optionsBack, { time = 500, y = -335 } )
 	options = false
-	composer.gotoScene( "menu", { effect="slideRight", time=800})
+	composer.gotoScene( "menu", { effect="fromBottom", time=800})
 	return true   
 	end
 end
@@ -461,6 +461,7 @@ function scene:create( event )
 	{
 		id = "measureButt",
     width = 125,
+    height = 52,
 		label = "TO METRIC",
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
@@ -477,6 +478,7 @@ function scene:create( event )
 	{
 		id = "menuButt",
     width = 125,
+    height = 52,
 		label = "MENU",
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
@@ -493,6 +495,7 @@ function scene:create( event )
 	{
 		id = "resetButt",
     width = 125,
+    height = 52,
 		label = "RESET",
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
@@ -526,7 +529,7 @@ function scene:create( event )
 	decPlaces.y = backEdgeY + 117
 	
 	places = 4
-	decLabel = display.newText( backGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
+	decLabel = display.newText( screenGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 115
   

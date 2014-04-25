@@ -138,12 +138,11 @@ scrollView = widget.newScrollView
 		width = 240,
 		height = 265,
 		scrollWidth = 0,
-		--scrollHeight = display.pixelHeight-50,
 		id = "answerScroll",
 		hideBackground = false,
 		horizontalScrollDisabled = true,
 		verticalScrollDisabled = false,
-    	isBounceEnabled = false,
+    isBounceEnabled = false,
 		listener = scrollListener,		
 	}
 	screenGroup:insert(scrollView)

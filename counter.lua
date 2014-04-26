@@ -180,6 +180,13 @@ local function measureChange( event )
 	
 end
 
+local function alertListener ( event )
+	if "clicked" == event.action then
+
+    
+	end
+end
+
 -----------------------------------
 --Functions Used After Calculate
 -----------------------------------
@@ -189,8 +196,16 @@ function scene:calculate()
   
   myData.isOverlay = false
   local continue = false
+  local errorBox = false
     
-  if myData.number ~= "Tap Me" then    
+  if whatTap == 1 or whatTap == 11 then
+    if tonumber(myData.number) > 179 then
+      native.showAlert ( "Error", "Point Angle must be less than 180°", { "OK" }, alertListener )
+      errorBox = true
+    end
+  end
+    
+  if myData.number ~= "Tap Me" and not errorBox then    
           	
     if whatTap > 3 then
       tapTable[whatTap - 10].text = myData.number
@@ -210,7 +225,7 @@ function scene:calculate()
         
     if whatTap == 2 or whatTap == 12 then
       if diam.text ~= "Tap Me" and pointAngle.text ~= "Tap Me" then
-        pointLength.text = (diam.text / 2) / (math.tan(pointAngle.text / 2))
+        pointLength.text = (diam.text / 2) / (math.tan(math.rad(pointAngle.text) / 2))
         continue = true
       elseif diam.text ~= "Tap Me" and pointLength.text ~= "Tap Me" then
         pointAngle.text = math.deg((math.atan(diam.text / 2 / pointLength.text)) * 2)
@@ -241,7 +256,6 @@ function scene:calculate()
       pointLength.text = math.round(pointLength.text * math.pow(10, places)) / math.pow(10, places)
       pointAngle.text = math.round(pointAngle.text * math.pow(10, places)) / math.pow(10, places)
     end
-        
   end
 end
 

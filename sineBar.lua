@@ -11,7 +11,7 @@ local myData = require("myData")
 ---------------------------------------------------------------------------------
 
 local optionsGroup, backGroup
-local back, menuBack, backEdgeX, backEdgeY
+local back, menuBack, backEdgeX, backEdgeY, rightDisplay
 
 local sineText
 local decStep, menu, reset, measure
@@ -360,10 +360,6 @@ function scene:create( event )
     Runtime:addEventListener( "key", onKeyEvent )
     
     stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
-	
---    tapSheet = graphics.newImageSheet("Images/tapSheetv2_tapSheetv2.png", tapAniDataFile.getSpriteSheetData() )
---    local tapAniSequenceDataFile = require("Images.tapAniv2");
---    local tapAniSequenceData = tapAniSequenceDataFile:getAnimationSequences();
 	
 		back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
 		back.x = display.contentCenterX

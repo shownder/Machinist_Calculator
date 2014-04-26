@@ -12,7 +12,7 @@ local myData = require("myData")
 
 -- local forward references should go here
 
-local back, isDegree
+local back, isDegree, rightDisplay
 local angleAtext, angleBtext, sideAtext, sideBtext, sideCtext
 local whatTap
 local tapTable, aniTable

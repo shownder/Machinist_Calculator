@@ -11,7 +11,7 @@ local myData = require("myData")
 ---------------------------------------------------------------------------------
 
 local optionsGroup, backGroup
-local back, menuBack, backEdgeX, backEdgeY
+local back, menuBack, backEdgeX, backEdgeY, rightDisplay
 
 local decStep, menu, reset, measure
 
@@ -38,26 +38,6 @@ local function onKeyEvent( event )
        timer.performWithDelay(100,goBack2,1)
    end
    return true
-end
-
-local function helpScreen(event)
-	local phase = event.phase
-  
-  if "ended" == phase then	
-
-    if options then
-				transition.to ( optionsGroup, { time = 500, x=(backEdgeX - 125) } )
-				transition.to ( optionsGroup, { time = 500, alpha = 0, delay = 200} )
-				transition.to ( optionsButt, {time = 500, x=(backEdgeX + 115)} )
-				options = false
-    end
-    
-    Runtime:removeEventListener( "touch", onScreenTouch  )
-    
-    composer.showOverlay( "help", { effect="zoomInOut", time=200, params = { helpType = "speed" }, isModal = true}  )
-    
-  end
-      
 end
 
 local function optionsMove(event)

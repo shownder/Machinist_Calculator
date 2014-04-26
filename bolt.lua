@@ -10,7 +10,7 @@ local myData = require("myData")
 -- unless "composer.removeScene()" is called.
 ---------------------------------------------------------------------------------
 
-local back, menuBack, backEdgeX, backEdgeY, optionsGroup, backGroup
+local back, menuBack, backEdgeX, backEdgeY, optionsGroup, backGroup, rightDisplay
 
 local numHolesText, diamText, circleXtext, circleYtext, firstHoleText, calculate
 local numHolesTap, diamTap, circleXTap, circleYTap, firstHoleTap

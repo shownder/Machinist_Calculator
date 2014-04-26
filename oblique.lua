@@ -10,7 +10,7 @@ local widget = require ( "widget" )
 ---------------------------------------------------------------------------------
 
 local back, rightDisplay
-local backEdgeX, backEdgeY
+local backEdgeX, backEdgeY, rightDisplay
 
 local places, decPlaces
 local area, areaAnswer

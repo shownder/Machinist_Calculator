@@ -108,7 +108,27 @@ local function moveItems()
   transition.fadeIn(counterLabel, {time=1000})
   transition.fadeIn(chartLabel, {time=1100})
   
-  menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
+  --menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
+  
+end
+
+local function moveItems2()
+  
+  transition.to(rightButt, {y=back.contentHeight - 50})
+  transition.to(obliqueButt, {y=back.contentHeight - 50})
+  transition.to(sineButt, {y=back.contentHeight - 50})
+  transition.to(speedButt, {y=back.contentHeight - 50})
+  transition.to(boltButt, {y=back.contentHeight - 50})
+  transition.to(counterButt, {y=back.contentHeight - 50})
+  transition.to(chartButt, {y=back.contentHeight - 50})
+  
+  rightLabel.alpha = 1
+  obliqueLabel.alpha = 1
+  sineLabel.alpha = 1
+  speedLabel.alpha = 1
+  boltLabel.alpha = 1
+  counterLabel.alpha = 1
+  chartLabel.alpha = 1
   
 end
 
@@ -388,7 +408,12 @@ function scene:create( event )
   menuScroll:insert(counterLabel)
   menuScroll:insert(chartLabel)
 
-  timer.performWithDelay(1000, moveItems)
+  if not composer.getSceneName( "previous" ) then
+    timer.performWithDelay(1000, moveItems)
+  else
+    moveItems2()
+  end
+  
     
 
    -- Initialize the scene here.

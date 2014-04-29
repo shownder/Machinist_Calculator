@@ -41,6 +41,8 @@ local function sceneSelect ( event )
 		composer.gotoScene( "bolt", { effect="fromTop", time=800} )
     elseif event.target.num == 6 then
 		composer.gotoScene( "counter", { effect="fromTop", time=800} )
+    elseif event.target.num == 7 then
+		composer.gotoScene( "charts", { effect="fromTop", time=800, params = {isOverlay = false},} )
    	end
    end
 end
@@ -358,7 +360,7 @@ function scene:create( event )
     defaultFile = "Images/chartMenu.png",
 		onRelease = sceneSelect,		
 		}
-	chartButt.num = 6
+	chartButt.num = 7
 	sceneGroup:insert(chartButt)
 	--counterButt.x = backEdgeX + 470
   chartButt.x = 470
@@ -372,7 +374,7 @@ function scene:create( event )
   chartLabel.x = 470
   chartLabel.y = back.contentHeight - 140
   chartLabel:setFillColor(0.15, 0.4, 0.729, 0.90)
-  chartLabel.num = 6
+  chartLabel.num = 7
   chartLabel:addEventListener ( "touch", sceneSelect )
   chartLabel.alpha = 0
   
@@ -407,12 +409,14 @@ function scene:create( event )
   menuScroll:insert(boltLabel)
   menuScroll:insert(counterLabel)
   menuScroll:insert(chartLabel)
+  
+  moveItems2()
 
-  if not composer.getSceneName( "previous" ) then
-    timer.performWithDelay(1000, moveItems)
-  else
-    moveItems2()
-  end
+--  if not composer.getSceneName( "previous" ) then
+--    timer.performWithDelay(1000, moveItems)
+--  else
+--    moveItems2()
+--  end
   
     
 

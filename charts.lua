@@ -14,9 +14,43 @@ local moveIntro
 local choiceTable, decEquiTable, uniTapTable
 local decEquiAnswer, uniTapAnswer
 local counter
-local menuHidden
+local menuHidden, topText, showing
 
 local menuHide, menuShow, goBack, openDecEqui, openUniTap
+
+local function onKeyEvent( event )
+
+  local phase = event.phase
+  local keyName = event.keyName
+   
+  if ( "back" == keyName and phase == "up" ) then
+    timer.performWithDelay(100,goBack2,1)
+  end
+  return true
+end
+
+local function goBack2()
+	
+  if (myData.isOverlay) then
+    myData.number = "Tap Me"
+    composer.hideOverlay()
+  else
+		composer.gotoScene( "menu", { effect="slideRight", time=800})
+  end
+		
+end
+
+local function goTop(event)
+  local phase = event.phase
+  
+  if "ended" == phase then
+    if showing == 1 then
+      decEqui:scrollToY({ y = 0})
+    elseif showing == 2 then
+      uniTap:scrollToY({ y = 0})
+    end
+  end
+end
 
 local function onRowRender( event )
 
@@ -28,7 +62,7 @@ local function onRowRender( event )
     local rowHeight = row.contentHeight
     local rowWidth = row.contentWidth
 
-    local rowTitle = display.newText( { parent = row, text = chart[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20, align = right} )
+    local rowTitle = display.newText( { parent = row, text = chart[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
     if row.index == 1 then
       rowTitle:setFillColor( 1 )
     elseif row.index == 2 then
@@ -42,32 +76,6 @@ local function onRowRender( event )
     rowTitle.x = 10
     rowTitle.y = rowHeight * 0.5
 end
-
---local function onRowRender2( event )
-
---    -- Get reference to the row group
---    local row = event.row
-
---    -- Cache the row "contentWidth" and "contentHeight" because the row bounds can change as children objects are added
---    local rowHeight = row.contentHeight
---    local rowWidth = row.contentWidth
---    
---    local rowTitle = display.newText( { parent = row, text = decEquiTable[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
---    if row.index == 1 then
---      rowTitle:setFillColor( 1 )
---    elseif row.index == 2 then
---      rowTitle:setFillColor( 0.15, 0.4, 0.729 )
---    else
---      rowTitle:setFillColor( 0 )
---    end
---    
---    -- Align the label left and vertically centered
---    rowTitle.anchorX = 0
---    rowTitle.x = 10
---    rowTitle.y = rowHeight * 0.5
---    
---    --decEquiCounter = decEquiCounter + 1
---end
 
 local function onRowTouch( event )
   local phase = event.phase
@@ -92,18 +100,20 @@ end
 local function onRowTouch2( event )
   local phase = event.phase
   local row = event.target
-  local event = event.target
+  local answer = event.row.params.answer
+  local id = event.row.params.table
   
   if "release" == phase then
     if row.index == 2 then
       timer.performWithDelay(500, menuShow)
-      if event._id == "decEqui" then
+      if id == "decEqui" then
         openDecEqui()
-      elseif event._id == "uniTap" then
+      elseif id == "uniTap" then
         openUniTap()
       end
     else
-      print(event.target.params.answer[row.index])
+      print(answer[row.index])
+      print(id)
     end
   end
 end
@@ -121,6 +131,7 @@ openDecEqui = function()
     decEqui.alpha = 1
     transition.to(decEqui, {y = display.contentCenterY, time = 500})
     menuHidden = true
+    showing = 1
   else
     transition.to(decEqui, {y = display.contentHeight * 2 + 10, time = 500})
     menuHidden = false
@@ -133,6 +144,7 @@ openUniTap = function()
     uniTap.alpha = 1
     transition.to(uniTap, {y = display.contentCenterY, time = 500})
     menuHidden = true
+    showing = 2
   else
     transition.to(uniTap, {y = display.contentHeight * 2 + 10, time = 500})
     menuHidden = false
@@ -162,6 +174,8 @@ end
 function scene:create( event )
 
    local sceneGroup = self.view
+   
+   Runtime:addEventListener( "key", onKeyEvent )
    
    isOverlay = event.params.isOverlay
    myData.isOverlay = isOverlay
@@ -285,7 +299,7 @@ function scene:create( event )
             rowHeight = rowHeight,
             rowColor = rowColor,
             lineColor = lineColor,
-            params = { chart = decEquiTable, answer = decEquiAnswer}
+            params = { chart = decEquiTable, answer = decEquiAnswer, table = "decEqui"}
            }
          )
      end    
@@ -345,11 +359,16 @@ function scene:create( event )
             rowHeight = rowHeight,
             rowColor = rowColor,
             lineColor = lineColor,
-            params = { chart = uniTapTable, answer = uniTapAnswer }
+            params = { chart = uniTapTable, answer = uniTapAnswer, table = "uniTap" }
            }
          )
      end
    
+   
+   local topText = display.newEmbossedText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - 35, y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
+   topText:setFillColor(1)
+   topText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
+   topText:addEventListener("touch", goTop)
    
 end
 
@@ -381,7 +400,7 @@ function scene:hide( event )
    elseif ( phase == "did" ) then
       
       if isOverlay then isOverlay = false end
-      
+      Runtime:removeEventListener( "key", onKeyEvent )
    end
 end
 

@@ -1,88 +1,88 @@
 Unified tapping drills (INCH)
 BACK
-#0-80UNF Tap-------Drill 3/64 - 0.0469
-#0-80UNF RollTap---Drill #50 - 0.055
-#1-64UNC Tap-------Drill #53 -  0.0595
-#1-64UNC RollTap---Drill #51 -  0.067
-#1-72UNF Tap-------Drill #53 -  0.0595
-#1-72UNF RollTap---Drill #51 -  0.067
-#2-56UNC Tap-------Drill #50 -  0.07
-#2-56UNC RollTap---Drill 5/64 -  0.0781
-#2-64UNF Tap-------Drill #50 - 0.07
-#2-64UNF RollTap---Drill #47 -  0.0785
-#3-48UNC Tap-------Drill #47 - 0.0785
-#3-48UNC RollTap---Drill #43 - 0.089
-#3-56UNF Tap-------Drill #45 - 0.082
-#3-56UNF RollTap---Drill #43 - 0.089
-#4-40UNC Tap-------Drill #43 - 0.089
-#4-40UNC RollTap---Drill #39 - 0.0995
-#4-48UNF Tap-------Drill #42 - 0.0935
-#4-48UNF RollTap---Drill #38 - 0.1015
-#5-40UNC Tap-------Drill #38 - 0.1015
-#5-40UNC RollTap---Drill #33 - 0.113
-#5-44UNF Tap-------Drill #37 - 0.104
-#5-44UNF RollTap---Drill #33 - 0.113
-#6-32UNC Tap-------Drill 7/64 - 0.1094
-#6-32UNC RollTap---Drill 1/8 - 0.125
-#6-40UNF Tap-------Drill #33 - 0.113
-#6-40UNF RollTap---Drill 1/8 - 0.125
-#8-32UNC Tap-------Drill #29 - 0.136
-#8-32UNC RollTap---Drill #25 - 0.1495
-#8-36UNF Tap-------Drill #28 - 0.1405
-#8-36UNF RollTap---Drill #24 - 0.152
-#10-24UNC Tap------Drill #24 - 0.152
-#10-24UNC RollTap--Drill 11/64 - 0.1719
-#10-32UNF Tap------Drill #20 - 0.161
-#10-32UNF RollTap--Drill #16 - 0.177
-#12-24UNC Tap------Drill #16 - 0.177
-#12-24UNC RollTap--Drill #9  - 0.196
-#12-28UNF Tap------Drill #14 - 0.182
-#12-28UNF RollTap--Drill #8  - 0.199
-1/4-20UNC Tap------Drill 13/64 - 0.2031
-1/4-20UNC RollTap--Drill #1  - 0.228
-1/4-28UNF Tap------Drill #3  - 0.213
-1/4-28UNF RollTap--Drill A   - 0.234
-5/16-18UNC Tap-----Drill G   - 0.261
-5/16-18UNC RollTap-Drill L   - 0.29
-5/16-24UNF Tap-----Drill I   - 0.272
-5/16-24UNF RollTap-Drill M   - 0.295
-3/8-16UNC Tap------Drill 5/16 - 0.3125
-3/8-16UNC RollTap--Drill S   - 0.348
-3/8-24UNF Tap------Drill Q   - 0.332
-3/8-24UNF RollTap--Drill T   - 0.358
-7/16-14UNC Tap-----Drill U   - 0.368
-7/16-14UNC RollTap-Drill 13/32 - 0.4062
-7/16-20UNF Tap-----Drill 13/32 - 0.4062
-7/16-20UNF RollTap-Drill Z   - 0.413
-1/2-13UNC Tap------Drill 27/64 - 0.4219
-1/2-13UNC RollTap--Drill 15/32 - 0.4687
-1/2-20UNF Tap------Drill 29/64 - 0.4531
-1/2-20UNF RollTap--Drill 12.1mm - 0.4764
-9/16-12UNC Tap-----Drill 31/64 - 0.4844
-9/16-12UNC RollTap-Drill 17/32 - 0.5312
-9/16-18UNF Tap-----Drill 33/64 - 0.5156
-9/16-18UNF RollTap-Drill 17/32 - 0.5312
-5/8-11UNC Tap------Drill 17/32 - 0.5312
-5/8-11UNC RollTap--Drill 37/64 - 0.5781
-5/8-18UNF Tap------Drill 37/64 - 0.5781
-5/8-18UNF RollTap--Drill 19/32 - 0.5937
-3/4-10UNC Tap------Drill 21/32 - 0.6562
-3/4-10UNC RollTap--Drill 45/64 - 0.7031
-3/4-16UNF Tap------Drill 11/16 - 0.6875
-3/4-16UNF RollTap--Drill 23/32 - 0.7187
-7/8-9UNC Tap-------Drill 49/64 - 0.7656
-7/8-14UNF Tap------Drill 13/16 - 0.8125
-1- 8UNC Tap--------Drill 7/8   - 0.875
-1-12UNF Tap--------Drill 59/64 - 0.9219
-1-14UNS Tap--------Drill 15/16 - 0.9375
-1-1/8-7UNC Tap-----Drill 63/64 - 0.9844
-1-1/8-12UNF Tap----Drill 1-3/64 - 1.0469
-1-1/4-7UNC Tap-----Drill 1-7/64 - 1.1094
-1-1/4-12UNF Tap----Drill 1-11/64 - 1.1719
-1-3/8-6UNC Tap-----Drill 1-7/32 - 1.2188
-1-3/8-12UNF Tap----Drill 1-19/64 - 1.2969
-1-1/2-6UNC Tap-----Drill 1-11/32 - 1.3438
-1-1/2-12UNF Tap----Drill 1-27/64 - 1.4219
-1-3/4-5UNC Tap-----Drill 1-9/16 - 1.5625
-1-3/4-16UNC Tap----Drill 1-11/16 - 1.6875
-2-4.5UNC Tap-------Drill 1-25/32 - 1.7812
+#0 - 80UNF Tap-------Drill 3/64 - 0.0469
+#0 - 80UNF RollTap---Drill #50 - 0.055
+#1 - 64UNC Tap-------Drill #53 -  0.0595
+#1 - 64UNC RollTap---Drill #51 -  0.067
+#1 - 72UNF Tap-------Drill #53 -  0.0595
+#1 - 72UNF RollTap---Drill #51 -  0.067
+#2 - 56UNC Tap-------Drill #50 -  0.07
+#2 - 56UNC RollTap---Drill 5/64 -  0.0781
+#2 - 64UNF Tap-------Drill #50 - 0.07
+#2 - 64UNF RollTap---Drill #47 -  0.0785
+#3 - 48UNC Tap-------Drill #47 - 0.0785
+#3 - 48UNC RollTap---Drill #43 - 0.089
+#3 - 56UNF Tap-------Drill #45 - 0.082
+#3 - 56UNF RollTap---Drill #43 - 0.089
+#4 - 40UNC Tap-------Drill #43 - 0.089
+#4 - 40UNC RollTap---Drill #39 - 0.0995
+#4 - 48UNF Tap-------Drill #42 - 0.0935
+#4 - 48UNF RollTap---Drill #38 - 0.1015
+#5 - 40UNC Tap-------Drill #38 - 0.1015
+#5 - 40UNC RollTap---Drill #33 - 0.113
+#5 - 44UNF Tap-------Drill #37 - 0.104
+#5 - 44UNF RollTap---Drill #33 - 0.113
+#6 - 32UNC Tap-------Drill 7/64 - 0.1094
+#6 - 32UNC RollTap---Drill 1/8 - 0.125
+#6 - 40UNF Tap-------Drill #33 - 0.113
+#6 - 40UNF RollTap---Drill 1/8 - 0.125
+#8 - 32UNC Tap-------Drill #29 - 0.136
+#8 - 32UNC RollTap---Drill #25 - 0.1495
+#8 - 36UNF Tap-------Drill #28 - 0.1405
+#8 - 36UNF RollTap---Drill #24 - 0.152
+#10 - 24UNC Tap------Drill #24 - 0.152
+#10 - 24UNC RollTap--Drill 11/64 - 0.1719
+#10 - 32UNF Tap------Drill #20 - 0.161
+#10 - 32UNF RollTap--Drill #16 - 0.177
+#12 - 24UNC Tap------Drill #16 - 0.177
+#12 - 24UNC RollTap--Drill #9  - 0.196
+#12 - 28UNF Tap------Drill #14 - 0.182
+#12 - 28UNF RollTap--Drill #8  - 0.199
+1/4 - 20UNC Tap------Drill 13/64 - 0.2031
+1/4 - 20UNC RollTap--Drill #1  - 0.228
+1/4 - 28UNF Tap------Drill #3  - 0.213
+1/4 - 28UNF RollTap--Drill A   - 0.234
+5/16 - 18UNC Tap-----Drill G   - 0.261
+5/16 - 18UNC RollTap-Drill L   - 0.29
+5/16 - 24UNF Tap-----Drill I   - 0.272
+5/16 - 24UNF RollTap-Drill M   - 0.295
+3/8 - 16UNC Tap------Drill 5/16 - 0.3125
+3/8 - 16UNC RollTap--Drill S   - 0.348
+3/8 - 24UNF Tap------Drill Q   - 0.332
+3/8 - 24UNF RollTap--Drill T   - 0.358
+7/16 - 14UNC Tap-----Drill U   - 0.368
+7/16 - 14UNC RollTap-Drill 13/32 - 0.4062
+7/16 - 20UNF Tap-----Drill 13/32 - 0.4062
+7/16 - 20UNF RollTap-Drill Z   - 0.413
+1/2 - 13UNC Tap------Drill 27/64 - 0.4219
+1/2 - 13UNC RollTap--Drill 15/32 - 0.4687
+1/2 - 20UNF Tap------Drill 29/64 - 0.4531
+1/2 - 20UNF RollTap--Drill 12.1mm - 0.4764
+9/16 - 12UNC Tap-----Drill 31/64 - 0.4844
+9/16 - 12UNC RollTap-Drill 17/32 - 0.5312
+9/16 - 18UNF Tap-----Drill 33/64 - 0.5156
+9/16 - 18UNF RollTap-Drill 17/32 - 0.5312
+5/8 - 11UNC Tap------Drill 17/32 - 0.5312
+5/8 - 11UNC RollTap--Drill 37/64 - 0.5781
+5/8 - 18UNF Tap------Drill 37/64 - 0.5781
+5/8 - 18UNF RollTap--Drill 19/32 - 0.5937
+3/4 - 10UNC Tap------Drill 21/32 - 0.6562
+3/4 - 10UNC RollTap--Drill 45/64 - 0.7031
+3/4 - 16UNF Tap------Drill 11/16 - 0.6875
+3/4 - 16UNF RollTap--Drill 23/32 - 0.7187
+7/8 - 9UNC Tap-------Drill 49/64 - 0.7656
+7/8 - 14UNF Tap------Drill 13/16 - 0.8125
+1 - 8UNC Tap--------Drill 7/8   - 0.875
+1 - 12UNF Tap--------Drill 59/64 - 0.9219
+1 - 14UNS Tap--------Drill 15/16 - 0.9375
+1 - 1/8-7UNC Tap-----Drill 63/64 - 0.9844
+1 - 1/8-12UNF Tap----Drill 1-3/64 - 1.0469
+1 - 1/4-7UNC Tap-----Drill 1-7/64 - 1.1094
+1 - 1/4-12UNF Tap----Drill 1-11/64 - 1.1719
+1 - 3/8-6UNC Tap-----Drill 1-7/32 - 1.2188
+1 - 3/8-12UNF Tap----Drill 1-19/64 - 1.2969
+1 - 1/2-6UNC Tap-----Drill 1-11/32 - 1.3438
+1 - 1/2-12UNF Tap----Drill 1-27/64 - 1.4219
+1 - 3/4-5UNC Tap-----Drill 1-9/16 - 1.5625
+1 - 3/4-16UNC Tap----Drill 1-11/16 - 1.6875
+2 - 4.5UNC Tap-------Drill 1-25/32 - 1.7812

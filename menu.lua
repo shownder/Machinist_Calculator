@@ -171,11 +171,6 @@ function scene:create( event )
   topBar.anchorX = 0
   topBar.anchorY = 0.5
   
---  botBar = display.newRect( sceneGroup, display.contentWidth, display.contentCenterY, 30, display.contentHeight )
---  botBar:setFillColor(0.15, 0.4, 0.729, 0.75)
---  botBar.anchorX = 1
---  botBar.anchorY = 0.5
-  
   facebookButt = display.newImageRect(sceneGroup, "Images/facebook.png", 56, 56)
   facebookButt:rotate(-90)
   facebookButt.x = backEdgeX + 75

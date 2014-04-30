@@ -1,0 +1,14 @@
+Taper pipe tapping drills (INCH)
+BACK
+1/16-27NPT Tap------Drill D     - 0.2460
+1/8-27NPT Tap-------Drill R     - 0.3390
+1/4-18NPT Tap-------Drill 7/16  - 0.4375
+3/8-18NPT Tap-------Drill 37/64 - 0.5781
+1/2-14NPT Tap-------Drill 23/32 - 0.7188
+3/4-14NPT Tap-------Drill 59/64 - 0.9219
+1-11.5NPT Tap-------Drill 1-5/32  - 1.1562
+1-1/4-11.5NPT Tap---Drill 1-1/2     - 1.5000
+1-1/2-11.5NPT Tap---Drill 1-47/64 - 1.7344
+2-11.5NPT Tap-------Drill 2-7/32  - 2.2188
+2-1/2-8NPT Tap------Drill 2-5/8   - 2.6250
+3-8NPT Tap----------Drill 3-1/4    - 3.2500

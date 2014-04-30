@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require ( "widget" )
-widget.setTheme("widget_theme_ios")
+--widget.setTheme("widget_theme_ios")
 local loadsave = require("loadsave")
 local myData = require("myData")
 display.setStatusBar(display.HiddenStatusBar)
@@ -42,7 +42,7 @@ local function sceneSelect ( event )
     elseif event.target.num == 6 then
 		composer.gotoScene( "counter", { effect="fromTop", time=800} )
     elseif event.target.num == 7 then
-		composer.gotoScene( "charts", { effect="fromTop", time=800, params = {isOverlay = false},} )
+		composer.gotoScene( "charts", { effect="fromTop", time=800, params = {isOverlay = false}} )
    	end
    end
 end
@@ -110,7 +110,7 @@ local function moveItems()
   transition.fadeIn(counterLabel, {time=1000})
   transition.fadeIn(chartLabel, {time=1100})
   
-  --menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
+  menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
   
 end
 
@@ -171,10 +171,10 @@ function scene:create( event )
   topBar.anchorX = 0
   topBar.anchorY = 0.5
   
-  facebookButt = display.newImageRect(sceneGroup, "Images/facebook.png", 56, 56)
+  facebookButt = display.newImageRect(sceneGroup, "Images/facebook.png", 42, 42)
   facebookButt:rotate(-90)
-  facebookButt.x = backEdgeX + 75
-  facebookButt.y = backEdgeY + 50
+  facebookButt.x = backEdgeX + 95
+  facebookButt.y = backEdgeY + 55
   facebookButt:addEventListener ( "touch", goToFacebook )
   
   rightButt = widget.newButton
@@ -261,34 +261,6 @@ function scene:create( event )
   sineLabel:addEventListener ( "touch", sceneSelect )
   sineLabel.alpha = 0
   
-  speedButt = widget.newButton
-	{
-		width = 56,
-    height = 56,
-    left = 0,
-		top = 0,
-		id = "speedButt",
-    defaultFile = "Images/speedMenu.png",
-		onRelease = sceneSelect,		
-		}
-	speedButt.num = 4
-	sceneGroup:insert(speedButt)
-	--speedButt.x = backEdgeX + 400
-  speedButt.x = 260
-	speedButt.y = display.contentHeight + 100
-  speedButt:rotate(-90)
-  speedButt.alpha = 0.75
-  
-  speedLabel = display.newText( { parent = sceneGroup, text = "Speeds & Feeds", 0, 0, font = "BerlinSansFB-Reg", fontSize = 20, width = 100})
-  speedLabel:rotate(-90)
-  --speedLabel.x = backEdgeX + 400
-  speedLabel.x = 260
-  speedLabel.y = back.contentHeight - 140
-  speedLabel:setFillColor(0.15, 0.4, 0.729, 0.90)
-  speedLabel.num = 4
-  speedLabel:addEventListener ( "touch", sceneSelect )
-  speedLabel.alpha = 0
-  
   boltButt = widget.newButton
 	{
 		width = 56,
@@ -302,7 +274,7 @@ function scene:create( event )
 	boltButt.num = 5
 	sceneGroup:insert(boltButt)
 	--boltButt.x = backEdgeX + 470
-  boltButt.x = 330
+  boltButt.x = 260
 	boltButt.y = display.contentHeight + 100
   boltButt:rotate(-90)
   boltButt.alpha = 0.75
@@ -310,12 +282,40 @@ function scene:create( event )
   boltLabel = display.newText( { parent = sceneGroup, text = "Bolt Circle", 0, 0, font = "BerlinSansFB-Reg", fontSize = 20, width = 100})
   boltLabel:rotate(-90)
   --boltLabel.x = backEdgeX + 470
-  boltLabel.x = 330
+  boltLabel.x = 260
   boltLabel.y = back.contentHeight - 140
   boltLabel:setFillColor(0.15, 0.4, 0.729, 0.90)
   boltLabel.num = 5
   boltLabel:addEventListener ( "touch", sceneSelect )
   boltLabel.alpha = 0
+  
+  speedButt = widget.newButton
+	{
+		width = 56,
+    height = 56,
+    left = 0,
+		top = 0,
+		id = "speedButt",
+    defaultFile = "Images/speedMenu.png",
+		onRelease = sceneSelect,		
+		}
+	speedButt.num = 4
+	sceneGroup:insert(speedButt)
+	--speedButt.x = backEdgeX + 400
+  speedButt.x = 330
+	speedButt.y = display.contentHeight + 100
+  speedButt:rotate(-90)
+  speedButt.alpha = 0.75
+  
+  speedLabel = display.newText( { parent = sceneGroup, text = "Speeds & Feeds", 0, 0, font = "BerlinSansFB-Reg", fontSize = 20, width = 100})
+  speedLabel:rotate(-90)
+  --speedLabel.x = backEdgeX + 400
+  speedLabel.x = 330
+  speedLabel.y = back.contentHeight - 140
+  speedLabel:setFillColor(0.15, 0.4, 0.729, 0.90)
+  speedLabel.num = 4
+  speedLabel:addEventListener ( "touch", sceneSelect )
+  speedLabel.alpha = 0
   
   counterButt = widget.newButton
 	{
@@ -407,11 +407,11 @@ function scene:create( event )
   
   moveItems2()
 
---  if not composer.getSceneName( "previous" ) then
---    timer.performWithDelay(1000, moveItems)
---  else
---    moveItems2()
---  end
+  if not composer.getSceneName( "previous" ) then
+    timer.performWithDelay(1000, moveItems)
+  else
+    moveItems2()
+  end
   
     
 

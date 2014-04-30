@@ -437,6 +437,8 @@ function scene:create( event )
   
 	num1 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num1",
 		label = "1",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -450,6 +452,8 @@ function scene:create( event )
 		
 	num2 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num2",
 		label = "2",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -463,6 +467,8 @@ function scene:create( event )
 		
 	num3 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num3",
 		label = "3",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -476,6 +482,8 @@ function scene:create( event )
 		
 	num4 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num4",
 		label = "4",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -489,6 +497,8 @@ function scene:create( event )
 		
 	num5 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num5",
 		label = "5",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -502,6 +512,8 @@ function scene:create( event )
 		
 	num6 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num6",
 		label = "6",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -515,6 +527,8 @@ function scene:create( event )
 		
 	num7 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num7",
 		label = "7",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -528,6 +542,8 @@ function scene:create( event )
 		
 	num8 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num8",
 		label = "8",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -541,6 +557,8 @@ function scene:create( event )
 		
 	num9 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num9",
 		label = "9",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -554,6 +572,8 @@ function scene:create( event )
 		
 	dec = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "dec",
 		label = ".",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -573,6 +593,8 @@ function scene:create( event )
 		
 	num0 = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "num0",
 		label = "0",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -586,6 +608,8 @@ function scene:create( event )
 		
 	neg = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "neg",
 		label = "-",
 		labelColor = { default = {0.153, 0.4, 0.729}, over = {1}},
@@ -605,6 +629,8 @@ function scene:create( event )
 	
 	enter = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		labelColor = { default = {1}, over = {0.153, 0.4, 0.729} },
 		label = "GO",
 		id = "enter",
@@ -617,6 +643,8 @@ function scene:create( event )
 
   backButt = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		id = "back",
 		label = "DEL",
 		labelColor = { default = {1}, over = {0.153, 0.4, 0.729}},
@@ -630,6 +658,8 @@ function scene:create( event )
 		
 	clear = widget.newButton
 	{
+    width = 50,
+    height = 50,
 		labelColor = { default = {0.777, 0.267, 0.267}, over = {1} },
 		label = "C",
 		id = "clear",

@@ -23,7 +23,7 @@ local feedFlag, speedFlag
 
 local stepSheet, buttSheet, tapSheet
 local rpmTap, diamTap, revTap, surfaceSpeedTap, minuteTap
-local options
+local options, charts
 
 local calc, clac2, addListeners, removeListeners, toMill, toInch, goBack2, calculate
 
@@ -38,30 +38,6 @@ local function onKeyEvent( event )
        timer.performWithDelay(100,goBack2,1)
    end
    return true
-end
-
-local function optionsMove(event)
-	local phase = event.phase
-  if "ended" == phase then
-		
-    if not options then
-      options = true
-      transition.to ( optionsBack, { time = 200, x = -50 } )
-      transition.to ( optionsBack, { time = 200, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=160 } )
-      transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
-      decLabel:setFillColor(0.15, 0.4, 0.729)
-		elseif options then 
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-    end
-  end
 end
 
 local function resetCalc(event)
@@ -98,6 +74,62 @@ local function resetCalc(event)
       decLabel:setFillColor(1)
 			options = false
 		end		
+end
+
+local function alertListener2 ( event )
+	if "clicked" == event.action then
+    local i = event.index
+    if 1 == i then
+      timer.performWithDelay( 1000, resetCalc("ended") )
+    end
+  end
+end
+
+local function goToCharts(event)
+  local phase = event.phase
+  
+  if "ended" == phase then
+    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
+      native.showAlert ("Continue?", "Choosing new Diameter will reset all values!", { "OK", "Cancel" }, alertListener2 )
+    else
+      if options then
+        transition.to ( optionsGroup, { time = 100, alpha = 0} )
+        transition.to ( backGroup, { time = 200, x=0 } )
+        transition.to ( optionsBack, { time = 200, x = -170 } )
+        transition.to ( optionsBack, { time = 200, y = -335 } )
+        transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+        decLabel:setFillColor(1)
+        options = false
+      end	
+      whatTap = 2
+      myData.isOverlay = true
+      composer.showOverlay( "charts", { effect="fromRight", time=100, isModal = true }  )
+    end
+  end  
+end
+
+local function optionsMove(event)
+	local phase = event.phase
+  if "ended" == phase then
+		
+    if not options then
+      options = true
+      transition.to ( optionsBack, { time = 200, x = -50 } )
+      transition.to ( optionsBack, { time = 200, y = 0 } )
+			transition.to ( optionsGroup, { time = 500, alpha = 1} )
+      transition.to ( backGroup, { time = 200, x=160 } )
+      transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
+      decLabel:setFillColor(0.15, 0.4, 0.729)
+		elseif options then 
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+			options = false
+    end
+  end
 end
 
 local function alertListener ( event )
@@ -232,7 +264,7 @@ end
 function scene:calculate()
   local screenGroup = self.view
   
-      myData.isOverlay = false
+  myData.isOverlay = false
     
   if myData.number ~= "Tap Me" then    
           	
@@ -286,6 +318,11 @@ function scene:calculate()
         aniTable[i].alpha = 0
       end
     end
+    
+--    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
+--      charts:setEnabled(false)
+--      charts.alpha = 0.5
+--    end
     
   end
 end
@@ -518,6 +555,23 @@ function scene:create( event )
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 115
 	measureLabel.y = backEdgeY + 95
+  
+  charts = widget.newButton
+	{
+		id = "chartsButt",
+    width = 90,
+    height = 37,
+		label = "Drill Charts",
+		labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
+		font = "BerlinSansFB-Reg",
+		fontSize = 16,
+    defaultFile = "Images/chartButtD.png",
+    overFile = "Images/chartButtO.png",
+		onEvent = goToCharts,
+		}
+	backGroup:insert(charts)
+	charts.x = backEdgeX + 260
+	charts.y = backEdgeY + 110
 		
 	rpm = display.newText( textOptionsR )
   backGroup:insert(rpm)

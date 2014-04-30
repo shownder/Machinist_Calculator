@@ -8,15 +8,15 @@ local myData = require("myData")
 -- unless "composer.removeScene()" is called.
 ---------------------------------------------------------------------------------
 
-local chartChoice, taperPipe, decEqui, uniTap, isoMetric
+local chartChoice, decEqui, uniTap, taperTap, isoMetric
 local back, isOverlay, backEdgeX, backEdgeY
 local moveIntro
-local choiceTable, decEquiTable, uniTapTable
-local decEquiAnswer, uniTapAnswer
+local choiceTable, decEquiTable, uniTapTable, taperTapTable, isoTable
+local decEquiAnswer, uniTapAnswer, taperTapAnswer, isoAnswer
 local counter
-local menuHidden, topText, showing
+local menuHidden, topText, showing, topFade
 
-local menuHide, menuShow, goBack, openDecEqui, openUniTap
+local menuHide, menuShow, goBack, openDecEqui, openUniTap, openTaperTap, openIso
 
 local function onKeyEvent( event )
 
@@ -48,6 +48,10 @@ local function goTop(event)
       decEqui:scrollToY({ y = 0})
     elseif showing == 2 then
       uniTap:scrollToY({ y = 0})
+    elseif showing == 3 then
+      taperTap:scrollToY({ y = 0})
+    elseif showing == 4 then
+      isoTap:scrollToY({ y = 0})
     end
   end
 end
@@ -57,12 +61,47 @@ local function onRowRender( event )
     -- Get reference to the row group
     local row = event.row
     local chart = event.row.params.chart
+    local answer = event.row.params.answer
 
     -- Cache the row "contentWidth" and "contentHeight" because the row bounds can change as children objects are added
     local rowHeight = row.contentHeight
     local rowWidth = row.contentWidth
 
     local rowTitle = display.newText( { parent = row, text = chart[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
+    if row.index > 2 then
+      local rowAnswer = display.newText( { parent = row, text = answer[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 22} )
+      rowAnswer:setFillColor(0.757, 0, 0)
+      rowAnswer.anchorX = 0
+      rowAnswer.x = rowTitle.contentWidth + 15
+      rowAnswer.y = rowHeight * 0.5
+    end
+    
+    if row.index == 1 then
+      rowTitle:setFillColor( 1 )
+    elseif row.index == 2 then
+      rowTitle:setFillColor( 0.15, 0.4, 0.729 )
+    else
+      rowTitle:setFillColor( 0 )
+    end
+    
+    -- Align the label left and vertically centered
+    rowTitle.anchorX = 0    
+    rowTitle.x = 10    
+    rowTitle.y = rowHeight * 0.5
+    return true
+end
+
+local function onRowRender2( event )
+
+    -- Get reference to the row group
+    local row = event.row
+    local chart = event.row.params.chart
+
+    -- Cache the row "contentWidth" and "contentHeight" because the row bounds can change as children objects are added
+    local rowHeight = row.contentHeight
+    local rowWidth = row.contentWidth
+
+    local rowTitle = display.newText( { parent = row, text = choiceTable[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
     if row.index == 1 then
       rowTitle:setFillColor( 1 )
     elseif row.index == 2 then
@@ -75,6 +114,7 @@ local function onRowRender( event )
     rowTitle.anchorX = 0
     rowTitle.x = 10
     rowTitle.y = rowHeight * 0.5
+    return true
 end
 
 local function onRowTouch( event )
@@ -85,14 +125,25 @@ local function onRowTouch( event )
     print(row.index)  
   elseif "release" == phase then
     if row.index == 2 then
-      transition.to(chartChoice, {x = chartChoice.contentWidth - chartChoice.contentWidth * 2})
+      if myData.isOverlay then
+        myData.number = "Tap Me"
+        composer.hideOverlay(true, "slideRight", 500 )
+      else
       timer.performWithDelay(500, goBack)
+      transition.to(chartChoice, {x = chartChoice.contentWidth - chartChoice.contentWidth * 2})
+      end
     elseif row.index == 3 then
       menuHide()
       timer.performWithDelay(500, openDecEqui)
     elseif row.index == 4 then
       menuHide()
-      timer.performWithDelay(500, openUniTap) 
+      timer.performWithDelay(500, openUniTap)
+    elseif row.index == 5 then
+      menuHide()
+      timer.performWithDelay(500, openTaperTap)
+    elseif row.index == 6 then
+      menuHide()
+      timer.performWithDelay(500, openIso)
     end
   end
 end
@@ -100,8 +151,8 @@ end
 local function onRowTouch2( event )
   local phase = event.phase
   local row = event.target
-  local answer = event.row.params.answer
-  local id = event.row.params.table
+  local answer = event.target.params.answer
+  local id = event.target.params.table
   
   if "release" == phase then
     if row.index == 2 then
@@ -110,10 +161,18 @@ local function onRowTouch2( event )
         openDecEqui()
       elseif id == "uniTap" then
         openUniTap()
+      elseif id == "taperTap" then
+        openTaperTap()
+      elseif id == "isoTap" then
+        openIso()  
       end
     else
       print(answer[row.index])
-      print(id)
+      if myData.isOverlay then
+        local answer = answer[row.index]
+        myData.number = answer
+        composer.hideOverlay(true, "slideLeft", 500 )
+      end
     end
   end
 end
@@ -128,7 +187,7 @@ end
 openDecEqui = function()
   
   if not menuHidden then
-    decEqui.alpha = 1
+    decEqui.alpha = 0.7
     transition.to(decEqui, {y = display.contentCenterY, time = 500})
     menuHidden = true
     showing = 1
@@ -141,7 +200,7 @@ end
 openUniTap = function()
   
   if not menuHidden then
-    uniTap.alpha = 1
+    uniTap.alpha = 0.7
     transition.to(uniTap, {y = display.contentCenterY, time = 500})
     menuHidden = true
     showing = 2
@@ -151,14 +210,42 @@ openUniTap = function()
   end
 end
 
+openTaperTap = function()
+  
+  if not menuHidden then
+    taperTap.alpha = 0.7
+    transition.to(taperTap, {y = display.contentCenterY, time = 500})
+    menuHidden = true
+    showing = 3
+  else
+    transition.to(taperTap, {y = display.contentHeight * 2 + 10, time = 500})
+    menuHidden = false
+  end
+end
+
+openIso = function()
+  
+  if not menuHidden then
+    isoTap.alpha = 0.7
+    transition.to(isoTap, {y = display.contentCenterY, time = 500})
+    menuHidden = true
+    showing = 4
+  else
+    transition.to(isoTap, {y = display.contentHeight * 2 + 10, time = 500})
+    menuHidden = false
+  end
+end
+
 menuHide = function()
   
    transition.to(chartChoice, {x = chartChoice.contentWidth - chartChoice.contentWidth * 2, time = 500})
+   transition.fadeIn( topText, {time = 1200})
 
 end
 
 menuShow = function()
   
+   transition.fadeOut( topText, {time = 50})
    transition.to(chartChoice, {x = chartChoice.contentWidth / 2, time = 500})
 
 end
@@ -177,21 +264,28 @@ function scene:create( event )
    
    Runtime:addEventListener( "key", onKeyEvent )
    
-   isOverlay = event.params.isOverlay
-   myData.isOverlay = isOverlay
+   if myData.isOverlay then
+     print("true")
+   else
+     print("false")
+   end   
    
    choiceTable = {}
    decEquiTable = {}
    uniTapTable = {}
+   taperTapTable = {}
+   isoTable = {}
    
    decEquiAnswer = {}
    uniTapAnswer = {}
+   taperTapAnswer = {}
+   isoAnswer = {}
    
    counter = 1
    
    menuHidden = false
    
-  if not isOverlay then
+  if not myData.isOverlay then
     back = display.newImageRect( sceneGroup, "backgrounds/background.png", 570, 360 )
     back.x = display.contentCenterX
     back.y = display.contentCenterY
@@ -205,112 +299,113 @@ function scene:create( event )
   choiceTable[4] = "Unified Tapping Drills (INCH)"
   choiceTable[5] = "Taper Pipe Tapping Drills (INCH)"
   choiceTable[6] = "ISO Metric Tapping Drills (MM)"
-
   
-  
-   chartChoice = widget.newTableView(
+  chartChoice = widget.newTableView
      {
        left = 0,
        top = 0,
        width = display.contentWidth,
        height = display.contentHeight,
        onRowTouch = onRowTouch,
-       onRowRender = onRowRender,
+       onRowRender = onRowRender2,
        hideScrollBar = false,
-       }
-     )
-     sceneGroup:insert(chartChoice)
-     chartChoice.x = chartChoice.contentWidth - chartChoice.contentWidth * 2
+     }
+  sceneGroup:insert(chartChoice)
+  chartChoice.alpha = 0
+  chartChoice.x = chartChoice.contentWidth - chartChoice.contentWidth * 2
+  
+  transition.to(chartChoice, {alpha = 0.7, time = 500})
+
+  timer.performWithDelay(300, moveIntro)
+  
      
-     timer.performWithDelay(600, moveIntro)
-     
-     for i = 1, 6, 1 do
+  for i = 1, 6, 1 do
        
-       local isCategory = false
-       local rowHeight = display.contentHeight / 6
-       local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
-       local lineColor = { 0.15, 0.4, 0.729 }
+    local isCategory = false
+    local rowHeight = display.contentHeight / 6
+    local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+    local lineColor = { 0.15, 0.4, 0.729 }
        
-       if ( i == 1 ) then
-         isCategory = true
-         rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
-         lineColor = { 1, 0, 0 }
-       end
+    if ( i == 1 ) then
+      isCategory = true
+      rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
+      lineColor = { 1, 0, 0 }
+    end
        
-           chartChoice:insertRow(
-           {
-            isCategory = isCategory,
-            rowHeight = rowHeight,
-            rowColor = rowColor,
-            lineColor = lineColor,
-            params = { chart =  choiceTable}
-           }
-           )
-     end
-     
-     --Start Decimal Equivalents
-     
-     decEqui = widget.newTableView(
-     {
-       id = "decEqui",
-       left = 0,
-       top = display.contentHeight + 10,
-       width = display.contentWidth,
-       height = display.contentHeight,
-       onRowTouch = onRowTouch2,
-       onRowRender = onRowRender,
-       hideScrollBar = false,
-       }
-     )
-     sceneGroup:insert(decEqui)
-     decEqui.alpha = 0
-     
-     local path = system.pathForFile( "charts/DecEqui.txt")
-     local file = io.open( path, "r")
-     for line in file:lines() do
-       decEquiTable[counter] = line
-       counter = counter + 1
-     end  
-     
-     for i = 3, 170, 1 do
-       local temp = string.find(decEquiTable[i], ".", 1, true)
-       decEquiAnswer[i] = string.sub(decEquiTable[i], temp - 1)
-     end
-     
-     for i = 1, 170, 1 do
-       
-       local isCategory = false
-       local rowHeight = display.contentHeight / 6
-       local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
-       local lineColor = { 0.15, 0.4, 0.729 }
-       
-       if ( i == 1 ) then
-         isCategory = true
-         rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
-         lineColor = { 1, 0, 0 }
-       elseif (i == 2 ) then
-         rowColor = { default={ 0.8, 0.885, 1, 0.95 } }
-         lineColor = { 0.15, 0.4, 0.729 }
-       end       
-       
-       decEqui:insertRow(
-           {
-            isCategory = isCategory,
-            rowHeight = rowHeight,
-            rowColor = rowColor,
-            lineColor = lineColor,
-            params = { chart = decEquiTable, answer = decEquiAnswer, table = "decEqui"}
-           }
-         )
-     end    
-     
-     counter = 1
-     
-    --End Decimal Equivalents
+    chartChoice:insertRow
+    {
+      isCategory = isCategory,
+      rowHeight = rowHeight,
+      rowColor = rowColor,
+      lineColor = lineColor,
+      params = { chart =  choiceTable}
+    }
     
-    --Start Unified Tapping
-    
-    uniTap = widget.newTableView(
+  end
+     
+-- --Start Decimal Equivalents
+--     
+  decEqui = widget.newTableView
+  {
+    id = "decEqui",
+    left = 0,
+    top = display.contentHeight + 10,
+    width = display.contentWidth,
+    height = display.contentHeight,
+    onRowTouch = onRowTouch2,
+    onRowRender = onRowRender,
+    hideScrollBar = false,
+    }
+  sceneGroup:insert(decEqui)
+  decEqui.alpha = 0
+  
+  local path = system.pathForFile( "charts/DecEqui.txt")
+  local file = io.open( path, "r")
+  for line in file:lines() do
+    decEquiTable[counter] = line
+    counter = counter + 1
+  end  
+     
+  for i = 3, 170, 1 do
+    local temp = string.find(decEquiTable[i], ".", 1, true)
+    decEquiAnswer[i] = string.sub(decEquiTable[i], temp - 1)
+    decEquiTable[i] = string.sub(decEquiTable[i], 1, temp - 2 )
+  end
+     
+  for i = 1, 170, 1 do
+       
+    local isCategory = false
+    local rowHeight = display.contentHeight / 6
+    local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+    local lineColor = { 0.15, 0.4, 0.729 }
+       
+    if ( i == 1 ) then
+      isCategory = true
+      rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
+      lineColor = { 1, 0, 0 }
+    elseif (i == 2 ) then
+      rowColor = { default={ 0.8, 0.885, 1, 0.95 } }
+      lineColor = { 0.15, 0.4, 0.729 }
+    end       
+       
+    decEqui:insertRow(
+    {
+      isCategory = isCategory,
+      rowHeight = rowHeight,
+      rowColor = rowColor,
+      lineColor = lineColor,
+      params = { chart = decEquiTable, answer = decEquiAnswer, table = "decEqui"}
+      }
+    )
+  end    
+     
+  counter = 1
+--     
+--    --End Decimal Equivalents
+--    
+--    --Start Unified Tapping
+--    
+     uniTap = widget.newTableView
      {
        id = "uniTap",
        left = 0,
@@ -321,7 +416,6 @@ function scene:create( event )
        onRowRender = onRowRender,
        hideScrollBar = false,
        }
-     )
      sceneGroup:insert(uniTap)
      uniTap.alpha = 0
      
@@ -333,8 +427,10 @@ function scene:create( event )
      end
      
      for i = 3, 88, 1 do
-       local temp = string.find(uniTapTable[i], ".", 1, true)
-       uniTapAnswer[i] = string.sub(uniTapTable[i], temp - 1)
+       --local temp = string.find(uniTapTable[i], ".", 1, true)
+       local temp = string.len( uniTapTable[i])
+       uniTapAnswer[i] = string.sub(uniTapTable[i], temp - 6)
+       uniTapTable[i] = string.sub(uniTapTable[i], 1, temp - 7 )
      end
      
      for i = 1, 88, 1 do
@@ -363,12 +459,132 @@ function scene:create( event )
            }
          )
      end
+     
+     counter = 1
+--     
+--   --end unified tap
+--   --start taper tap
+--   
+   taperTap = widget.newTableView
+     {
+       id = "taperTap",
+       left = 0,
+       top = display.contentHeight + 10,
+       width = display.contentWidth,
+       height = display.contentHeight,
+       onRowTouch = onRowTouch2,
+       onRowRender = onRowRender,
+       hideScrollBar = false,
+       }
+     sceneGroup:insert(taperTap)
+     taperTap.alpha = 0
+     
+     local path = system.pathForFile( "charts/taperPipeTap.txt")
+     local file = io.open( path, "r")
+     for line in file:lines() do
+       taperTapTable[counter] = line
+       counter = counter + 1
+     end
+     
+     for i = 3, 14, 1 do
+       --local temp = string.find(taperTapTable[i], ".", 1, true)
+       local temp = string.len( taperTapTable[i])
+       taperTapAnswer[i] = string.sub(taperTapTable[i], temp - 6)
+       taperTapTable[i] = string.sub(taperTapTable[i], 1, temp - 7 )
+     end
+     
+     for i = 1, 14, 1 do
+       
+       local isCategory = false
+       local rowHeight = display.contentHeight / 6
+       local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+       local lineColor = { 0.15, 0.4, 0.729 }
+       
+       if ( i == 1 ) then
+         isCategory = true
+         rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
+         lineColor = { 1, 0, 0 }
+       elseif (i == 2 ) then
+         rowColor = { default={ 0.8, 0.885, 1, 0.95 } }
+         lineColor = { 0.15, 0.4, 0.729 }
+       end       
+       
+       taperTap:insertRow(
+           {
+            isCategory = isCategory,
+            rowHeight = rowHeight,
+            rowColor = rowColor,
+            lineColor = lineColor,
+            params = { chart = taperTapTable, answer = taperTapAnswer, table = "taperTap" }
+           }
+         )
+     end
+     
+     counter = 1
+--     
+--     --end Taper Tap
+--     --Start ISO Metric
+     
+     isoTap = widget.newTableView
+     {
+       id = "taperTap",
+       left = 0,
+       top = display.contentHeight + 10,
+       width = display.contentWidth,
+       height = display.contentHeight,
+       onRowTouch = onRowTouch2,
+       onRowRender = onRowRender,
+       hideScrollBar = false,
+       }
+     sceneGroup:insert(isoTap)
+     isoTap.alpha = 0
+     
+     local path = system.pathForFile( "charts/ISOMetricTap.txt")
+     local file = io.open( path, "r")
+     for line in file:lines() do
+       isoTable[counter] = line
+       counter = counter + 1
+     end
+     
+     for i = 3, 93, 1 do
+       local temp = string.len( isoTable[i])
+       isoAnswer[i] = string.sub(isoTable[i], temp - 5)
+       isoTable[i] = string.sub(isoTable[i], 1, temp - 6 )
+     end
+     
+     for i = 1, 93, 1 do
+       
+       local isCategory = false
+       local rowHeight = display.contentHeight / 6
+       local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+       local lineColor = { 0.15, 0.4, 0.729 }
+       
+       if ( i == 1 ) then
+         isCategory = true
+         rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
+         lineColor = { 1, 0, 0 }
+       elseif (i == 2 ) then
+         rowColor = { default={ 0.8, 0.885, 1, 0.95 } }
+         lineColor = { 0.15, 0.4, 0.729 }
+       end       
+       
+       isoTap:insertRow(
+           {
+            isCategory = isCategory,
+            rowHeight = rowHeight,
+            rowColor = rowColor,
+            lineColor = lineColor,
+            params = { chart = isoTable, answer = isoAnswer, table = "isoTap" }
+           }
+         )
+     end
    
    
-   local topText = display.newEmbossedText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - 35, y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
+   topText = display.newText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - 35, y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
    topText:setFillColor(1)
-   topText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
    topText:addEventListener("touch", goTop)
+   topText.alpha = 0
+
    
 end
 
@@ -381,6 +597,7 @@ function scene:show( event )
    if ( phase == "will" ) then
       -- Called when the scene is still off screen (but is about to come on screen).
    elseif ( phase == "did" ) then
+     composer.removeScene( "menu", true)
       -- Called when the scene is now on screen.
       -- Insert code here to make the scene come alive.
       -- Example: start timers, begin animation, play audio, etc.
@@ -392,14 +609,16 @@ function scene:hide( event )
 
    local sceneGroup = self.view
    local phase = event.phase
-
+   local parent = event.parent
+   
    if ( phase == "will" ) then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
+      
+      if myData.isOverlay then
+        parent:calculate()
+      end
+            
    elseif ( phase == "did" ) then
       
-      if isOverlay then isOverlay = false end
       Runtime:removeEventListener( "key", onKeyEvent )
    end
 end

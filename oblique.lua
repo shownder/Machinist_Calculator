@@ -626,13 +626,16 @@ function scene:create( event )
 	{
    	left = 0,
   	top = 0,
-  	width = 70,
- 	  height = 40,
- 	  fontSize = 18,
+  	width = 90,
+ 	  height = 37,
+ 	  fontSize = 14,
   	id = "info",
-  	label = "Input",
+  	label = "Change Input",
+    labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
     font = "BerlinSansFB-Reg",
-  	emboss = true,
+    defaultFile = "Images/chartButtD.png",
+    overFile = "Images/chartButtO.png",
+  	--emboss = true,
  	  onEvent = infoPress,
 	}
 	backGroup:insert(infoButt)

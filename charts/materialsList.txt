@@ -1,0 +1,324 @@
+MATERIALS
+BACK
+Plain carbon steel, B1111, AISI B1112, AISI B1113, 140-180Bhn, HSS: 140
+Plain carbon steel, B1111, AISI B1112, AISI B1113, 140-180Bhn, Carbide: 650
+Plain carbon steel, AISI 1010 to AISI 1030, <150Bhn, HSS: 120
+Plain carbon steel, AISI 1010 to AISI 1030, <150Bhn, Carbide: 800
+Plain carbon steel, AISI 1010 to AISI 1030, 150-200Bhn, HSS: 100
+Plain carbon steel, AISI 1010 to AISI 1030, 150-200Bhn, Carbide: 500
+Plain carbon steel, AISI 1040 to 1095, 120-180Bhn, HSS: 200
+Plain carbon steel, AISI 1040 to 1095, 120-180Bhn, Carbide: 600
+Plain carbon steel, AISI 1040 to 1095, 180-220Bhn, HSS: 90
+Plain carbon steel, AISI 1040 to 1095, 180-220Bhn, Carbide: 350
+Plain carbon steel, AISI 1040 to 1095, 220-300Bhn, HSS: 60
+Plain carbon steel, AISI 1040 to 1095, 220-300Bhn, Carbide: 200
+Alloy steel, AISI 1320, 3120, 4130, 4020, 5020, 4118, 9310, etc., 180-220Bhn, HSS: 80
+Alloy steel, AISI 1320, 3120, 4130, 4020, 5020, 4118, 9310, etc., 180-220Bhn, Carbide: 350
+Alloy steel, AISI 1320, 3120, 4130, 4020, 5020, 4118, 9310, etc., 220-300Bhn, HSS: 60
+Alloy steel, AISI 1320, 3120, 4130, 4020, 5020, 4118, 9310, etc., 220-300Bhn, Carbide: 300
+Alloy steel, AISI 1320, 3120, 4130, 4020, 5020, 4118, 9310, etc., 300-400Bhn, HSS: 40
+Alloy steel, AISI 1320, 3120, 4130, 4020, 5020, 4118, 9310, etc., 300-400Bhn, Carbide: 125
+Alloy steel, AISI 1340, 2340, 4140, 4150, 4340, 5140, 5150, 52100, 8660, 9260, etc., 180-220Bhn, HSS: 80
+Alloy steel, AISI 1340, 2340, 4140, 4150, 4340, 5140, 5150, 52100, 8660, 9260, etc., 180-220Bhn, Carbide: 325
+Alloy steel, AISI 1340, 2340, 4140, 4150, 4340, 5140, 5150, 52100, 8660, 9260, etc., 220-300Bhn, HSS: 55
+Alloy steel, AISI 1340, 2340, 4140, 4150, 4340, 5140, 5150, 52100, 8660, 9260, etc., 220-300Bhn, Carbide: 250
+Alloy steel, AISI 1340, 2340, 4140, 4150, 4340, 5140, 5150, 52100, 8660, 9260, etc., 300-400Bhn, HSS: 30
+Alloy steel, AISI 1340, 2340, 4140, 4150, 4340, 5140, 5150, 52100, 8660, 9260, etc., 300-400Bhn, Carbide: 100
+Alloy steel, E51100, E52100, 175-250Bhn, HSS: 70
+Alloy steel, E51100, E52100, 175-250Bhn, Carbide: 310
+Alloy steel, E51100, E52100, 250-300Bhn, HSS: 50
+Alloy steel, E51100, E52100, 250-300Bhn, Carbide: 240
+Alloy steel, E51100, E52100, 300-425Bhn, HSS: 30
+Alloy steel, E51100, E52100, 300-425Bhn, Carbide: 140
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 220-300Bhn, HSS: 65
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 220-300Bhn, Carbide: 270
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 300-350Bhn, HSS: 50
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 300-350Bhn, Carbide: 200
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 350-400Bhn, HSS: 35
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 350-400Bhn, Carbide: 150
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 43-48HRC, HSS: 25
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 43-48HRC, Carbide: 120
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 48-52HRC, HSS: 10
+Ultra high strength steel, AMS6421, 6422, 6424, 6427, 6428, 6430, 6432, etc., 48-52HRC, Carbide: 80
+Maraging steel, 18%Ni Grade 200 to 350, 250-325Bhn A, HSS: 60
+Maraging steel, 18%Ni Grade 200 to 250, 250-325Bhn A, Carbide: 300
+Maraging steel, 18%Ni Grade 200 to 350, 50-52HRC Maraged, HSS: 10
+Maraging steel, 18%Ni Grade 200 to 350, 50-52HRC Maraged, Carbide: 80
+Nitriding steel, Nitalloy 125, 135, 135 Mod, 225, 230, N, EZ, 200-250Bhn A, HSS: 70
+Nitriding steel, Nitalloy 125, 135, 135 Mod, 225, 230, N, EZ, 200-250Bhn A, Carbide: 300
+Nitriding steel, Nitalloy 125, 135, 135 Mod, 225, 230, N, EZ, 300-350Bhn N, Q&T, HSS: 30
+Nitriding steel, Nitalloy 125, 135, 135 Mod, 225, 230, N, EZ, 300-350Bhn N, Q&T, Carbide: 225
+Tool steel, AISI, W1, W2, W5, 150-200Bhn A, HSS: 100
+Tool steel, AISI, W1, W2, W5, 150-200Bhn A, Carbide: 325
+Tool steel, AISI, S1, S2, S5, S6, S7, 175-225Bhn A, HSS: 70
+Tool steel, AISI, S1, S2, S5, S6, S7, 175-225Bhn A, Carbide: 300
+Tool steel, AISI, O1, O2, O6, O7, 175-225Bhn A, HSS: 70
+Tool steel, AISI, O1, O2, O6, O7, 175-225Bhn A, Carbide: 250
+Tool steel, AISI, D2, D3, D4, D5, D7, 200-250Bhn A, HSS: 45
+Tool steel, AISI, D2, D3, D4, D5, D7, 200-250Bhn A, Carbide: 175
+Tool steel, AISI, A2, A3, A8, A9, A10, 200-250Bhn A, HSS: 70
+Tool steel, AISI, A2, A3, A8, A9, A10, 200-250Bhn A, Carbide: 250
+Tool steel, AISI, A4, A6, 200-250Bhn A, HSS: 55
+Tool steel, AISI, A4, A6, 200-250Bhn A, Carbide: 100
+Tool steel, AISI, A7, 225-275Bhn A, HSS: 45
+Tool steel, AISI, A7, 225-275Bhn A, Carbide: 175
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 150-200Bhn A, HSS: 80
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 150-200Bhn A, Carbide: 300
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 200-250Bhn A, HSS: 65
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 200-250Bhn A, Carbide: 225
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 325-375Bhn Q&T, HSS: 50
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 325-375Bhn Q&T, Carbide: 175
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 48-50HRC Q&T, HSS: 20
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 48-50HRC Q&T, Carbide: 95
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 50-52HRC Q&T, HSS: 10
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 50-52HRC Q&T, Carbide: 80
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 52-54HRC Q&T, HSS: 0
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 48-50HRC Q&T, Carbide: 60
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 54-56HRC Q&T, HSS: 0
+Tool steel, AISI, H10, H11, H12, H13, H14, H19, 54-56HRC Q&T, Carbide: 40
+Tool steel, AISI, H21, H22, H23, H24, H25, H26, 150-200Bhn A, HSS: 60
+Tool steel, AISI, H21, H22, H23, H24, H25, H26, 150-200Bhn A, Carbide: 250
+Tool steel, AISI, H21, H22, H23, H24, H25, H26, 200-250Bhn A, HSS: 50
+Tool steel, AISI, H21, H22, H23, H24, H25, H26, 200-250Bhn A, Carbide: 200
+Tool steel, AISI, H21, H22, H23, H24, H25, H26, 200-250Bhn A, HSS: 50
+Tool steel, AISI, H21, H22, H23, H24, H25, H26, 200-250Bhn A, Carbide: 200
+Tool steel, AISI, H41, H42, H43, 150-200Bhn A, HSS: 55
+Tool steel, AISI, H41, H42, H43, 150-200Bhn A, Carbide: 225
+Tool steel, AISI, H41, H42, H43, 200-250Bhn A, HSS: 45
+Tool steel, AISI, H41, H42, H43, 200-250Bhn A, Carbide: 175
+Tool steel, AISI, L2, L3, L6, 150-200Bhn A, HSS: 75
+Tool steel, AISI, L2, L3, L6, 150-200Bhn A, Carbide: 325
+Tool steel, AISI, P2, P3, P4, P5, P6, 100-150Bhn A, HSS: 90
+Tool steel, AISI, P2, P3, P4, P5, P6, 100-150Bhn A, Carbide: 400
+Tool steel, AISI, P20, P21, 150-200Bhn A, HSS: 80
+Tool steel, AISI, P20, P21, 150-200Bhn A, Carbide: 350
+High Speed Steel, M1, M2, M6, M10, T1, T2, T6, 200-250Bhn A, HSS: 65
+High Speed Steel, M1, M2, M6, M10, T1, T2, T6, 200-250Bhn A, Carbide: 225
+High Speed Steel, M3-1, M4, M7, M30, M33, M34, M36, M41 to M47, T5, T8, 225-275Bhn A, HSS: 55
+High Speed Steel, M3-1, M4, M7, M30, M33, M34, M36, M41 to M47, T5, T8, 225-275Bhn A, Carbide: 200
+High Speed Steel, M3-2, T15, 225-275Bhn A, HSS: 45
+High Speed Steel, M3-2, T15, 225-275Bhn A, Carbide: 170
+Free Machining Stainless (Ferritic), 430F, 430FSe, 135-185Bhn A, HSS: 110
+Free Machining Stainless (Ferritic), 430F, 430FSe, 135-185Bhn A, Carbide: 400
+Free Machining Stainless (Austenitic), 203EZ, 303-all types, 135-185Bhn A, HSS: 100
+Free Machining Stainless (Austenitic), 203EZ, 303-all types, 135-185Bhn A, Carbide: 350
+Free Machining Stainless (Austenitic), 203EZ, 303-all types, 135-185Bhn CD, HSS: 80
+Free Machining Stainless (Austenitic), 203EZ, 303-all types, 225-275Bhn CD, Carbide: 325
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 135-185Bhn A, HSS: 75
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 135-185Bhn A, Carbide: 225
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 185-240Bhn A CD, HSS: 100
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 185-240Bhn A CD, Carbide: 350
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 275-325Bhn Q&T, HSS: 80
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 275-325Bhn Q&T, Carbide: 325
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 375-425Bhn Q&T, HSS: 80
+Free Machining Stainless (Martensitic), 416, 416SE & PlusX, 420F & FSe, 440F & FSe, 375-425Bhn Q&T, Carbide: 325
+Stainless steel(Ferritic), 405, 409, 429, 430, 434, 436, 442, 446, 502, 135-185Bhn Q&T, HSS: 80
+Stainless steel(Ferritic), 405, 409, 429, 430, 434, 436, 442, 446, 502, 135-185Bhn Q&T, Carbide: 325
+Stainless steel(Austenitic), 201, 202, 301, 302, 304, 304L, 305, 308, 321, 347, 348, 135-185Bhn A, HSS: 75
+Stainless steel(Austenitic), 201, 202, 301, 302, 304, 304L, 305, 308, 321, 347, 348, 135-185Bhn A, Carbide: 225
+Stainless steel(Austenitic), 201, 202, 301, 302, 304, 304L, 305, 308, 321, 347, 348, 225-275Bhn CD, HSS: 65
+Stainless steel(Austenitic), 201, 202, 301, 302, 304, 304L, 305, 308, 321, 347, 348, 225-275Bhn CD, Carbide: 200
+Stainless steel(Austenitic), 302B, 309309S, 310, 310S, 314, 316, 316L, 317, 330, 135-185Bhn A, HSS: 70
+Stainless steel(Austenitic), 302B, 309309S, 310, 310S, 314, 316, 316L, 317, 330, 135-185Bhn A, Carbide: 225
+Stainless steel(Martensitic), 403, 410, 420, 501, 135-175Bhn A, HSS: 95
+Stainless steel(Martensitic), 403, 410, 420, 501, 135-175Bhn A, Carbide: 350
+Stainless steel(Martensitic), 403, 410, 420, 501, 175-225Bhn A, HSS: 85
+Stainless steel(Martensitic), 403, 410, 420, 501, 175-225Bhn A, Carbide: 300
+Stainless steel(Martensitic), 403, 410, 420, 501, 275-325Bhn Q&T, HSS: 55
+Stainless steel(Martensitic), 403, 410, 420, 501, 275-325Bhn Q&T, Carbide: 200
+Stainless steel(Martensitic), 403, 410, 420, 501, 375-425Bhn Q&T, HSS: 35
+Stainless steel(Martensitic), 403, 410, 420, 501, 375-425Bhn Q&T, Carbide: 125
+Stainless steel(Martensitic), 414, 431, Greek Ascoloy, 375-425Bhn A, HSS: 60
+Stainless steel(Martensitic), 414, 431, Greek Ascoloy, 375-425Bhn A, Carbide: 250
+Stainless steel(Martensitic), 414, 431, Greek Ascoloy, 375-425Bhn Q&T, HSS: 50
+Stainless steel(Martensitic), 414, 431, Greek Ascoloy, 375-425Bhn Q&T, Carbide: 200
+Stainless steel(Martensitic), 414, 431, Greek Ascoloy, 375-425Bhn Q&T, HSS: 30
+Stainless steel(Martensitic), 414, 431, Greek Ascoloy, 375-425Bhn Q&T, Carbide: 125
+Stainless steel(Martensitic), 440A, 440B, 440C, 225-275Bhn A, HSS: 55
+Stainless steel(Martensitic), 440A, 440B, 440C, 225-275Bhn A, Carbide: 200
+Stainless steel(Martensitic), 440A, 440B, 440C, 275-325Bhn Q&T, HSS: 45
+Stainless steel(Martensitic), 440A, 440B, 440C, 275-325Bhn Q&T, Carbide: 150
+Stainless steel(Martensitic), 440A, 440B, 440C, 375-425Bhn Q&T, HSS: 30
+Stainless steel(Martensitic), 440A, 440B, 440C, 375-425Bhn Q&T, Carbide: 125
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 150-200Bhn A, HSS: 60
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 150-200Bhn A, Carbide: 225
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 275-325Bhn H, HSS: 50
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 275-325Bhn H, Carbide: 200
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 325-375Bhn H, HSS: 40
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 325-375Bhn H, Carbide: 130
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 375-450Bhn H, HSS: 25
+Stainless steel(Preciptitation Hardening), 15-5PH, 17-7PH, AF71, etc, 375-450Bhn H, Carbide: 90
+Grey Cast Iron, ASTM Class 20, 120-150Bhn A, HSS: 120
+Grey Cast Iron, ASTM Class 20, 120-150Bhn A, Carbide: 450
+Grey Cast Iron, ASTM Class 25, 160-200Bhn AC, HSS: 90
+Grey Cast Iron, ASTM Class 25, 160-200Bhn AC, Carbide: 350
+Grey Cast Iron, ASTM Class 30, 35 & 40, 190-220Bhn AC, HSS: 80
+Grey Cast Iron, ASTM Class 30, 35 & 40, 190-220Bhn AC, Carbide: 225
+Grey Cast Iron, ASTM Class 45 & 50, 220-260Bhn AC, HSS: 60
+Grey Cast Iron, ASTM Class 45 & 50, 220-260Bhn AC, Carbide: 200
+Grey Cast Iron, ASTM Class 55 & 60, 250-320Bhn AC HT, HSS: 35
+Grey Cast Iron, ASTM Class 55 & 60, 250-320Bhn AC HT, Carbide: 125
+Grey Cast Iron, ASTM Type 1, 1b, 5 (Ni Resist) AC, HSS: 65
+Grey Cast Iron, ASTM Type 1, 1b, 5 (Ni Resist) AC, Carbide: 210
+Grey Cast Iron, ASTM Type 2b, 4 (Ni Resist) AC, HSS: 50
+Grey Cast Iron, ASTM Type 2b, 4 (Ni Resist) AC, Carbide: 200
+Malleable Iron, (Ferritic), 32510, 35018, 110-160Bhn MHT, HSS: 130
+Malleable Iron, (Ferritic), 32510, 35018, 110-160Bhn MHT, Carbide: 500
+Malleable Iron, (Pearlitic), 40010, 43010, 45006, 45008, 45005, 50005, 160-200Bhn MHT, HSS: 95
+Malleable Iron, (Pearlitic), 40010, 43010, 45006, 45008, 45005, 50005, 160-200Bhn MHT, Carbide: 400
+Malleable Iron, (Pearlitic), 40010, 43010, 45006, 45008, 45005, 50005, 200-240Bhn MHT, HSS: 75
+Malleable Iron, (Pearlitic), 40010, 43010, 45006, 45008, 45005, 50005, 200-240Bhn MHT, Carbide: 275
+Malleable Iron, (Martensitic), 53004, 60003, 60004, 200-255Bhn MHT, HSS: 70
+Malleable Iron, (Martensitic), 53004, 60003, 60004, 200-255Bhn MHT, Carbide: 250
+Malleable Iron, (Martensitic), 70002, 70003, 220-260Bhn MHT, HSS: 60
+Malleable Iron, (Martensitic), 70002, 70003, 220-260Bhn MHT, Carbide: 225
+Malleable Iron, (Martensitic), 80002, 240-280Bhn MHT, HSS: 50
+Malleable Iron, (Martensitic), 80002, 240-280Bhn MHT, Carbide: 140
+Malleable Iron, (Martensitic), 90001, 250-320Bhn MHT, HSS: 30
+Malleable Iron, (Martensitic), 90001, 250-320Bhn MHT, Carbide: 125
+Ductile Iron, (Ferritic), 60-40-18, 65-45-12, 140-190Bhn A, HSS: 100
+Ductile Iron, (Ferritic), 60-40-18, 65-45-12, 140-190Bhn A, Carbide: 455
+Ductile Iron, (Ferritic-Pearlitic), 80-55-06, 190-225Bhn AC, HSS: 80
+Ductile Iron, (Ferritic-Pearlitic), 80-55-06, 190-225Bhn AC, Carbide: 350
+Ductile Iron, (Ferritic-Pearlitic), 80-55-06, 225-260Bhn AC, HSS: 65
+Ductile Iron, (Ferritic-Pearlitic), 80-55-06, 225-260Bhn AC, Carbide: 210
+Ductile Iron, (Martensitic), 120-90-02, 270-330Bhn HT, HSS: 30
+Ductile Iron, (Martensitic), 120-90-02, 270-3300Bhn HT, Carbide: 100
+Ductile Iron, (Martensitic), 120-90-02, 330-400Bhn HT, HSS: 15
+Ductile Iron, (Martensitic), 120-90-02, 330-400Bhn HT, Carbide: 50
+Cast Steel, (Low carbon), 1010, 1020, 100-150Bhn, AC, A, N, HSS: 110
+Cast Steel, (Low carbon), 1010, 1020, 100-150Bhn, AC, A, N, Carbide: 400
+Cast Steel, (Medium carbon), 1030, 1040, 1050, 125-175Bhn, AC, A, N, HSS: 100
+Cast Steel, (Medium carbon), 1030, 1040, 1050, 125-175Bhn, AC, A, N, Carbide: 400
+Cast Steel, (Medium carbon), 1030, 1040, 1050, 175-225Bhn, AC, A, N, HSS: 90
+Cast Steel, (Medium carbon), 1030, 1040, 1050, 175-225Bhn, AC, A, N, Carbide: 350
+Cast Steel, (Medium carbon), 1030, 1040, 1050, 225-300Bhn, AC, HT, HSS: 70
+Cast Steel, (Medium carbon), 1030, 1040, 1050, 225-300Bhn, AC, HT, Carbide: 300
+Cast Steel, Low Carbon Alloy), 1320, 2135, 2320, 4110, 4120, 4320, 8020, 8620, 150-200Bhn AC A N, HSS: 90
+Cast Steel, Low Carbon Alloy), 1320, 2135, 2320, 4110, 4120, 4320, 8020, 8620, 150-200Bhn AC A N, Carbide: 350
+Cast Steel, Low Carbon Alloy), 1320, 2135, 2320, 4110, 4120, 4320, 8020, 8620, 200-250Bhn AC A N, HSS: 80
+Cast Steel, Low Carbon Alloy), 1320, 2135, 2320, 4110, 4120, 4320, 8020, 8620, 200-250Bhn AC A N, Carbide: 325
+Cast Steel, Low Carbon Alloy), 1320, 2135, 2320, 4110, 4120, 4320, 8020, 8620, 250-300Bhn AC HT, HSS: 60
+Cast Steel, Low Carbon Alloy), 1320, 2135, 2320, 4110, 4120, 4320, 8020, 8620, 250-300Bhn AC HT, Carbide: 250
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 175-225Bhn AC A N, HSS: 80
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 175-225Bhn AC A N, Carbide: 325
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 225-250Bhn AC A N, HSS: 70
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 225-250Bhn AC A N, Carbide: 280
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 250-300Bhn AC HT, HSS: 55
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 250-300Bhn AC HT, Carbide: 250
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 300-350Bhn AC HT, HSS: 45
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 300-350Bhn AC HT, Carbide: 220
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 350-400Bhn HT, HSS: 30
+Cast Steel, (Medium Carbon Alloy), 1330, 1340, 2325, 2330, 4125, 4130, 4140, 4330, 4340, 8030, 80B30, 8040, 8430, 8440, 8630, 8640, 9525, 9530, 9535, 350-400Bhn HT, Carbide: 150
+Aluminium, Wrought Alloys (all), CD, HSS: 600
+Aluminium, Wrought Alloys (all), CD, Carbide: 1200
+Aluminium, Wrought Alloys (all), ST and A, HSS: 500
+Aluminium, Wrought Alloys (all), ST and A, Carbide: 1100
+Aluminium Sand and Permanent Mould Casting Alloys (all), AC, HSS: 750
+Aluminium Sand and Permanent Mould Casting Alloys (all), AC, Carbide: 1400
+Aluminium Sand and Permanent Mould Casting Alloys (all), ST and A, HSS: 600
+Aluminium Sand and Permanent Mould Casting Alloys (all), ST and A, Carbide: 1200
+Aluminium Die Casting Alloys (all except Alloys 390.0 and 392.0), AC, HSS: 125
+Aluminium Die Casting Alloys (all except Alloys 390.0 and 392.0), AC, Carbide: 550
+Aluminium Die Casting Alloys (all except Alloys 390.0 and 392.0), ST and A, HSS: 100
+Aluminium Die Casting Alloys (all except Alloys 390.0 and 392.0), ST and A, Carbide: 450
+Aluminium Die Casting Alloys 390.0 and 392.0, AC, HSS: 80
+Aluminium Die Casting Alloys 390.0 and 392.0, AC, Carbide: 500
+Aluminium Die Casting Alloys 390.0 and 392.0, ST and A, HSS: 60
+Aluminium Die Casting Alloys 390.0 and 392.0, ST and A, Carbide: 425
+Wrought Magnesium Alloys (all), A CD ST and A, HSS: 800
+Wrought Magnesium Alloys (all), A CD ST and A, Carbide: 2000
+Cast Magnesium Alloys (all), A CD ST and A, HSS: 800
+Cast Magnesium Alloys (all), A CD ST and A, Carbide: 2000
+Leaded Commercial Bronze, A CD, HSS: 325
+Leaded Commercial Bronze, A CD, Carbide: 625
+Leaded Brass, A CD, HSS: 325
+Leaded Brass, A CD, Carbide: 625
+Medium Leaded Brass, A CD, HSS: 325
+Medium Leaded Brass, A CD, Carbide: 625
+Free Cutting Brass, A CD, HSS: 325
+Free Cutting Brass, A CD, Carbide: 625
+Free Cutting Muntz Metal, A CD, HSS: 325
+Free Cutting Muntz Metal, A CD, Carbide: 625
+Forging Brass, A CD, HSS: 325
+Forging Brass, A CD, Carbide: 625
+Architectural Bronze, A CD, HSS: 325
+Architectural Bronze, A CD, Carbide: 625
+Leaded Naval Brass, A CD, HSS: 325
+Leaded Naval Brass, A CD, Carbide: 625
+Free Cutting Phosphor Bronze, A CD, HSS: 325
+Free Cutting Phosphor Bronze, A CD, Carbide: 625
+Jewelery Bronze, A CD, HSS: 225
+Jewelery Bronze, A CD, Carbide: 525
+Red Brass, A CD, HSS: 225
+Red Brass, A CD, Carbide: 525
+Low Brass, A CD, HSS: 225
+Low Brass, A CD, Carbide: 525
+Cartridge Brass 70%, A CD, HSS: 225
+Cartridge Brass 70%, A CD, Carbide: 525
+Yellow Brass, A CD, HSS: 225
+Yellow Brass, A CD, Carbide: 525
+Muntz Metal, A CD, HSS: 225
+Muntz Metal, A CD, Carbide: 525
+Low Leaded Brass, A CD, HSS: 225
+Low Leaded Brass, A CD, Carbide: 525
+Leaded Muntz Metal, A CD, HSS: 225
+Leaded Muntz Metal, A CD, Carbide: 525
+Admiralty Brass (inhibited), A CD, HSS: 225
+Admiralty Brass (inhibited), A CD, Carbide: 525
+Low Slicon Bronze, A CD, HSS: 225
+Low Slicon Bronze, A CD, Carbide: 525
+High Silicon Bronze, A CD, HSS: 225
+High Silicon Bronze, A CD, Carbide: 525
+Manganese Bronze, A CD, HSS: 225
+Manganese Bronze, A CD, Carbide: 525
+Aluminium Brass, A CD, HSS: 225
+Aluminium Brass, A CD, Carbide: 525
+Nickel Silver, A CD, HSS: 225
+Nickel Silver, A CD, Carbide: 525
+Leaded Nickel Silver, A CD, HSS: 225
+Leaded Nickel Silver, A CD, Carbide: 525
+Oxygen Free Cooper, A CD, HSS: 105
+Oxygen Free Cooper, A CD, Carbide: 215
+Electrolytic Tough Pitch Copper, A CD, HSS: 105
+Electrolytic Tough Pitch Copper, A CD, Carbide: 215
+Electrolytic Deoxidized Copper, A CD, HSS: 105
+Electrolytic Deoxidized Copper, A CD, Carbide: 215
+Beryllium Copper, A CD, HSS: 105
+Beryllium Copper, A CD, Carbide: 215
+Guilding 95%, A CD, HSS: 105
+Guilding 95%, A CD, Carbide: 215
+Copper Nickel, A CD, HSS: 105
+Copper Nickel, A CD, Carbide: 215
+Aluminium Bronze, A CD, HSS: 105
+Aluminium Bronze, A CD, Carbide: 215
+Nickel Silver, A CD, HSS: 105
+Nickel Silver, A CD, Carbide: 215
+Titanium-Commercially pure, 99.5%Ti, 110-150Bhn, A, HSS: 110
+Titanium-Commercially pure, 99.5%Ti, 110-150Bhn, A, Carbide: 400
+Titanium-Commercially pure, 99.1%T1, 99.2%Ti, 180-240Bhn, A, HSS: 90
+Titanium-Commercially pure, 99.1%T1, 99.2%Ti, 180-240Bhn, A, Carbide: 300
+Titanium-Commercially pure, 99.0%Ti, 250-275Bhn, A, HSS: 70
+Titanium-Commercially pure, 99.0%Ti, 250-275Bhn, A, Carbide: 250
+Titanium-Low Alloyed, 99.5%Ti-15%Pd, 110-150Bhn, A, HSS: 100
+Titanium-Low Alloyed, 99.5%Ti-15%Pd, 110-150Bhn, A, Carbide: 350
+Titanium-Low Alloyed, 99.2%Ti-15%Pd, 98.9%Ti-.8%Ni-.3%Mo, A, HSS: 80
+Titanium-Low Alloyed, 99.2%Ti-15%Pd, 98.9%Ti-.8%Ni-.3%Mo, A, Carbide: 280
+Titanium-Alpha and Alpha-Beta Alloys, 5%Al-2.5%Sn, .8%Mn, 2%Al-11%Sn-5%Zr-1%Mo, 4%Al-3%Mo-1%V, 5%Al-6%Sn-2%Zr-1%Mo, 6%Al-2%-4%Zr-Sn-2%Mo, 6%Al-2%Sn-4%Zr-6%Mo, 6%Al-2%Sn-4%Zr-2%Mo-.25%Si, A, Bhn300-350, HSS: 50
+Titanium-Alpha and Alpha-Beta Alloys, 5%Al-2.5%Sn, .8%Mn, 2%Al-11%Sn-5%Zr-1%Mo, 4%Al-3%Mo-1%V, 5%Al-6%Sn-2%Zr-1%Mo, 6%Al-2%-4%Zr-Sn-2%Mo, 6%Al-2%Sn-4%Zr-6%Mo, 6%Al-2%Sn-4%Zr-2%Mo-.25%Si, A, Bhn300-350, Carbide: 200
+Titanium-Alpha and Alpha-Beta Alloys, 6%Al-4%V, A, 310-350Bhn, A, HSS: 40
+Titanium-Alpha and Alpha-Beta Alloys, 6%Al-4%V, A, 310-350Bhn, A, Carbide: 125
+Titanium-Alpha and Alpha-Beta Alloys, 6%Al-6%V-2%Sn, 7%Al-4%Mo, 8%Al-1%Mo-1%V, 320-370Bhn, A, HSS: 30
+Titanium-Alpha and Alpha-Beta Alloys, 6%Al-6%V-2%Sn, 7%Al-4%Mo, 8%Al-1%Mo-1%V, 320-370Bhn, A, Carbide: 100
+Titanium-Alpha and Alpha-Beta Alloys, 8%V-5%Fe-1%Al, 320-380Bhn, A, HSS: 20
+Titanium-Alpha and Alpha-Beta Alloys, 8%V-5%Fe-1%Al, 320-380Bhn, A, Carbide: 90
+Titanium-Alpha and Alpha-Beta Alloys, 6%Al-4%V, 6%Al-2%Sn-4%Zr-2%Mo, 6%Al-2%Sn-4%Zr-6%Mo, 320-380Bhn, ST and A, HSS: 40
+Titanium-Alpha and Alpha-Beta Alloys, 6%Al-4%V, 6%Al-2%Sn-4%Zr-2%Mo, 6%Al-2%Sn-4%Zr-6%Mo, 320-380Bhn, ST and A, Carbide: 100
+Titanium-Alpha and Alpha-Beta Alloys, 4%Al-3%Mo-1%V, 6%Al-6%V-2%Sn, 7%Al-4%Mo, 375-420Bhn, ST and A,HSS: 20
+Titanium-Alpha and Alpha-Beta Alloys, 4%Al-3%Mo-1%V, 6%Al-6%V-2%Sn, 7%Al-4%Mo, 375-420Bhn, ST and A, Carbide: 80
+Titanium-Alpha and Alpha-Beta Alloys, 1%Al-5%V-5%Fe, 375-440Bhn, ST and A, HSS: 20
+Titanium-Alpha and Alpha-Beta Alloys, 1%Al-5%V-5%Fe, 375-440Bhn, ST and A, Carbide: 80
+Titanium-Beta Alloys, 13%V-11%Cr-3%Al, 8%M0-8%V-2%Fe-3%Al, 8%Al-8%V-6%Cr-4%Mo-4%Zr, 11.5%M0-6%Zr-4.5%Sn, 275-350Bhn, A ST, HSS: 25
+Titanium-Beta Alloys, 13%V-11%Cr-3%Al, 8%M0-8%V-2%Fe-3%Al, 8%Al-8%V-6%Cr-4%Mo-4%Zr, 11.5%M0-6%Zr-4.5%Sn, 275-350Bhn, A ST, Carbide: 100
+Titanium-Beta Alloys, 13%V-11%Cr-3%Al, 8%M0-8%V-2%Fe-3%Al, 8%Al-8%V-6%Cr-4%Mo-4%Zr, 11.5%M0-6%Zr-4.5%Sn, 350-440Bhn, ST and A, HSS: 20
+Titanium-Beta Alloys, 13%V-11%Cr-3%Al, 8%M0-8%V-2%Fe-3%Al, 8%Al-8%V-6%Cr-4%Mo-4%Zr, 11.5%M0-6%Zr-4.5%Sn, 350-440Bhn, ST and A, Carbide: 60

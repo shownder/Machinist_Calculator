@@ -80,32 +80,12 @@ local function alertListener2 ( event )
 	if "clicked" == event.action then
     local i = event.index
     if 1 == i then
-      timer.performWithDelay( 1000, resetCalc("ended") )
-    end
-  end
-end
-
-local function goToCharts(event)
-  local phase = event.phase
-  
-  if "ended" == phase then
-    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
-      native.showAlert ("Continue?", "Choosing new Diameter will reset all values!", { "OK", "Cancel" }, alertListener2 )
-    else
-      if options then
-        transition.to ( optionsGroup, { time = 100, alpha = 0} )
-        transition.to ( backGroup, { time = 200, x=0 } )
-        transition.to ( optionsBack, { time = 200, x = -170 } )
-        transition.to ( optionsBack, { time = 200, y = -335 } )
-        transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-        decLabel:setFillColor(1)
-        options = false
-      end	
+      timer.performWithDelay( 500, resetCalc("ended") )
       whatTap = 2
       myData.isOverlay = true
       composer.showOverlay( "charts", { effect="fromRight", time=100, isModal = true }  )
     end
-  end  
+  end
 end
 
 local function optionsMove(event)
@@ -130,6 +110,29 @@ local function optionsMove(event)
 			options = false
     end
   end
+end
+
+local function goToCharts(event)
+  local phase = event.phase  
+  
+  if "ended" == phase then
+    if options then
+      transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+      options = false
+    end	
+    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
+      native.showAlert ("Continue?", "Choosing new Diameter will reset all values!", { "OK", "Cancel" }, alertListener2 )
+    else
+      whatTap = 2
+      myData.isOverlay = true
+      composer.showOverlay( "charts", { effect="fromRight", time=100, isModal = true }  )
+    end
+  end  
 end
 
 local function alertListener ( event )

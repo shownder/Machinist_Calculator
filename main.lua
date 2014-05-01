@@ -59,7 +59,8 @@ local timesOpen = loadsave.loadTable("timesOpen.json")
   end
  
 
-composer.gotoScene( "menu")
+--composer.gotoScene( "menu")
+composer.gotoScene( "materials")
 
 
 

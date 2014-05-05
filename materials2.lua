@@ -2,6 +2,9 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require ( "widget" )
 local myData = require("myData")
+local w_candy = require("widget_candy")
+--w_candy.LoadTheme("theme_7", "themes/theme_7")
+--w_candy.SetTheme("theme_7")
 display.setStatusBar(display.HiddenStatusBar)
 
 ---------------------------------------------------------------------------------
@@ -160,6 +163,22 @@ function scene:create( event )
       }
     )
   end    
+  
+  searchBar = w_candy.NewInput(
+    {
+      x = display.contentWidth - 100,
+      y = 50,
+      width = "70%",
+      theme = "theme_7",
+      name = "searchBar",
+      caption = "Search",
+      notEmpty = true,
+      inputType = "default"
+    }
+  )
+  
+      
+      
 
 
    -- Initialize the scene here.

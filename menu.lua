@@ -19,6 +19,7 @@ local boltButt, boltLabel
 local speedButt, speedLabel
 local counterButt, counterLabel
 local chartButt, chartLabel
+local matButt, matLabel
 local timesOpen
 local back
 local logo, facebookButt
@@ -43,6 +44,8 @@ local function sceneSelect ( event )
 		composer.gotoScene( "counter", { effect="fromTop", time=800} )
     elseif event.target.num == 7 then
 		composer.gotoScene( "charts", { effect="fromTop", time=800, params = {isOverlay = false}} )
+    elseif event.target.num == 8 then
+		composer.gotoScene( "materials", { effect="fromTop", time=800, params = {isOverlay = false}} )
    	end
    end
 end
@@ -101,6 +104,7 @@ local function moveItems()
   transition.to(boltButt, {y=back.contentHeight - 50, time=900})
   transition.to(counterButt, {y=back.contentHeight - 50, time=1000})
   transition.to(chartButt, {y=back.contentHeight - 50, time=1100})
+  transition.to(matButt, {y=back.contentHeight - 50, time=100})
   
   transition.fadeIn(rightLabel, {time=500})
   transition.fadeIn(obliqueLabel, {time=600})
@@ -109,6 +113,7 @@ local function moveItems()
   transition.fadeIn(boltLabel, {time=900})
   transition.fadeIn(counterLabel, {time=1000})
   transition.fadeIn(chartLabel, {time=1100})
+  transition.fadeIn(matLabel, {time=100})
   
   menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
   
@@ -123,6 +128,7 @@ local function moveItems2()
   transition.to(boltButt, {y=back.contentHeight - 50})
   transition.to(counterButt, {y=back.contentHeight - 50})
   transition.to(chartButt, {y=back.contentHeight - 50})
+  transition.to(matButt, {y=back.contentHeight - 50})
   
   rightLabel.alpha = 1
   obliqueLabel.alpha = 1
@@ -131,6 +137,7 @@ local function moveItems2()
   boltLabel.alpha = 1
   counterLabel.alpha = 1
   chartLabel.alpha = 1
+  matLabel.alpha = 1
   
 end
 
@@ -373,6 +380,34 @@ function scene:create( event )
   chartLabel:addEventListener ( "touch", sceneSelect )
   chartLabel.alpha = 0
   
+  matButt = widget.newButton
+	{
+		width = 56,
+    height = 56,
+    left = 0,
+		top = 0,
+		id = "matButt",
+    defaultFile = "Images/chartMenu.png",
+		onRelease = sceneSelect,		
+		}
+	matButt.num = 8
+	sceneGroup:insert(matButt)
+	--counterButt.x = backEdgeX + 470
+  matButt.x = 540
+	matButt.y = display.contentHeight + 100
+  matButt:rotate(-90)
+  matButt.alpha = 0.75
+  
+  matLabel = display.newText( { parent = sceneGroup, text = "Materials List", 0, 0, font = "BerlinSansFB-Reg", fontSize = 20, width = 100})
+  matLabel:rotate(-90)
+  --counterLabel.x = backEdgeX + 470
+  matLabel.x = 540
+  matLabel.y = back.contentHeight - 140
+  matLabel:setFillColor(0.15, 0.4, 0.729, 0.90)
+  matLabel.num = 8
+  matLabel:addEventListener ( "touch", sceneSelect )
+  matLabel.alpha = 0
+  
   
   menuScroll = widget.newScrollView
   {
@@ -396,6 +431,7 @@ function scene:create( event )
   menuScroll:insert(boltButt)
   menuScroll:insert(counterButt)
   menuScroll:insert(chartButt)
+  menuScroll:insert(matButt)
   
   menuScroll:insert(rightLabel)
   menuScroll:insert(obliqueLabel)
@@ -404,6 +440,7 @@ function scene:create( event )
   menuScroll:insert(boltLabel)
   menuScroll:insert(counterLabel)
   menuScroll:insert(chartLabel)
+  menuScroll:insert(matLabel)
   
   moveItems2()
 

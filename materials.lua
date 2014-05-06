@@ -17,6 +17,28 @@ local matTable2, matContent2, matAnswer2
 local deleteTables
 
 ---------------------------------------------------------------------------------
+local function onKeyEvent( event )
+
+  local phase = event.phase
+  local keyName = event.keyName
+   
+  if ( "back" == keyName and phase == "up" ) then
+    timer.performWithDelay(100,goBack2,1)
+  end
+  return true
+end
+
+local function goBack2()
+	
+  if (myData.isOverlay) then
+    myData.number = "Tap Me"
+    composer.hideOverlay()
+  else
+		composer.gotoScene( "menu", { effect="slideRight", time=800})
+  end
+		
+end
+
 local function placeHolder(event)
   local phase = event.phase
   
@@ -55,6 +77,41 @@ local function textListener(event)
       fullRows()
     end
         
+  end
+end
+
+local function onRowTouch( event )
+  local phase = event.phase
+  local row = event.target
+  
+  if "press" == phase then
+--    if string.len(searchBox.text) > 0 then
+--      local temp = string.find(matAnswer2[row.index], "%d")
+--      print(string.sub(matAnswer2[row.index], temp))
+--    else
+--      local temp = string.find(matAnswer[row.index], "%d")
+--      print(string.sub(matAnswer[row.index], temp))
+--    end
+  elseif "release" == phase then
+    if row.index == 2 then
+      if myData.isOverlay then
+        myData.number = "Tap Me"
+        composer.hideOverlay(true, "slideTop", 500 )
+      else
+        timer.performWithDelay(100, goBack2)
+      end
+    else
+      if myData.isOverlay then
+        if string.len(searchBox.text) > 0 then
+          local temp = string.find(matAnswer2[row.index], "%d")
+          myData.number = string.sub(matAnswer2[row.index], temp)
+        else
+          local temp = string.find(matAnswer[row.index], "%d")
+          myData.number = string.sub(matAnswer[row.index], temp)
+        end
+      end
+      composer.hideOverlay(true, "slideTop", 500 )
+    end
   end
 end
 
@@ -128,7 +185,7 @@ finalRows = function(title, content, answer)
   for i = 3, #title, 1 do
     local temp = string.find( title[i], ",")
     content[i] = string.sub(title[i], temp + 2)
-    title[i] = string.sub(title[i], 1, temp - 1)
+    title[i] = string.sub(title[i], 1, temp - 1) .. " "
     temp = string.find(content[i], ":")
     if (math.fmod(i, 2)) == 0 then
       answer[i] = string.sub(content[i], temp - 7)
@@ -143,11 +200,60 @@ end
 matchRow = function(length, word)
   
   local length1 = length
-  local word1 = word
-  
+    
   for i = 3, #matTable, 1 do
-    local temp = string.lower(string.sub(matTable[i], 1, length1))
-    if temp:lower() == word1:lower() then
+    local pos1, pos2, pos3, pos4, pos5, pos6, pos7
+    local word1 = word
+    local title1 = ""
+    local title2 = ""
+    local title3 = ""
+    local title4 = ""
+    local title5 = ""
+    local title6 = ""
+    local title7 = ""
+    pos1 = string.find(matTable[i], "%s")
+    if pos1 then
+      title1 = string.sub(matTable[i], 1, pos1 - 1)
+      pos2 = string.find(matTable[i], " ", pos1 + 1)
+    end
+  
+    if pos2 then
+      title2 = string.sub(matTable[i], pos1 + 1, pos2 - 1)
+      pos3 = string.find(matTable[i], "%s", pos2 + 1)
+    end
+    
+    if pos3 then
+      title3 = string.sub(matTable[i], pos2 + 1, pos3 - 1)
+      pos4 = string.find(matTable[i], "%s", pos3 + 1)
+    end
+    
+    if pos4 then
+      title4 = string.sub(matTable[i], pos3 + 1, pos4 - 1)
+      pos5 = string.find(matTable[i], "%s", pos4 + 1)
+    end
+    
+    if pos5 then
+      title5 = string.sub(matTable[i], pos4 + 1, pos5 - 1)
+      pos6 = string.find(matTable[i], "%s", pos5 + 1)
+    end
+    
+    if pos6 then
+      title6 = string.sub(matTable[i], pos5 + 1, pos6 - 1)
+      pos7 = string.find(matTable[i], "%s", pos6 + 1)
+    end
+    
+    if pos7 then
+      title7 = string.sub(matTable[i], pos6 + 1, pos7 - 1)
+    end
+    
+    local tempWord = string.lower(string.sub(matTable[i], 1, length1))
+    local temp2 = string.lower(string.sub(title2, 1, length1))
+    local temp3 = string.lower(string.sub(title3, 1, length1))
+    local temp4 = string.lower(string.sub(title4, 1, length1))
+    local temp5 = string.lower(string.sub(title5, 1, length1))
+    local temp6 = string.lower(string.sub(title6, 1, length1))
+    local temp7 = string.lower(string.sub(title7, 1, length1))
+    if (tempWord:lower() == word1:lower()) or (temp2:lower() == word1:lower()) or (temp3:lower() == word1:lower()) or (temp4:lower() == word1:lower()) or (temp5:lower() == word1:lower()) or (temp6:lower() == word1:lower()) or (temp7:lower() == word1:lower()) then
       table.insert( matTable2, matTable[i])
       table.insert( matContent2, matContent[i])
       table.insert( matAnswer2, matAnswer[i])
@@ -259,6 +365,8 @@ function scene:create( event )
 
    local sceneGroup = self.view
    
+   Runtime:addEventListener( "key", onKeyEvent )
+   
    matTable = {}
    matContent = {}
    matAnswer = {}
@@ -302,57 +410,7 @@ function scene:create( event )
     
   finalRows(matTable, matContent, matAnswer)
   
---  for i = 3, #matTable, 1 do
---    local temp = string.find( matTable[i], ",")
---    matContent[i] = string.sub(matTable[i], temp + 2)
---    matTable[i] = string.sub(matTable[i], 1, temp - 1)
---    temp = string.find(matContent[i], ":")
---    if (math.fmod(i, 2)) == 0 then
---      matAnswer[i] = string.sub(matContent[i], temp - 7)
---      matContent[i] = string.sub(matContent[i], 1, temp - 10)
---    else
---      matAnswer[i] = string.sub(matContent[i], temp - 3)
---      matContent[i] = string.sub(matContent[i], 1, temp - 6)
---    end
---  end
-    fullRows()
---  for i = 1, #matTable, 1 do
---       
---    local isCategory = false
---    local rowHeight = display.contentHeight / 4 + 15
---    if (i > 201) and (i < 213) then
---      rowHeight = display.contentHeight / 4 + 25
---    end
---    if (i == 321 or i == 322) then
---      rowHeight = display.contentHeight / 4 + 30
---    end
---    if (i == 307 or i == 308) then
---      rowHeight = display.contentHeight / 4 + 42
---    end
---    local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
---    local lineColor = { 0.15, 0.4, 0.729 }
---           
---    if ( i == 1 ) then
---      isCategory = true
---      rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
---      --lineColor = { 1, 0, 0 }
---      rowHeight = display.contentHeight / 6
---    elseif (i == 2 ) then
---      rowColor = { default={ 0.8, 0.885, 1, 0.95 } }
---      lineColor = { 0.15, 0.4, 0.729 }
---      rowHeight = display.contentHeight / 6
---    end       
---       
---    matList:insertRow(
---    {
---      isCategory = isCategory,
---      rowHeight = rowHeight,
---      rowColor = rowColor,
---      lineColor = lineColor,
---      params = { }
---      }
---    )
---  end
+  fullRows()
   
   mask = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
   mask:setFillColor(1)
@@ -363,6 +421,7 @@ function scene:create( event )
   searchBox = native.newTextField(display.contentWidth - 110, 30, 200, 30)
   searchBox:addEventListener( "userInput", textListener)
   searchBox.placeholder = "Search"
+  searchBox.alpha = 0
 
 
    -- Initialize the scene here.
@@ -378,6 +437,8 @@ function scene:show( event )
    if ( phase == "will" ) then
       -- Called when the scene is still off screen (but is about to come on screen).
    elseif ( phase == "did" ) then
+     composer.removeScene( "menu", true)
+     transition.to(searchBox, {alpha = 1, time = 300})
       -- Called when the scene is now on screen.
       -- Insert code here to make the scene come alive.
       -- Example: start timers, begin animation, play audio, etc.
@@ -389,15 +450,19 @@ function scene:hide( event )
 
    local sceneGroup = self.view
    local phase = event.phase
-
+   local parent = event.parent
+   
    if ( phase == "will" ) then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
+      if myData.isOverlay then
+        parent:switch()
+      end
+      searchBox:removeSelf()      
    elseif ( phase == "did" ) then
-      -- Called immediately after scene goes off screen.
+      
+      Runtime:removeEventListener( "key", onKeyEvent )
    end
 end
+
 
 -- "scene:destroy()"
 function scene:destroy( event )

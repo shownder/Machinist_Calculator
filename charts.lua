@@ -167,7 +167,6 @@ local function onRowTouch2( event )
         openIso()  
       end
     else
-      print(answer[row.index])
       if myData.isOverlay then
         local answer = answer[row.index]
         myData.number = answer
@@ -191,6 +190,7 @@ openDecEqui = function()
     transition.to(decEqui, {y = display.contentCenterY, time = 500})
     menuHidden = true
     showing = 1
+    myData.inch = false
   else
     transition.to(decEqui, {y = display.contentHeight * 2 + 10, time = 500})
     menuHidden = false
@@ -204,6 +204,7 @@ openUniTap = function()
     transition.to(uniTap, {y = display.contentCenterY, time = 500})
     menuHidden = true
     showing = 2
+    myData.inch = false
   else
     transition.to(uniTap, {y = display.contentHeight * 2 + 10, time = 500})
     menuHidden = false
@@ -217,6 +218,7 @@ openTaperTap = function()
     transition.to(taperTap, {y = display.contentCenterY, time = 500})
     menuHidden = true
     showing = 3
+    myData.inch = false
   else
     transition.to(taperTap, {y = display.contentHeight * 2 + 10, time = 500})
     menuHidden = false
@@ -230,6 +232,7 @@ openIso = function()
     transition.to(isoTap, {y = display.contentCenterY, time = 500})
     menuHidden = true
     showing = 4
+    myData.inch = true
   else
     transition.to(isoTap, {y = display.contentHeight * 2 + 10, time = 500})
     menuHidden = false
@@ -614,7 +617,7 @@ function scene:hide( event )
    if ( phase == "will" ) then
       
       if myData.isOverlay then
-        parent:calculate()
+        parent:switch2()
       end
             
    elseif ( phase == "did" ) then

@@ -14,7 +14,7 @@ local moveIntro
 local choiceTable, decEquiTable, uniTapTable, taperTapTable, isoTable
 local decEquiAnswer, uniTapAnswer, taperTapAnswer, isoAnswer
 local counter
-local menuHidden, topText, showing, topFade
+local menuHidden, topText, showing, topFade, topBox
 
 local menuHide, menuShow, goBack, openDecEqui, openUniTap, openTaperTap, openIso
 
@@ -243,12 +243,14 @@ menuHide = function()
   
    transition.to(chartChoice, {x = chartChoice.contentWidth - chartChoice.contentWidth * 2, time = 500})
    transition.fadeIn( topText, {time = 1200})
+   transition.fadeIn( topBox, {time = 1200})
 
 end
 
 menuShow = function()
   
    transition.fadeOut( topText, {time = 50})
+   transition.fadeOut( topBox, {time = 50})
    transition.to(chartChoice, {x = chartChoice.contentWidth / 2, time = 500})
 
 end
@@ -584,9 +586,17 @@ function scene:create( event )
    
    
    topText = display.newText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - 35, y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
-   topText:setFillColor(1)
+   topText:setFillColor(1, 0.7)
    topText:addEventListener("touch", goTop)
    topText.alpha = 0
+   
+   topBox = display.newRect(sceneGroup, 0, 0, topText.contentWidth + 5, topText.contentHeight + 5)
+   topBox:setFillColor(1, 0)
+   topBox.stroke = {1, 0.7}
+   topBox.strokeWidth = 2
+   topBox.x = topText.x - 1
+   topBox.y = topText.y
+   topBox.alpha = 0
 
    
 end

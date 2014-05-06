@@ -184,6 +184,21 @@ function scene:create( event )
   facebookButt.y = backEdgeY + 55
   facebookButt:addEventListener ( "touch", goToFacebook )
   
+  menuScroll = widget.newScrollView
+  {
+    left = 150,
+    top = 0,
+    width = back.contentWidth - 150,
+    height = back.contentHeight,
+    scrollWidth = 1000,
+    scrollHeight = 500,
+    verticalScrollDisabled = true,
+    hideBackground = true,
+    --isBounceEnabled = false,
+    rightPadding = 50,
+  }
+  sceneGroup:insert(menuScroll)
+  
   rightButt = widget.newButton
 	{
 		width = 56,
@@ -387,7 +402,7 @@ function scene:create( event )
     left = 0,
 		top = 0,
 		id = "matButt",
-    defaultFile = "Images/chartMenu.png",
+    defaultFile = "Images/mattButt.png",
 		onRelease = sceneSelect,		
 		}
 	matButt.num = 8
@@ -407,22 +422,6 @@ function scene:create( event )
   matLabel.num = 8
   matLabel:addEventListener ( "touch", sceneSelect )
   matLabel.alpha = 0
-  
-  
-  menuScroll = widget.newScrollView
-  {
-    left = 150,
-    top = 0,
-    width = back.contentWidth - 150,
-    height = back.contentHeight,
-    scrollWidth = 1000,
-    scrollHeight = 500,
-    verticalScrollDisabled = true,
-    hideBackground = true,
-    --isBounceEnabled = false,
-    rightPadding = 50,
-  }
-  sceneGroup:insert(menuScroll)
   
   menuScroll:insert(rightButt)
   menuScroll:insert(obliqueButt)
@@ -449,12 +448,9 @@ function scene:create( event )
   else
     moveItems2()
   end
-  
-    
 
-   -- Initialize the scene here.
-   -- Example: add display objects to "sceneGroup", add touch listeners, etc.
-     print(display.contentWidth)  
+
+     
 end
 
 -- "scene:show()"

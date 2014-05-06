@@ -14,7 +14,7 @@ local counter, goNext, counter2
 local searchBox, mask, placeHolder
 local finalRows, matchRow, fullRows, fullRows2
 local matTable2, matContent2, matAnswer2
-local deleteTables
+local deleteTables, back, topText, topBox
 
 ---------------------------------------------------------------------------------
 local function onKeyEvent( event )
@@ -26,6 +26,14 @@ local function onKeyEvent( event )
     timer.performWithDelay(100,goBack2,1)
   end
   return true
+end
+
+local function goTop(event)
+  local phase = event.phase
+  
+  if "ended" == phase then
+    matList:scrollToY({ y = 0})  
+  end
 end
 
 local function goBack2()
@@ -158,15 +166,39 @@ local function onRowRender( event )
     end    
     
     if row.index > 2 then
+      local temp = string.find(answer[row.index], "%s")
+      temp = string.sub(answer[row.index], temp + 1)
+      temp = math.round((temp / 3.2808) * math.pow(10, 2)) / math.pow(10, 2)
         rowAnswerRow = display.newText( { parent = row, text = answer[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
+        local display1 = display.newText( { parent = row, text = "ft/min", x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 16} )
+        local display2 = display.newText( { parent = row, text = temp, x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
+        local display3 = display.newText( { parent = row, text = "meters/min", x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 16} )
         rowAnswerRow:setFillColor(0.757, 0, 0)
-        rowAnswerRow.anchorX = 0
+        display1:setFillColor(0.757, 0, 0, 0.8)
+        display2:setFillColor(0.757, 0, 0)
+        display3:setFillColor(0.757, 0, 0, 0.8)
+        rowAnswerRow.anchorX = 1
+        display1.anchorX = 1
+        display2.anchorX = 1
+        display3.anchorX = 1
         rowAnswerRow.anchorY = 0
-        rowAnswerRow.x = 10
-        if (row.index > 216) and (row.index < 226) then
+        display1.anchorY = 0
+        display2.anchorY = 0
+        display3.anchorY = 0
+        rowAnswerRow.x = rowAnswerRow.contentWidth + 10
+        display1.x = rowAnswerRow.contentWidth + display1.contentWidth + 10
+        display2.x = rowAnswerRow.contentWidth + display1.contentWidth + display2.contentWidth + 10
+        display3.x = rowAnswerRow.contentWidth + display1.contentWidth + display2.contentWidth + display3.contentWidth + 10
+        if rowTitle.contentHeight > 20 then
           rowAnswerRow.y = rowTitle.contentHeight - 5
+          display1.y = rowTitle.contentHeight - 5
+          display2.y = rowTitle.contentHeight - 5
+          display3.y = rowTitle.contentHeight - 5
         else
           rowAnswerRow.y = rowTitle.y + 20
+          display1.y = rowTitle.y + 20
+          display2.y = rowTitle.y + 20
+          display3.y = rowTitle.y + 20
         end
         
         rowContentRow = display.newText( { parent = row, text = content[row.index], x = 0, y = 0, width = display.contentWidth - 10, font = "BerlinSansFB-Reg", fontSize = 16} )
@@ -189,9 +221,15 @@ finalRows = function(title, content, answer)
     temp = string.find(content[i], ":")
     if (math.fmod(i, 2)) == 0 then
       answer[i] = string.sub(content[i], temp - 7)
+      --local temp = string.find(answer[i], "%s")
+--      temp = string.sub(answer[i], temp + 1)
+--      answer[i] = answer[i] .. " ft/min" .. " - " .. " " .. math.round((temp / 3.2808) * math.pow(10, 2)) / math.pow(10, 2) .. " meters/min"
       content[i] = string.sub(content[i], 1, temp - 10)
     else
       answer[i] = string.sub(content[i], temp - 3)
+      local temp = string.find(answer[i], "%s")
+      --temp = string.sub(answer[i], temp + 1)
+--      answer[i] = answer[i] .. " ft/min" .. " - " .. " " .. math.round((temp / 3.2808) * math.pow(10, 2)) / math.pow(10, 2) .. " meters/min"
       content[i] = string.sub(content[i], 1, temp - 6)
     end
   end
@@ -200,10 +238,19 @@ end
 matchRow = function(length, word)
   
   local length1 = length
+  local word1 = word
+  
+  if word1 == "aluminum" then
+      word1 = "aluminium"
+      length1 = length1 + 1
+    elseif word1 == "aluminu" then
+      word1 = "aluminiu"
+      length1 = length1 + 1
+    end
     
   for i = 3, #matTable, 1 do
     local pos1, pos2, pos3, pos4, pos5, pos6, pos7
-    local word1 = word
+          
     local title1 = ""
     local title2 = ""
     local title3 = ""
@@ -386,8 +433,13 @@ function scene:create( event )
    matAnswer2[1] = " "
    matAnswer2[2] = " "
    
-   mask = display.newRect( sceneGroup, 0, 0, display.contentWidth, display.contentHeight)
-   mask:setFillColor(1)
+   if not myData.isOverlay then
+    back = display.newImageRect( sceneGroup, "backgrounds/background.png", 570, 360 )
+    back.x = display.contentCenterX
+    back.y = display.contentCenterY
+    backEdgeX = back.contentBounds.xMin
+    backEdgeY = back.contentBounds.yMin
+  end
    
    matList = widget.newTableView
      {
@@ -400,6 +452,7 @@ function scene:create( event )
        hideScrollBar = false,
      }
   sceneGroup:insert(matList)
+  matList.alpha = 0.7
   
   local path = system.pathForFile( "charts/materialsList.txt")
   local file = io.open( path, "r")
@@ -420,8 +473,21 @@ function scene:create( event )
    
   searchBox = native.newTextField(display.contentWidth - 110, 30, 200, 30)
   searchBox:addEventListener( "userInput", textListener)
-  searchBox.placeholder = "Search"
+  searchBox.placeholder = "Search by name..."
   searchBox.alpha = 0
+  
+  topText = display.newText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - (searchBox.contentWidth + 40), y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
+   topText:setFillColor(1, 0.7)
+   topText:addEventListener("touch", goTop)
+   topText.alpha = 0
+   
+   topBox = display.newRect(sceneGroup, 0, 0, topText.contentWidth + 5, topText.contentHeight + 5)
+   topBox:setFillColor(1, 0)
+   topBox.stroke = {1, 0.7}
+   topBox.strokeWidth = 2
+   topBox.x = topText.x - 1
+   topBox.y = topText.y
+   topBox.alpha = 0
 
 
    -- Initialize the scene here.
@@ -439,6 +505,8 @@ function scene:show( event )
    elseif ( phase == "did" ) then
      composer.removeScene( "menu", true)
      transition.to(searchBox, {alpha = 1, time = 300})
+     transition.to(topText, {alpha = 1, time = 300})
+     transition.to(topBox, {alpha = 1, time = 300})
       -- Called when the scene is now on screen.
       -- Insert code here to make the scene come alive.
       -- Example: start timers, begin animation, play audio, etc.

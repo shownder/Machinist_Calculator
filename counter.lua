@@ -21,7 +21,7 @@ local whatTap, tapTable
 
 local stepSheet, buttSheet, tapSheet
 local angleTap, diamTap, lengthTap
-local options, charts
+local options, charts, switch2
 
 local toMill, toInch, goBack2, calculate
 
@@ -222,9 +222,64 @@ local function alertListener ( event )
 	end
 end
 
+local function measureChange2()
+
+		if measure:getLabel() == "TO METRIC" then
+			measure:setLabel("TO IMPERIAL")
+			measureLabel:setText("Metric")
+			for i = 2, 3, 1 do
+				if tapTable[i].text ~= "Tap Me" then
+					tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
+
+				end
+			end
+		else
+			measure:setLabel("TO METRIC")
+			measureLabel:setText("Imperial")
+			for i = 2, 3, 1 do
+				if tapTable[i].text ~= "Tap Me" then
+					tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
+				end
+			end
+		end
+    if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+			options = false
+		end
+end	
+
 -----------------------------------
 --Functions Used After Calculate
 -----------------------------------
+
+local function alertListener4 ( event )
+	if "clicked" == event.action then
+    local i = event.index
+    if 1 == i then
+      measureChange2()
+      timer.performWithDelay(100, scene:calculate())
+    end
+  end
+end
+
+function scene:switch2()
+  local screenGroup = self.view
+  
+  if myData.inch == true then print("it's true") elseif myData.inch == false then print("it's false") else print("It's Nothing" .. " " .. myData.number) end
+  
+  if measure:getLabel() == "TO IMPERIAL" and myData.inch == true then
+    native.showAlert ("Caution", "You have chosen an INCH drill. Switch to IMPERIAL calculations?", { "OK", "Cancel" }, alertListener4 )
+  elseif measure:getLabel() == "TO METRIC" and myData.inch == false then
+    native.showAlert ("Caution", "You have chosen an MM drill. Switch to METRIC calculations?", { "OK", "Cancel" }, alertListener4 )
+  else
+    scene:calculate()
+  end
+end
 
 function scene:calculate()
   local screenGroup = self.view

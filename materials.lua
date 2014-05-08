@@ -42,7 +42,7 @@ local function goBack2()
     myData.number = "Tap Me"
     composer.hideOverlay()
   else
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
+		composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end
 		
 end

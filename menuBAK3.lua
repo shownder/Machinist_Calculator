@@ -115,7 +115,7 @@ local function moveItems()
   transition.fadeIn(chartLabel, {time=1100})
   transition.fadeIn(matLabel, {time=100})
   
-  menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
+  --menuScroll:scrollToPosition( {x=-110, time=1900, onComplete = scrollComplete})  
   
 end
 
@@ -152,7 +152,7 @@ end
 function scene:create( event )
 
   local sceneGroup = self.view
-   
+  myData.inch = false 
   timesOpen = loadsave.loadTable("timesOpen.json")
   
   if timesOpen.opened == 5 then

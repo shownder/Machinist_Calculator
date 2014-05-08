@@ -73,7 +73,9 @@ local function resetCalc(event)
       transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
       decLabel:setFillColor(1)
 			options = false
-		end		
+		end
+    myData.inch = false
+		
 end
 
 local function alertListener2 ( event )
@@ -423,7 +425,7 @@ end
 function scene:switch()
   local screenGroup = self.view
   
-  if measure:getLabel() == "TO IMPERIAL" then
+  if measure:getLabel() == "TO IMPERIAL" and myData.number ~= "Tap Me" then
     myData.number = myData.number / 3.2808
     myData.number = math.round(myData.number * math.pow(10, places)) / math.pow(10, places)
     scene:calculate()
@@ -444,14 +446,17 @@ end
 
 function scene:switch2()
   local screenGroup = self.view
-  if myData.inch then print("it's true") else print("it's false") end
-  if measure:getLabel() == "TO IMPERIAL" and myData.inch == false then
+  
+  if myData.inch == true then print("it's true") elseif myData.inch == false then print("it's false") else print("It's Nothing" .. " " .. myData.number) end
+  
+  if measure:getLabel() == "TO IMPERIAL" and myData.inch == true then
     native.showAlert ("Caution", "You have chosen an INCH drill. Switch to IMPERIAL calculations?", { "OK", "Cancel" }, alertListener4 )
-  elseif measure:getLabel() == "TO METRIC" and myData.inch == true then
+  elseif measure:getLabel() == "TO METRIC" and myData.inch == false then
     native.showAlert ("Caution", "You have chosen an MM drill. Switch to METRIC calculations?", { "OK", "Cancel" }, alertListener4 )
   else
     scene:calculate()
   end
+  
 end
 
 calc = function()

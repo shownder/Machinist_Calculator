@@ -40,7 +40,7 @@ local function goBack2()
 	
   if (myData.isOverlay) then
     myData.number = "Tap Me"
-    composer.hideOverlay()
+    composer.hideOverlay(true, "slideRight", 500)
   else
 		composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end

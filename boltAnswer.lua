@@ -56,7 +56,7 @@ end
 local function goBack( event )
 	if event.phase == "ended" then
 		
-		composer.hideOverlay(true, "slideRight", 300 )
+		composer.hideOverlay(true, "slideRight", 500 )
 		
 	end
 end

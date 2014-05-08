@@ -604,12 +604,15 @@ local screenGroup = self.view
 	answer = widget.newButton{
 		left = 0,
 		top = 0,
-		width = 150,
+		width = 90,
 		height = 35,
 		font = "BerlinSansFB-Reg",
-    fontSize = 20,
+    fontSize = 14,
+    labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
 		label = "CALCULATE",
 		id = "answer",
+    defaultFile = "Images/chartButtD.png",
+    overFile = "Images/chartButtO.png",
 		onEvent = answerScene
 		}
 	backGroup:insert(answer)

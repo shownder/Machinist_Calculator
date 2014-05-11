@@ -8,7 +8,7 @@ local myData = require("myData")
 -- unless "composer.removeScene()" is called.
 ---------------------------------------------------------------------------------
 
-local chartChoice, decEqui, uniTap, taperTap, isoMetric
+local chartChoice, decEqui, uniTap, taperTap, isoMetric, goBack2
 local back, isOverlay, backEdgeX, backEdgeY
 local moveIntro
 local choiceTable, decEquiTable, uniTapTable, taperTapTable, isoTable
@@ -18,27 +18,28 @@ local menuHidden, topText, showing, topFade, topBox
 
 local menuHide, menuShow, goBack, openDecEqui, openUniTap, openTaperTap, openIso
 
-local function onKeyEvent( event )
+--local function onKeyEvent( event )
 
-  local phase = event.phase
-  local keyName = event.keyName
-   
-  if ( "back" == keyName and phase == "up" ) then
-    timer.performWithDelay(100,goBack2,1)
-  end
-  return true
-end
+--  local phase = event.phase
+--  local keyName = event.keyName
+--   
+--  if ( "back" == keyName and phase == "up" ) then
+--    timer.performWithDelay(100,goBack2,1)
+--  end
+--  return true
+--end
 
-local function goBack2()
-	
-  if myData.isOverlay == true then
-    myData.number = "Tap Me"
-    composer.hideOverlay(true, "slideRight", 500)
-  else
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
-  end
-		
-end
+--goBack2 = function()
+--	
+--  if myData.isOverlay == true then
+--    myData.number = "Tap Me"
+--    myData.isOverlay = false
+--    composer.hideOverlay("slideRight", 500)
+--  else
+--		composer.gotoScene( "menu", { effect="slideRight", time=800})
+--  end
+--		
+--end
 
 local function goTop(event)
   local phase = event.phase
@@ -269,7 +270,7 @@ function scene:create( event )
 
    local sceneGroup = self.view
    
-   Runtime:addEventListener( "key", onKeyEvent )
+   --Runtime:addEventListener( "key", onKeyEvent )
    
    if myData.isOverlay then
      print("true")
@@ -627,14 +628,14 @@ function scene:hide( event )
    local parent = event.parent
    
    if ( phase == "will" ) then
-      
+      --Runtime:removeEventListener( "key", onKeyEvent )
       if myData.isOverlay then
         parent:switch2()
       end
             
    elseif ( phase == "did" ) then
       
-      Runtime:removeEventListener( "key", onKeyEvent )
+      
    end
 end
 

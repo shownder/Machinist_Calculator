@@ -714,6 +714,7 @@ function scene:hide( event )
 
   if ( phase == "will" ) then
     --calling the calculate function in the parent scene
+    transition.to(maskBakc, {alpha = 0, time = 200})
     parent:calculate()
   elseif ( phase == "did" ) then
       -- Called immediately after scene goes off screen.

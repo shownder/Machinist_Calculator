@@ -233,8 +233,17 @@ goBack2 = function()
 	
   if (myData.isOverlay) then
     myData.number = "Tap Me"
-    composer.hideOverlay()
+    composer.hideOverlay("slideRight", 500)
   else
+		if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+			options = false
+		end
 		composer.gotoScene( "menu", { effect="slideRight", time=800})
   end
 		

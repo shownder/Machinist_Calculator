@@ -34,7 +34,7 @@ local measure
 local options, angAcalc, angBcalc, sideAcalc, sideBcalc, sideCcalc
 local addListeners, removeListeners, toMill, toInch, goBack2
 local backGroup, rightDisplay, optionsButt, optionsBack
-local toMill, toInch
+local toMill, toInch, goBack2
 
 --Local Functions
 
@@ -372,12 +372,21 @@ local function angBcalc()
 	end
 end
 
-local function goBack2()
+goBack2 = function()
 	
   if (myData.isOverlay) then
     myData.number = "Tap Me"
-    composer.hideOverlay()
+    composer.hideOverlay("slideRight", 500)
   else
+    if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+			options = false
+		end
 		composer.gotoScene( "menu", { effect="slideRight", time=800})
   end
 		
@@ -759,11 +768,12 @@ function scene:hide( event )
    local phase = event.phase
 
    if ( phase == "will" ) then
+     Runtime:removeEventListener( "key", onKeyEvent )
       -- Called when the scene is on screen (but is about to go off screen).
       -- Insert code here to "pause" the scene.
       -- Example: stop timers, stop animation, stop audio, etc.
    elseif ( phase == "did" ) then
-      Runtime:removeEventListener( "key", onKeyEvent )
+      
    end
 end
 

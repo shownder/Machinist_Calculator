@@ -15,18 +15,19 @@ local searchBox, mask, placeHolder
 local finalRows, matchRow, fullRows, fullRows2
 local matTable2, matContent2, matAnswer2
 local deleteTables, back, topText, topBox
+local goBack2
 
 ---------------------------------------------------------------------------------
-local function onKeyEvent( event )
+--local function onKeyEvent( event )
 
-  local phase = event.phase
-  local keyName = event.keyName
-   
-  if ( "back" == keyName and phase == "up" ) then
-    timer.performWithDelay(100,goBack2,1)
-  end
-  return true
-end
+--  local phase = event.phase
+--  local keyName = event.keyName
+--   
+--  if ( "back" == keyName and phase == "up" ) then
+--    timer.performWithDelay(100,goBack2,1)
+--  end
+--  return true
+--end
 
 local function goTop(event)
   local phase = event.phase
@@ -36,13 +37,14 @@ local function goTop(event)
   end
 end
 
-local function goBack2()
+goBack2 = function()
 	
   if (myData.isOverlay) then
     myData.number = "Tap Me"
+    myData.isOverlay = false
     composer.hideOverlay(true, "slideRight", 500)
   else
-		composer.gotoScene( "menu", { effect="fromBottom", time=800})
+		composer.gotoScene( "menu", { effect="slideRight", time=800})
   end
 		
 end
@@ -102,12 +104,12 @@ local function onRowTouch( event )
 --    end
   elseif "release" == phase then
     if row.index == 2 then
-      if myData.isOverlay then
-        myData.number = "Tap Me"
-        composer.hideOverlay(true, "slideTop", 500 )
-      else
+ --     if myData.isOverlay then
+--        myData.number = "Tap Me"
+        --composer.hideOverlay(true, "slideTop", 500 )
+      --else
         timer.performWithDelay(100, goBack2)
-      end
+      --end
     else
       if myData.isOverlay then
         if string.len(searchBox.text) > 0 then
@@ -412,7 +414,7 @@ function scene:create( event )
 
    local sceneGroup = self.view
    
-   Runtime:addEventListener( "key", onKeyEvent )
+   --Runtime:addEventListener( "key", onKeyEvent )
    
    matTable = {}
    matContent = {}
@@ -521,13 +523,14 @@ function scene:hide( event )
    local parent = event.parent
    
    if ( phase == "will" ) then
+     --Runtime:removeEventListener( "key", onKeyEvent )
       if myData.isOverlay then
         parent:switch()
       end
       searchBox:removeSelf()      
    elseif ( phase == "did" ) then
       
-      Runtime:removeEventListener( "key", onKeyEvent )
+      
    end
 end
 

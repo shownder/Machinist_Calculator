@@ -14,17 +14,17 @@ local answer, backButt, scrollView, answerX, answerY, diam, emailButt, maskBack
 local back, numY
 local bolt, boltCenterX, boltCenterY, line1, line2, goBack2
 
-local function onKeyEvent( event )
+--local function onKeyEvent( event )
 
-   local phase = event.phase
-   local keyName = event.keyName
-   print( event.phase, event.keyName )
+--   local phase = event.phase
+--   local keyName = event.keyName
+--   print( event.phase, event.keyName )
 
-  if ( "back" == keyName and phase == "down" ) then
-    timer.performWithDelay(100,goBack2,1)
-  end
-  return true
-end
+--  if ( "back" == keyName and phase == "down" ) then
+--    timer.performWithDelay(100,goBack2,1)
+--  end
+--  return true
+--end
 
 local function catchStrays(event)
    return true

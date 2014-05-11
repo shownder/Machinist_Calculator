@@ -376,8 +376,17 @@ goBack2 = function()
 	
   if (myData.isOverlay) then
     myData.number = "Tap Me"
-    composer.hideOverlay()
+    composer.hideOverlay("slideRight", 500)
   else
+		if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+			options = false
+		end
 		composer.gotoScene( "menu", { effect="slideRight", time=800})
   end
 		
@@ -788,7 +797,7 @@ function scene:show( event )
    local phase = event.phase
 
    if ( phase == "will" ) then
-      Runtime:removeEventListener( "key", onKeyEvent )
+      
    elseif ( phase == "did" ) then
       -- Called when the scene is now on screen.
       -- Insert code here to make the scene come alive.
@@ -804,11 +813,13 @@ function scene:hide( event )
    local phase = event.phase
 
    if ( phase == "will" ) then
+     Runtime:removeEventListener( "key", onKeyEvent )
       -- Called when the scene is on screen (but is about to go off screen).
       -- Insert code here to "pause" the scene.
       -- Example: stop timers, stop animation, stop audio, etc.
-      Runtime:removeEventListener( "key", onKeyEvent )
+      
    elseif ( phase == "did" ) then
+     
       -- Called immediately after scene goes off screen.
    end
 end

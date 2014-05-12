@@ -18,28 +18,49 @@ local menuHidden, topText, showing, topFade, topBox
 
 local menuHide, menuShow, goBack, openDecEqui, openUniTap, openTaperTap, openIso
 
---local function onKeyEvent( event )
+local function onKeyEvent( event )
 
---  local phase = event.phase
---  local keyName = event.keyName
---   
---  if ( "back" == keyName and phase == "up" ) then
---    timer.performWithDelay(100,goBack2,1)
---  end
---  return true
---end
+  local phase = event.phase
+  local keyName = event.keyName
+   
+  if ( "back" == keyName and phase == "up" ) and not myData.isOverlay then
+    if menuHidden then
+      timer.performWithDelay(500, menuShow)
+      if showing == 1 then
+        openDecEqui()
+      elseif showing == 2 then
+        openUniTap()
+      elseif showing == 3 then
+        openTaperTap()
+      elseif showing == 4 then
+        openIso()  
+      end
+    else
+      timer.performWithDelay(100,goBack2,1)
+    end
+  end
+  return true
+end
 
---goBack2 = function()
---	
---  if myData.isOverlay == true then
---    myData.number = "Tap Me"
---    myData.isOverlay = false
---    composer.hideOverlay("slideRight", 500)
---  else
---		composer.gotoScene( "menu", { effect="slideRight", time=800})
---  end
---		
---end
+goBack2 = function()
+
+  if (myData.isOverlay) then
+    myData.number = "Tap Me"
+    composer.hideOverlay("slideUp", 500)
+  else
+		if options then
+			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+      decLabel:setFillColor(1)
+			options = false
+		end
+		composer.gotoScene( "menu", { effect="fromBottom", time=800})
+  end
+		
+end
 
 local function goTop(event)
   local phase = event.phase
@@ -270,7 +291,9 @@ function scene:create( event )
 
    local sceneGroup = self.view
    
-   --Runtime:addEventListener( "key", onKeyEvent )
+  if not myData.isOverlay then
+    Runtime:addEventListener( "key", onKeyEvent )
+  end
    
    if myData.isOverlay then
      print("true")
@@ -628,7 +651,10 @@ function scene:hide( event )
    local parent = event.parent
    
    if ( phase == "will" ) then
-      --Runtime:removeEventListener( "key", onKeyEvent )
+     if not myData.isOverlay then
+      Runtime:removeEventListener( "key", onKeyEvent )
+     end
+     
       if myData.isOverlay then
         parent:switch2()
       end

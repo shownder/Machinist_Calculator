@@ -96,7 +96,7 @@ local function alertListener2 ( event )
       timer.performWithDelay( 1000, resetCalc("ended") )
       whatTap = 2
       myData.isOverlay = true
-      composer.showOverlay( "charts", { effect="fromRight", time=100, isModal = true }  )
+      composer.showOverlay( "charts", { effect="fromTop", time=100, isModal = true }  )
     end
   end
 end
@@ -119,7 +119,7 @@ local function goToCharts(event)
     else      
       whatTap = 2
       myData.isOverlay = true
-      composer.showOverlay( "charts", { effect="fromRight", time=100, isModal = true }  )
+      composer.showOverlay( "charts", { effect="fromTop", time=100, isModal = true }  )
     end
   end  
 end
@@ -365,7 +365,7 @@ goBack2 = function()
 	
   if (myData.isOverlay) then
     myData.number = "Tap Me"
-    composer.hideOverlay("slideRight", 500)
+    composer.hideOverlay("slideUp", 500)
   else
 		if options then
 			transition.to ( optionsGroup, { time = 100, alpha = 0} )
@@ -376,7 +376,7 @@ goBack2 = function()
       decLabel:setFillColor(1)
 			options = false
 		end
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
+		composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end
 		
 end

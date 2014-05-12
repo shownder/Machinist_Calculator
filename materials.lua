@@ -18,16 +18,16 @@ local deleteTables, back, topText, topBox
 local goBack2
 
 ---------------------------------------------------------------------------------
---local function onKeyEvent( event )
+local function onKeyEvent( event )
 
---  local phase = event.phase
---  local keyName = event.keyName
---   
---  if ( "back" == keyName and phase == "up" ) then
---    timer.performWithDelay(100,goBack2,1)
---  end
---  return true
---end
+  local phase = event.phase
+  local keyName = event.keyName
+   
+  if ( "back" == keyName and phase == "up" ) and not myData.isOverlay then
+    timer.performWithDelay(100,goBack2,1)
+  end
+  return true
+end
 
 local function goTop(event)
   local phase = event.phase
@@ -38,14 +38,15 @@ local function goTop(event)
 end
 
 goBack2 = function()
-	
-  if (myData.isOverlay) then
-    myData.number = "Tap Me"
-    myData.isOverlay = false
-    composer.hideOverlay(true, "slideRight", 500)
+
+  local effect1
+  if myData.isOverlay then
+    effect1 = "fromBottom"
   else
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
+    effect1 = "slideUp"
   end
+  
+	composer.gotoScene( "menu", { effect=effect1, time=800})
 		
 end
 
@@ -95,21 +96,15 @@ local function onRowTouch( event )
   local row = event.target
   
   if "press" == phase then
---    if string.len(searchBox.text) > 0 then
---      local temp = string.find(matAnswer2[row.index], "%d")
---      print(string.sub(matAnswer2[row.index], temp))
---    else
---      local temp = string.find(matAnswer[row.index], "%d")
---      print(string.sub(matAnswer[row.index], temp))
---    end
+
   elseif "release" == phase then
     if row.index == 2 then
- --     if myData.isOverlay then
---        myData.number = "Tap Me"
-        --composer.hideOverlay(true, "slideTop", 500 )
-      --else
+     if myData.isOverlay then
+       myData.number = "Tap Me"
+       composer.hideOverlay(true, "slideUp", 500 )
+     else
         timer.performWithDelay(100, goBack2)
-      --end
+      end
     else
       if myData.isOverlay then
         if string.len(searchBox.text) > 0 then
@@ -120,7 +115,7 @@ local function onRowTouch( event )
           myData.number = string.sub(matAnswer[row.index], temp)
         end
       end
-      composer.hideOverlay(true, "slideTop", 500 )
+      composer.hideOverlay(true, "slideUp", 500 )
     end
   end
 end
@@ -414,8 +409,10 @@ function scene:create( event )
 
    local sceneGroup = self.view
    
-   --Runtime:addEventListener( "key", onKeyEvent )
-   
+  if not myData.isOverlay then
+    Runtime:addEventListener( "key", onKeyEvent )
+  end
+     
    matTable = {}
    matContent = {}
    matAnswer = {}
@@ -523,10 +520,13 @@ function scene:hide( event )
    local parent = event.parent
    
    if ( phase == "will" ) then
-     --Runtime:removeEventListener( "key", onKeyEvent )
-      if myData.isOverlay then
-        parent:switch()
-      end
+     if not myData.isOverlay then
+      Runtime:removeEventListener( "key", onKeyEvent )
+     end
+    
+     if myData.isOverlay then
+      parent:switch()
+     end
       searchBox:removeSelf()      
    elseif ( phase == "did" ) then
       

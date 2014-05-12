@@ -295,7 +295,7 @@ goBack2 = function()
       decLabel:setFillColor(1)
 			options = false
 		end
-		composer.gotoScene( "menu", { effect="slideRight", time=800})
+		composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end
 		
 end

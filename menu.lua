@@ -20,7 +20,7 @@ local speedButt, speedLabel
 local counterButt, counterLabel
 local chartButt, chartLabel
 local matButt, matLabel
-local timesOpen
+local timesOpen2
 local back
 local logo, facebookButt
 local topBar
@@ -76,19 +76,33 @@ local function alertListener ( event )
 		local i = event.index
     
     if i == 3 then
+      timesOpen2.opened = "never"
+      loadsave.saveTable(timesOpen2, "timesOpen2.json")
       local options =
-      {
-        iOSAppId = "687225532",
-        nookAppEAN = "0987654321",
-        supportedAndroidStores = { "google", "samsung", "amazon", "nook" },
-      }
-      native.showPopup("rateApp", options)
+        {
+          iOSAppId = "687225532",
+          supportedAndroidStores = { "google" },
+        }
+        
+      if (string.sub(system.getInfo("model"),1,2) == "iP") then
+        --We are on iOS
+        local version = system.getInfo("platformVersion")
+        version = string.sub(version, 1, 3)
+        if tonumber(version) >= 7.1 then
+          system.openURL("http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=687225532&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8")
+        else
+          native.showPopup("rateApp", options)
+        end
+      else  
+        --It's on Android or Windows
+        native.showPopup("rateApp", options)
+      end
     elseif i == 2 then
-      timesOpen.opened = -4
-      loadsave.saveTable(timesOpen, "timesOpen.json")
+      timesOpen2.opened = -1
+      loadsave.saveTable(timesOpen2, "timesOpen2.json")
     elseif i == 1 then
-      timesOpen.opened = "never"
-      loadsave.saveTable(timesOpen, "timesOpen.json")
+      timesOpen2.opened = "never"
+      loadsave.saveTable(timesOpen2, "timesOpen2.json")
     end
         
 	end
@@ -156,13 +170,13 @@ function scene:create( event )
 
   local sceneGroup = self.view
   myData.inch = false 
-  timesOpen = loadsave.loadTable("timesOpen.json")
+  timesOpen2 = loadsave.loadTable("timesOpen2.json")
   
-  if timesOpen.opened == 5 then
-    native.showAlert ( "Rate Us? We appreciate your feedback!", "Help Us Improve by leaving a review.", { "Never", "Later", "OK" }, alertListener )
+  if timesOpen2.opened == 5 then
+    native.showAlert ( "Find this App useful?", "Leave a review and help others find it!", { "Never", "Later", "OK" }, alertListener )
   end
     
-  print("Times Opened "..timesOpen.opened)
+  print("Times Opened "..timesOpen2.opened)
   
   going = {}
   going.num = 1

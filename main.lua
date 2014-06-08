@@ -37,6 +37,8 @@ local function licensingListener( event )
    if not event.isVerified then
       --failed verify app from the play store, we print a message
       native.showAlert ( "Could Not Authorize", "There was a problem contacting the Google licensing servers. Please check internet connection and try again.", { "Close" }, alertListener)
+    else
+      composer.gotoScene( "menu")
    end
 end
 
@@ -59,7 +61,10 @@ local timesOpen2 = loadsave.loadTable("timesOpen2.json")
   end
  
 print(system.getInfo("model") .. " " .. system.getInfo("platformVersion"))
-composer.gotoScene( "menu")
+if device.isApple then
+  composer.gotoScene( "menu")
+end
+
 
 
 

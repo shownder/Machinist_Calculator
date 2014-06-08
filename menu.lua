@@ -81,7 +81,7 @@ local function alertListener ( event )
       local options =
         {
           iOSAppId = "687225532",
-          supportedAndroidStores = { "google" },
+          supportedAndroidStores = { "google", "amazon" },
         }
         
       if (string.sub(system.getInfo("model"),1,2) == "iP") then

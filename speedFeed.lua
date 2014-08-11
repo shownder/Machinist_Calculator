@@ -4,6 +4,7 @@ local widget = require ( "widget" )
 local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
+local loadsave = require("loadsave")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -26,6 +27,7 @@ local rpmTap, diamTap, revTap, surfaceSpeedTap, minuteTap
 local options, charts, mats
 
 local calc, clac2, addListeners, removeListeners, toMill, toInch, goBack2, calculate, toFoot, toMeter
+local gMeasure, measureText, measureFeed, measureSurface
 
 local function onKeyEvent( event )
 
@@ -259,9 +261,11 @@ local function measureChange( event )
 	local phase = event.phase
 	if "ended" == phase then	
 		if measure:getLabel() == "TO METRIC" then
+      gMeasure.measure = "TO IMPERIAL"
+      loadsave.saveTable(gMeasure, "speedMeasure.json")
 			measure:setLabel("TO IMPERIAL")
 			measureLabel:setText("Metric")
-      speedText.text = "meters/min"
+      speedText.text = "Meters/min"
       minText.text = "Mill"
       revText.text = "Mill"
 			for i = 2, 5, 1 do
@@ -274,9 +278,11 @@ local function measureChange( event )
         end
       end
     else
+      gMeasure.measure = "TO METRIC"
+      loadsave.saveTable(gMeasure, "speedMeasure.json")
 			measure:setLabel("TO METRIC")
 			measureLabel:setText("Imperial")
-      speedText.text = "feet/min"
+      speedText.text = "Feet/min"
       minText.text = "Inch"
       revText.text = "Inch"
 			for i = 2, 5, 1 do
@@ -309,7 +315,7 @@ local function measureChange2()
 		if measure:getLabel() == "TO METRIC" then
 			measure:setLabel("TO IMPERIAL")
 			measureLabel:setText("Metric")
-      speedText.text = "meters/min"
+      speedText.text = "Meters/min"
       minText.text = "Mill"
       revText.text = "Mill"
 			for i = 2, 5, 1 do
@@ -324,7 +330,7 @@ local function measureChange2()
     else
 			measure:setLabel("TO METRIC")
 			measureLabel:setText("Imperial")
-      speedText.text = "feet/min"
+      speedText.text = "Feet/min"
       minText.text = "Inch"
       revText.text = "Inch"
 			for i = 2, 5, 1 do
@@ -585,13 +591,31 @@ function scene:create( event )
 	feedFlag = false
 	speedFlag = false
   options = false
+
+  gMeasure = loadsave.loadTable("speedMeasure.json")
+  if gMeasure == nil then
+    gMeasure = {}
+    gMeasure.measure = "TO METRIC"
+    loadsave.saveTable(gMeasure, "speedMeasure.json")
+  end
+
+  if gMeasure.measure == "TO METRIC" then
+    measureText = "Imperial"
+    measureFeed = "Inch"
+    measureSurface = "Feet/min"
+  else
+    measureText = "Metric"
+    measureFeed = "Mill"
+    measureSurface = "Meters/min"
+  end
+
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup()
 	local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
   local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="BerlinSansFB-Reg", fontSize=24}
   local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL2 = {text="Feet/min", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=12}
-  local textOptionsR2 = {text="Inch", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=12}
+  local textOptionsL2 = {text=measureSurface, x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=12}
+  local textOptionsR2 = {text=measureFeed, x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=12}
   
   Runtime:addEventListener( "key", onKeyEvent )
   
@@ -632,7 +656,7 @@ function scene:create( event )
 		id = "measureButt",
     width = 125,
     height = 52,
-		label = "TO METRIC",
+		label = gMeasure.measure,
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
@@ -703,7 +727,7 @@ function scene:create( event )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 115
   
-  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
+  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
   measureLabel:setFillColor(1)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 115

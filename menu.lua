@@ -149,16 +149,16 @@ local function onRowRender( event )
     icon.anchorX = 0
     icon.x = 0
     icon.y = rowHeight * 0.5
-    icon.alpha = 0
-    transition.to(icon, {alpha = 0.75, time = 500})
+    -- icon.alpha = 0
+    -- transition.to(icon, {alpha = 0.75, time = 500})
     
     label = display.newText( { parent = row, text = labels[row.index], 0, 0, font = "BerlinSansFB-Reg", fontSize = 20, width = 100})
     label.anchorX = 0
     label.x = icon.x + icon.contentWidth + 10
     label.y = rowHeight * 0.5
     label:setFillColor(0.15, 0.4, 0.729, 0.90)
-    label.alpha = 0
-    transition.to(label, {alpha = 1, time = 500})
+    -- label.alpha = 0
+    -- transition.to(label, {alpha = 1, time = 500})
 
   return true
 end
@@ -257,7 +257,8 @@ function scene:create( event )
     )
   end
 
-  if not composer.getSceneName( "previous" ) then
+  local menuOpened = loadsave.loadTable("menuOpen.json")
+  if menuOpened.opened == false then
     timer.performWithDelay(500, moveItems)
   end
 

@@ -4,6 +4,7 @@ local widget = require ( "widget" )
 local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
+local loadsave = require("loadsave")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -24,6 +25,7 @@ local options, continue
 local stepSheet, buttSheet, tapSheet
 
 local addListeners, removeListeners, toMill, toInch, goBack2
+local gMeasure, measureText
 
 
 ---Listeners
@@ -142,6 +144,8 @@ local function measureChange( event )
 	
 	if "ended" == phase then	
 		if measure:getLabel() == "TO METRIC" then
+			gMeasure.measure = "TO IMPERIAL"
+      loadsave.saveTable(gMeasure, "sineMeasure.json")
 			measure:setLabel("TO IMPERIAL")
 			measureLabel:setText("Metric")
 			for i = 1, 2, 1 do
@@ -151,6 +155,8 @@ local function measureChange( event )
 				end
 			end
 		else
+			gMeasure.measure = "TO METRIC"
+      loadsave.saveTable(gMeasure, "sineMeasure.json")
 			measure:setLabel("TO METRIC")
 			measureLabel:setText("Imperial")
 			for i = 1, 2, 1 do
@@ -362,6 +368,20 @@ function scene:create( event )
     optionsGroup = display.newGroup ( )
     backGroup = display.newGroup ( )
 		continue = false
+
+	gMeasure = loadsave.loadTable("sineMeasure.json")
+  if gMeasure == nil then
+    gMeasure = {}
+    gMeasure.measure = "TO METRIC"
+    loadsave.saveTable(gMeasure, "sineMeasure.json")
+  end
+
+  if gMeasure.measure == "TO METRIC" then
+    measureText = "Imperial"
+  else
+    measureText = "Metric"
+  end
+
     local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
     local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="BerlinSansFB-Reg", fontSize=24}
     local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=24} 
@@ -406,7 +426,7 @@ function scene:create( event )
 		id = "measureButt",
     width = 125,
     height = 52,
-		label = "TO METRIC",
+		label = gMeasure.measure,
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
@@ -477,7 +497,7 @@ function scene:create( event )
 	decLabel.x = backEdgeX + 210
 	decLabel.y = backEdgeY + 85
     
-  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
+  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
   measureLabel:setFillColor(1)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 150

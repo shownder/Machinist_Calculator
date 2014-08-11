@@ -4,6 +4,7 @@ local widget = require ( "widget" )
 local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
+local loadsave = require("loadsave")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -24,6 +25,7 @@ local angleTap, diamTap, lengthTap
 local options, charts, switch2
 
 local toMill, toInch, goBack2, calculate
+local gMeasure, measureText
 
 local function onKeyEvent( event )
 
@@ -185,6 +187,8 @@ local function measureChange( event )
 	
 	if "ended" == phase then	
 		if measure:getLabel() == "TO METRIC" then
+      gMeasure.measure = "TO IMPERIAL"
+      loadsave.saveTable(gMeasure, "counterMeasure.json")
 			measure:setLabel("TO IMPERIAL")
 			measureLabel:setText("Metric")
 			for i = 2, 3, 1 do
@@ -194,6 +198,8 @@ local function measureChange( event )
 				end
 			end
 		else
+      gMeasure.measure = "TO METRIC"
+      loadsave.saveTable(gMeasure, "counterMeasure.json")
 			measure:setLabel("TO METRIC")
 			measureLabel:setText("Imperial")
 			for i = 2, 3, 1 do
@@ -389,6 +395,20 @@ function scene:create( event )
   tapTable = {}
   aniTable = {}
   options = false
+
+  gMeasure = loadsave.loadTable("counterMeasure.json")
+  if gMeasure == nil then
+    gMeasure = {}
+    gMeasure.measure = "TO METRIC"
+    loadsave.saveTable(gMeasure, "counterMeasure.json")
+  end
+
+  if gMeasure.measure == "TO METRIC" then
+    measureText = "Imperial"
+  else
+    measureText = "Metric"
+  end
+
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup()
   
@@ -436,7 +456,7 @@ function scene:create( event )
 		id = "measureButt",
     width = 125,
     height = 52,
-		label = "TO METRIC",
+		label = gMeasure.measure,
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
@@ -507,7 +527,7 @@ function scene:create( event )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 115
   
-  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
+  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
   measureLabel:setFillColor(1)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 115

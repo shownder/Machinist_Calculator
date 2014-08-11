@@ -3,6 +3,7 @@ local scene = composer.newScene()
 local stepperDataFile = require("Images.stepSheet_stepSheet")
 local myData = require("myData")
 local widget = require ( "widget" )
+local loadsave = require("loadsave")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -28,6 +29,7 @@ local stepSheet, buttSheet, tapSheet
 
 local addListeners, removeListeners, toMill, toInch
 local update, goBack2
+local gMeasure, measureText
 
 --Forward Functions
 
@@ -136,6 +138,8 @@ local function measureChange( event )
 	
 	if "ended" == phase then	
 		if measure:getLabel() == "TO METRIC" then
+      gMeasure.measure = "TO IMPERIAL"
+      loadsave.saveTable(gMeasure, "obliqueMeasure.json")
 			measure:setLabel("TO IMPERIAL")
 			measureLabel:setText("Metric")
 			for i = 1, 3, 1 do
@@ -145,6 +149,8 @@ local function measureChange( event )
 				end
 			end
 		else
+      gMeasure.measure = "TO METRIC"
+      loadsave.saveTable(gMeasure, "obliqueMeasure.json")
 			measure:setLabel("TO METRIC")
 			measureLabel:setText("Imperial")
 			for i = 1, 3, 1 do
@@ -507,6 +513,20 @@ function scene:create( event )
 	aniTable = {}
 	tapCount = 0
   options = false
+
+  gMeasure = loadsave.loadTable("obliqueMeasure.json")
+  if gMeasure == nil then
+    gMeasure = {}
+    gMeasure.measure = "TO METRIC"
+    loadsave.saveTable(gMeasure, "obliqueMeasure.json")
+  end
+
+  if gMeasure.measure == "TO METRIC" then
+    measureText = "Imperial"
+  else
+    measureText = "Metric"
+  end
+
 	optionsGroup = display.newGroup ( )
   backGroup = display.newGroup ( )
   local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
@@ -554,7 +574,7 @@ function scene:create( event )
 		id = "measureButt",
     width = 125,
     height = 52,
-		label = "TO METRIC",
+		label = gMeasure.measure,
 		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
 		font = "BerlinSansFB-Reg",
 		fontSize = 20,
@@ -625,7 +645,7 @@ function scene:create( event )
 	decLabel.x = backEdgeX + 178
 	decLabel.y = backEdgeY + 125
   
-  measureLabel = display.newEmbossedText(backGroup, "Imperial", 0, 0, "BerlinSansFB-Reg", 20)
+  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
   measureLabel:setFillColor(1)
   measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
 	measureLabel.x = backEdgeX + 115

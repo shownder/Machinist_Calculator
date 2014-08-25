@@ -46,16 +46,13 @@ licensing.verify( licensingListener )
 end
 
 local timesOpen2 = loadsave.loadTable("timesOpen2.json")
-local menuOpen = loadsave.loadTable("menuOpen.json")
+local menuOpened = loadsave.loadTable("menuOpen.json")
 --timesOpen2.opened = 4
 
-if (menuOpen == nil) then
-    menuOpen = {}
-    menuOpen.opened = false
-    loadsave.saveTable(menuOpen, "menuOpen.json")
-else 
-    menuOpen.opened = true
-    loadsave.saveTable(menuOpen, "menuOpen.json")
+if (menuOpened == nil) then
+    menuOpened = {}
+    menuOpened.opened = false
+    loadsave.saveTable(menuOpened, "menuOpen.json")
 end
   
   if (timesOpen2 == nil) then

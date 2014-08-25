@@ -260,6 +260,8 @@ function scene:create( event )
   local menuOpened = loadsave.loadTable("menuOpen.json")
   if menuOpened.opened == false then
     timer.performWithDelay(500, moveItems)
+    menuOpened.opened = true
+    loadsave.saveTable(menuOpened, "menuOpen.json")
   end
 
      

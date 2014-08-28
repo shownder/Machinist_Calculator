@@ -16,8 +16,11 @@ local loadsave = require("loadsave")
 local device = require("device")
 local licensing = require( "licensing" )
 local composer = require( "composer" )
+local analytics = require( "analytics" )
 
 if not device.isApple then
+
+analytics.init( "FRSV5MBZK5MNNRY92PVP" )
 
 licensing.init( "google" )
 
@@ -43,6 +46,10 @@ local function licensingListener( event )
 end
 
 licensing.verify( licensingListener )
+end
+
+if device.isApple then
+  analytics.init( "C52V5WBYR3QV8Q8XXKZZ" )
 end
 
 local timesOpen2 = loadsave.loadTable("timesOpen2.json")

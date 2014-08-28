@@ -389,8 +389,7 @@ end
 
 -- "scene:create()"
 function scene:create( event )
-
-   local screenGroup = self.view
+local screenGroup = self.view
    
   tapTable = {}
   aniTable = {}

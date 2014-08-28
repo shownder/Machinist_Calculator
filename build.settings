@@ -1,5 +1,14 @@
 settings =
 {
+  plugins =
+    {
+        -- key is the name passed to Lua's 'require()'
+        ["CoronaProvider.analytics.flurry"] =
+        {
+            -- required
+            publisherId = "com.coronalabs",
+        },
+    },
 	orientation =
 	{
 		default = "landscapeRight",

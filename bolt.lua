@@ -5,6 +5,7 @@ local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
 local loadsave = require("loadsave")
+local analytics = require( "analytics" )
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -358,9 +359,9 @@ end
 
 -- "scene:create()"
 function scene:create( event )
-local screenGroup = self.view
+	local screenGroup = self.view
 
-	tapTable = {}
+  tapTable = {}
   aniTable = {}
   answerX = {}
   answerY = {}

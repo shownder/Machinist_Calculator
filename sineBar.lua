@@ -362,8 +362,8 @@ function scene:create( event )
 
    local screenGroup = self.view
 
-		tapCount = 0
-		tapTable = {}
+	tapCount = 0
+	tapTable = {}
     aniTable = {}
     optionsGroup = display.newGroup ( )
     backGroup = display.newGroup ( )

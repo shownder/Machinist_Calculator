@@ -5,6 +5,8 @@ local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
 local loadsave = require("loadsave")
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -26,18 +28,24 @@ local options, charts, switch2
 
 local toMill, toInch, goBack2, calculate
 local gMeasure, measureText
+local optionLabels, chartLabel
 
 local function onKeyEvent( event )
 
-   local phase = event.phase
-   local keyName = event.keyName
-   print( event.phase, event.keyName )
-   
+  local phase = event.phase
+  local keyName = event.keyName
+  local platformName = system.getInfo("platformName")
+
+  if platformName == "Android" then
    if ( "back" == keyName and phase == "up" ) then
-       
-       timer.performWithDelay(100,goBack2,1)
+    timer.performWithDelay(100,goBack2,1)
    end
-   return true
+  elseif platformName == "WinPhone" then
+   if ( "back" == keyName ) then
+    timer.performWithDelay(100,goBack2,1)
+   end
+  end
+  return true
 end
 
 local function optionsMove(event)
@@ -48,18 +56,18 @@ local function optionsMove(event)
       options = true
       transition.to ( optionsBack, { time = 200, x = -50 } )
       transition.to ( optionsBack, { time = 200, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=160 } )
+	  transition.to ( optionsGroup, { time = 500, alpha = 1} )
       transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
-      decLabel:setFillColor(0.15, 0.4, 0.729)
-		elseif options then 
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x = 160} )
+	  decLabel:setFont("berlinFont")
+	elseif options then 
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 125} )
+	  decLabel:setFont("inputFont")
+	  options = false
     end
   end
 end
@@ -76,19 +84,19 @@ local function resetCalc(event)
     transition.to(lengthTap, {time = 300, alpha = 1})
 
     
-    pointAngle.text = "Tap Me"
-    diam.text = "Tap Me"
-    pointLength.text = "Tap Me"
+    pointAngle:setText( "Tap Me")
+    diam:setText( "Tap Me")
+    pointLength:setText( "Tap Me")
     
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end		
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 125} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end	
 end
 
 local function alertListener2 ( event )
@@ -108,15 +116,15 @@ local function goToCharts(event)
   
   if "ended" == phase then
     if options then
-        transition.to ( optionsGroup, { time = 100, alpha = 0} )
-        transition.to ( backGroup, { time = 200, x=0 } )
-        transition.to ( optionsBack, { time = 200, x = -170 } )
-        transition.to ( optionsBack, { time = 200, y = -335 } )
-        transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-        decLabel:setFillColor(1)
-        options = false
-      end	
-    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
+      transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x=0 } )
+      transition.to ( optionsBack, { time = 200, x = -170 } )
+      transition.to ( optionsBack, { time = 200, y = -335 } )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 125} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
+    if tapTable[1]:getText() ~= "Tap Me" and tapTable[2]:getText() ~= "Tap Me" and tapTable[3]:getText() ~= "Tap Me" then
       native.showAlert ("Continue?", "Choosing new Diameter will reset all values!", { "OK", "Cancel" }, alertListener2 )
     else      
       whatTap = 2
@@ -144,10 +152,10 @@ local function stepPress( event )
 	
 	if "increment" == phase then
 		places = places + 1
-		decLabel.text = places
+		decLabel:setText( places)
 	elseif "decrement" == phase then
 		places = places - 1
-		decLabel.text = places
+		decLabel:setText( places)
 	end
 end
 
@@ -157,14 +165,14 @@ local function calcTouch( event )
     local isDegree = false
     
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 125} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
 		
     whatTap = event.target.tap
     
@@ -186,39 +194,39 @@ local function measureChange( event )
 	local phase = event.phase
 	
 	if "ended" == phase then	
-		if measure:getLabel() == "TO METRIC" then
-      gMeasure.measure = "TO IMPERIAL"
-      loadsave.saveTable(gMeasure, "counterMeasure.json")
-			measure:setLabel("TO IMPERIAL")
+		if optionLabels[1]:getText() == "TO METRIC" then
+			gMeasure.measure = "TO IMPERIAL"
+			loadsave.saveTable(gMeasure, "counterMeasure.json")
+			optionLabels[1]:setText("TO IMPERIAL")
 			measureLabel:setText("Metric")
-			for i = 2, 3, 1 do
-				if tapTable[i].text ~= "Tap Me" then
-					tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-
+		for i = 2, 3, 1 do			
+			if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toMill(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
 				end
 			end
 		else
-      gMeasure.measure = "TO METRIC"
-      loadsave.saveTable(gMeasure, "counterMeasure.json")
-			measure:setLabel("TO METRIC")
+			gMeasure.measure = "TO METRIC"
+			loadsave.saveTable(gMeasure, "counterMeasure.json")
+			optionLabels[1]:setText("TO METRIC")
 			measureLabel:setText("Imperial")
 			for i = 2, 3, 1 do
-				if tapTable[i].text ~= "Tap Me" then
-					tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
+				if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toInch(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
 				end
 			end
 		end
+    
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 125} )
+	  decLabel:setFont("inputFont")
+	  options = false
 		end
-	end	
-	
+    
+	end
 end
 
 local function alertListener ( event )
@@ -230,33 +238,37 @@ end
 
 local function measureChange2()
 
-		if measure:getLabel() == "TO METRIC" then
-			measure:setLabel("TO IMPERIAL")
+	  if optionLabels[1]:getText() == "TO METRIC" then
+			gMeasure.measure = "TO IMPERIAL"
+			loadsave.saveTable(gMeasure, "counterMeasure.json")
+			optionLabels[1]:setText("TO IMPERIAL")
 			measureLabel:setText("Metric")
-			for i = 2, 3, 1 do
-				if tapTable[i].text ~= "Tap Me" then
-					tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-
-				end
-			end
-		else
-			measure:setLabel("TO METRIC")
-			measureLabel:setText("Imperial")
-			for i = 2, 3, 1 do
-				if tapTable[i].text ~= "Tap Me" then
-					tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-				end
+		for i = 2, 3, 1 do			
+			if tapTable[i]:getText() ~= "Tap Me" then
+				tapTable[i]:setText(math.round(toMill(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
 			end
 		end
+	  else
+			gMeasure.measure = "TO METRIC"
+			loadsave.saveTable(gMeasure, "counterMeasure.json")
+			optionLabels[1]:setText("TO METRIC")
+			measureLabel:setText("Imperial")
+			for i = 2, 3, 1 do
+				if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toInch(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+				end
+			end
+	  end
+    
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 125} )
+	  decLabel:setFont("inputFont")
+	  options = false
+	end
 end	
 
 -----------------------------------
@@ -278,9 +290,9 @@ function scene:switch2()
   
   if myData.inch == true then print("it's true") elseif myData.inch == false then print("it's false") else print("It's Nothing" .. " " .. myData.number) end
   
-  if measure:getLabel() == "TO IMPERIAL" and myData.inch == true then
+  if optionLabels[1]:getText() == "TO IMPERIAL" and myData.inch == true then
     native.showAlert ("Caution", "You have chosen an INCH drill. Switch to IMPERIAL calculations?", { "OK", "Cancel" }, alertListener4 )
-  elseif measure:getLabel() == "TO METRIC" and myData.inch == false then
+  elseif optionLabels[1]:getText() == "TO METRIC" and myData.inch == false then
     native.showAlert ("Caution", "You have chosen an MM drill. Switch to METRIC calculations?", { "OK", "Cancel" }, alertListener4 )
   else
     scene:calculate()
@@ -304,53 +316,53 @@ function scene:calculate()
   if myData.number ~= "Tap Me" and not errorBox then    
           	
     if whatTap > 3 then
-      tapTable[whatTap - 10].text = myData.number
+      tapTable[whatTap - 10]:setText( myData.number)
     else
-      tapTable[whatTap].text = myData.number
+      tapTable[whatTap]:setText( myData.number)
     end
     
     if whatTap == 1 or whatTap == 11 then
-      if pointAngle.text ~= "Tap Me" and pointLength.text ~= "Tap Me" then
-        diam.text = math.tan(math.rad(pointAngle.text) / 2) * pointLength.text * 2
+      if pointAngle:getText() ~= "Tap Me" and pointLength:getText() ~= "Tap Me" then
+        diam:setText( math.tan(math.rad(pointAngle:getText()) / 2) * pointLength:getText() * 2)
         continue = true
-      elseif pointAngle.text ~= "Tap Me" and diam.text ~= "Tap Me" then
-        pointLength.text = (diam.text / 2) / (math.tan(math.rad(pointAngle.text) / 2))
+      elseif pointAngle:getText() ~= "Tap Me" and diam:getText() ~= "Tap Me" then
+        pointLength:setText( (diam:getText() / 2) / (math.tan(math.rad(pointAngle:getText()) / 2)))
         continue = true
       end
     end
         
     if whatTap == 2 or whatTap == 12 then
-      if diam.text ~= "Tap Me" and pointAngle.text ~= "Tap Me" then
-        pointLength.text = (diam.text / 2) / (math.tan(math.rad(pointAngle.text) / 2))
+      if diam:getText() ~= "Tap Me" and pointAngle:getText() ~= "Tap Me" then
+        pointLength:setText( (diam:getText() / 2) / (math.tan(math.rad(pointAngle:getText()) / 2)))
         continue = true
-      elseif diam.text ~= "Tap Me" and pointLength.text ~= "Tap Me" then
-        pointAngle.text = math.deg((math.atan(diam.text / 2 / pointLength.text)) * 2)
+      elseif diam:getText() ~= "Tap Me" and pointLength:getText() ~= "Tap Me" then
+        pointAngle:setText( math.deg((math.atan(diam:getText() / 2 / pointLength:getText())) * 2))
         continue = true
       end
     end
     
     if whatTap == 3 or whatTap == 13 then
-      if pointAngle.text ~= "Tap Me" and pointLength.text ~= "Tap Me" then
-        diam.text = math.tan(math.rad(pointAngle.text) / 2) * pointLength.text * 2
+      if pointAngle:getText() ~= "Tap Me" and pointLength:getText() ~= "Tap Me" then
+        diam:setText( math.tan(math.rad(pointAngle:getText()) / 2) * pointLength:getText() * 2)
         continue = true
-      elseif diam.text ~= "Tap Me" and pointLength.text ~= "Tap Me" then
-        pointAngle.text = math.deg((math.atan(diam.text/2 / pointLength.text)) * 2)
+      elseif diam:getText() ~= "Tap Me" and pointLength:getText() ~= "Tap Me" then
+        pointAngle:setText( math.deg((math.atan(diam:getText()/2 / pointLength:getText())) * 2))
         continue = true
       end
     end
         
   
     for i = 1, 3, 1 do
-      if tapTable[i].text ~= "Tap Me"then
+      if tapTable[i]:getText() ~= "Tap Me"then
         tapTable[i].alpha = 1
         aniTable[i].alpha = 0
       end
     end
     
     if continue then   
-      diam.text = math.round(diam.text * math.pow(10, places)) / math.pow(10, places)
-      pointLength.text = math.round(pointLength.text * math.pow(10, places)) / math.pow(10, places)
-      pointAngle.text = math.round(pointAngle.text * math.pow(10, places)) / math.pow(10, places)
+      diam:setText( math.round(diam:getText() * math.pow(10, places)) / math.pow(10, places))
+      pointLength:setText( math.round(pointLength:getText() * math.pow(10, places)) / math.pow(10, places))
+      pointAngle:setText( math.round(pointAngle:getText() * math.pow(10, places)) / math.pow(10, places))
     end
   end
 end
@@ -373,16 +385,12 @@ goBack2 = function()
     myData.number = "Tap Me"
     composer.hideOverlay("slideUp", 500)
   else
-		if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
-		composer.gotoScene( "menu", { effect="fromBottom", time=800})
+	transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    transition.to ( backGroup, { time = 100, alpha = 0 } )
+    transition.to ( optionsBack, { time = 500, x = -170 } )
+    transition.to ( optionsBack, { time = 500, y = -335 } )
+	options = false
+	composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end
 		
 end
@@ -408,13 +416,14 @@ local screenGroup = self.view
     measureText = "Metric"
   end
 
+  optionLabels = {}
+
+  for i = 1, 3, 1 do
+	optionLabels[i] = display.newBitmapText("", 0, 0, "berlinFont", 18)
+  end
+
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup()
-  
-  local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL2 = {text="Feet/min", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=12}
-  local textOptionsR2 = {text="Inch", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=12}
    
   back = display.newImageRect( screenGroup, "backgrounds/background.png", 570, 360 )
 	back.x = display.contentCenterX
@@ -452,56 +461,59 @@ local screenGroup = self.view
 	
 	measure = widget.newButton
 	{
-		id = "measureButt",
+    id = "measureButt",
     width = 125,
     height = 52,
-		label = gMeasure.measure,
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = measureChange,
-		}
+	onEvent = measureChange,
+	}
 	optionsGroup:insert(measure)
 	measure.x = 70
 	measure.y = backEdgeY + 170
+
+	optionLabels[1]:setText(gMeasure.measure)
+	optionLabels[1].x = measure.contentWidth / 2
+	optionLabels[1].y = measure.contentHeight / 2
+	measure:insert(optionLabels[1])
 	
 	menu = widget.newButton
 	{
-		id = "menuButt",
+	id = "menuButt",
     width = 125,
     height = 52,
-		label = "MENU",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onRelease = goBack,
-		}
+	onRelease = goBack,
+	}
 	optionsGroup:insert(menu)
 	menu.x = 70
 	menu.y = backEdgeY + 230
+
+	optionLabels[2]:setText("MENU")
+	optionLabels[2].x = menu.contentWidth / 2
+	optionLabels[2].y = menu.contentHeight / 2
+	menu:insert(optionLabels[2])
 	
 	reset = widget.newButton
 	{
-		id = "resetButt",
+	id = "resetButt",
     width = 125,
     height = 52,
-		label = "RESET",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = resetCalc,
-		}
+	onEvent = resetCalc,
+	}
 	optionsGroup:insert(reset)
 	reset.x = 70
 	reset.y = backEdgeY + 290
+
+	optionLabels[3]:setText("RESET")
+	optionLabels[3].x = reset.contentWidth / 2
+	optionLabels[3].y = reset.contentHeight / 2
+	reset:insert(optionLabels[3])
 	
-	optionsGroup.alpha = 0
+  optionsGroup.alpha = 0
   
   optionsBack = display.newRect(screenGroup, 0, 0, 200, 365)
   optionsBack:setFillColor(1)
@@ -514,90 +526,94 @@ local screenGroup = self.view
   optionsButt.y = 15
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
-  
-	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
-  decPlaces:setFillColor(1)
-  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	decPlaces.x = backEdgeX + 115
-	decPlaces.y = backEdgeY + 117
+
+  decPlaces = display.newBitmapText("Decimal Places:", 0, 0, "uiFont", 16)
+  backGroup:insert(decPlaces)
+  decPlaces.x = backEdgeX + 117
+  decPlaces.y = backEdgeY + 127
 	
-	places = 4
-	decLabel = display.newText( screenGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
-	decLabel.x = backEdgeX + 178
-	decLabel.y = backEdgeY + 115
+  places = 4
+  decLabel = display.newBitmapText(places, 0, 0, "inputFont", 24)
+  screenGroup:insert(decLabel)
+  decLabel.x = backEdgeX + 180
+  decLabel.y = backEdgeY + 125
   
-  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
-  measureLabel:setFillColor(1)
-  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	measureLabel.x = backEdgeX + 115
-	measureLabel.y = backEdgeY + 95
+  measureLabel = display.newBitmapText(measureText, 0, 0, "uiFont", 20)
+  backGroup:insert(measureLabel)
+  measureLabel.x = backEdgeX + 118
+  measureLabel.y = backEdgeY + 100
   
   charts = widget.newButton
 	{
 		id = "chartsButt",
-    width = 90,
-    height = 37,
-		label = "Drill Charts",
-		labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 16,
-    defaultFile = "Images/chartButtD.png",
-    overFile = "Images/chartButtO.png",
+		width = 90,
+		height = 37,
+		defaultFile = "Images/chartButtD.png",
+		overFile = "Images/chartButtO.png",
 		onEvent = goToCharts,
-		}
+	}
 	backGroup:insert(charts)
 	charts.x = backEdgeX + 420
 	charts.y = backEdgeY + 110
-  
-  pointAngle = display.newText( textOptionsR )
+
+  chartLabel = display.newBitmapText("Drill Charts", 0, 0, "uiFont", 16)
+  chartLabel.x = charts.contentWidth / 2
+  chartLabel.y = charts.contentHeight / 2
+  charts:insert(chartLabel)
+
+  pointAngle = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(pointAngle)
-	pointAngle:addEventListener ( "touch", calcTouch )
-	pointAngle.x = backEdgeX + 220
-	pointAngle.y = backEdgeY + 300
-	tapTable[1] = pointAngle 
-	pointAngle.tap = 1
+  pointAngle:setJustification(pointAngle.Justify.RIGHT)
+  pointAngle:setAnchor(1, 0.5)
+  pointAngle:addEventListener ( "touch", calcTouch )
+  pointAngle.x = backEdgeX + 265
+  pointAngle.y = backEdgeY + 300
+  tapTable[1] = pointAngle 
+  pointAngle.tap = 1
   pointAngle.alpha = 0
   
   angleTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	angleTap.x = backEdgeX + 250
-	angleTap.y = backEdgeY + 305
-	backGroup:insert(angleTap)
-	angleTap:addEventListener ( "touch", calcTouch )
-	angleTap.tap = 11
+  angleTap.x = backEdgeX + 250
+  angleTap.y = backEdgeY + 305
+  backGroup:insert(angleTap)
+  angleTap:addEventListener ( "touch", calcTouch )
+  angleTap.tap = 11
   aniTable[1] = angleTap
   
-  diam = display.newText( textOptionsL )
+  diam = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(diam)
-	diam:addEventListener ( "touch", calcTouch )
-	diam.x = backEdgeX + 440
-	diam.y = backEdgeY + 48
-	tapTable[2] = diam
-	diam.tap = 2
+  diam:setAnchor(0, 0.5)
+  diam:addEventListener ( "touch", calcTouch )
+  diam.x = backEdgeX + 390
+  diam.y = backEdgeY + 48
+  tapTable[2] = diam
+  diam.tap = 2
   diam.alpha = 0
   
   diamTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	diamTap.x = backEdgeX + 407
-	diamTap.y = backEdgeY + 53
-	backGroup:insert(diamTap)
-	diamTap:addEventListener ( "touch", calcTouch )
-	diamTap.tap = 12
+  diamTap.x = backEdgeX + 407
+  diamTap.y = backEdgeY + 53
+  backGroup:insert(diamTap)
+  diamTap:addEventListener ( "touch", calcTouch )
+  diamTap.tap = 12
   aniTable[2] = diamTap 
 	
-	pointLength = display.newText( textOptionsL )
+  pointLength = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(pointLength)
-	pointLength:addEventListener ( "touch", calcTouch )
-	pointLength.x = backEdgeX + 440
-	pointLength.y = backEdgeY + 260
-	pointLength.alpha = 0
-	tapTable[3] = pointLength
-	pointLength.tap = 3
+  pointLength:setAnchor(0, 0.5)
+  pointLength:addEventListener ( "touch", calcTouch )
+  pointLength.x = backEdgeX + 390
+  pointLength.y = backEdgeY + 260
+  pointLength.alpha = 0
+  tapTable[3] = pointLength
+  pointLength.tap = 3
   
   lengthTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	lengthTap.x = backEdgeX + 410
-	lengthTap.y = backEdgeY + 265
-	backGroup:insert(lengthTap)
-	lengthTap:addEventListener ( "touch", calcTouch )
-	lengthTap.tap = 13
+  lengthTap.x = backEdgeX + 410
+  lengthTap.y = backEdgeY + 265
+  backGroup:insert(lengthTap)
+  lengthTap:addEventListener ( "touch", calcTouch )
+  lengthTap.tap = 13
   aniTable[3] = lengthTap
   
   optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
@@ -639,6 +655,7 @@ function scene:hide( event )
       -- Insert code here to "pause" the scene.
       -- Example: stop timers, stop animation, stop audio, etc.
       Runtime:removeEventListener( "key", onKeyEvent )
+	  decLabel.alpha = 0
    elseif ( phase == "did" ) then
       -- Called immediately after scene goes off screen.
    end

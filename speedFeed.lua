@@ -5,7 +5,8 @@ local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
 local loadsave = require("loadsave")
-
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
 -- unless "composer.removeScene()" is called.
@@ -28,40 +29,45 @@ local options, charts, mats
 
 local calc, clac2, addListeners, removeListeners, toMill, toInch, goBack2, calculate, toFoot, toMeter
 local gMeasure, measureText, measureFeed, measureSurface
+local optionLabels, matLabel, chartLabel
 
 local function onKeyEvent( event )
 
-   local phase = event.phase
-   local keyName = event.keyName
-   print( event.phase, event.keyName )
-   
+  local phase = event.phase
+  local keyName = event.keyName
+  local platformName = system.getInfo("platformName")
+
+  if platformName == "Android" then
    if ( "back" == keyName and phase == "up" ) then
-       
-     timer.performWithDelay(100,goBack2,1)
-     
+    timer.performWithDelay(100,goBack2,1)
    end
-   return true
+  elseif platformName == "WinPhone" then
+   if ( "back" == keyName ) then
+    timer.performWithDelay(100,goBack2,1)
+   end
+  end
+  return true
 end
 
 local function resetCalc(event)
 	local phase = event.phase
 		
-		transition.to(rpm, {time = 300, alpha = 0})
-		transition.to(diam, {time = 300, alpha = 0})
+	transition.to(rpm, {time = 300, alpha = 0})
+	transition.to(diam, {time = 300, alpha = 0})
     transition.to(surfaceSpeed, {time = 300, alpha = 0})
-		transition.to(rev, {time = 300, alpha = 0})
-		transition.to(minute, {time = 300, alpha = 0})
+	transition.to(rev, {time = 300, alpha = 0})
+	transition.to(minute, {time = 300, alpha = 0})
     transition.to(rpmTap, {time = 300, alpha = 1})
-		transition.to(diamTap, {time = 300, alpha = 1})
+	transition.to(diamTap, {time = 300, alpha = 1})
     transition.to(surfaceSpeedTap, {time = 300, alpha = 1})
-		transition.to(revTap, {time = 300, alpha = 0})
-		transition.to(minuteTap, {time = 300, alpha = 0})
+	transition.to(revTap, {time = 300, alpha = 0})
+	transition.to(minuteTap, {time = 300, alpha = 0})
     
-    rpm.text = "Tap Me"
-    diam.text = "Tap Me"
-    surfaceSpeed.text = "Tap Me"
-    minute.text = "Tap Me"
-    rev.text = "Tap Me"
+    rpm:setText( "Tap Me")
+    diam:setText( "Tap Me")
+    surfaceSpeed:setText( "Tap Me")
+    minute:setText( "Tap Me")
+    rev:setText( "Tap Me")
     
     speedFlag = false
     feedFlag = false
@@ -69,13 +75,13 @@ local function resetCalc(event)
     timer.performWithDelay( 10, addListeners )
     
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
 		end
     myData.inch = false
 		
@@ -113,18 +119,18 @@ local function optionsMove(event)
       options = true
       transition.to ( optionsBack, { time = 200, x = -50 } )
       transition.to ( optionsBack, { time = 200, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=160 } )
+	  transition.to ( optionsGroup, { time = 500, alpha = 1} )
       transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
-      decLabel:setFillColor(0.15, 0.4, 0.729)
-		elseif options then 
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x = 160} )
+	  decLabel:setFont("berlinFont")
+	elseif options then 
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
     end
   end
 end
@@ -134,15 +140,15 @@ local function goToCharts(event)
   
   if "ended" == phase then
     if options then
-      transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-      options = false
-    end	
-    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
+    if tapTable[1]:getText() ~= "Tap Me" and tapTable[2]:getText() ~= "Tap Me" and tapTable[3]:getText() ~= "Tap Me" then
       native.showAlert ("Continue?", "Choosing new Diameter will reset all values!", { "OK", "Cancel" }, alertListener2 )
     else
       whatTap = 2
@@ -157,15 +163,15 @@ local function goToMats(event)
   
   if "ended" == phase then
     if options then
-      transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-      options = false
-    end	
-    if tapTable[1].text ~= "Tap Me" and tapTable[2].text ~= "Tap Me" and tapTable[3].text ~= "Tap Me" then
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
+    if tapTable[1]:getText() ~= "Tap Me" and tapTable[2]:getText() ~= "Tap Me" and tapTable[3]:getText() ~= "Tap Me" then
       native.showAlert ("Continue?", "Choosing new Surface Speed will reset all values!", { "OK", "Cancel" }, alertListener3 )
     else
       whatTap = 3
@@ -213,10 +219,10 @@ local function stepPress( event )
 	
 	if "increment" == phase then
 		places = places + 1
-		decLabel.text = places
+		decLabel:setText( places)
 	elseif "decrement" == phase then
 		places = places - 1
-		decLabel.text = places
+		decLabel:setText( places)
 	end
 end
 
@@ -226,20 +232,20 @@ local function calcTouch( event )
     local continue = false
     
     for i = 1, 3, 1 do
-      if tapTable[i].text == "Tap Me" then
+      if tapTable[i]:getText() == "Tap Me" then
          continue = true
       end
     end
     
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
 		
     whatTap = event.target.tap
     
@@ -260,50 +266,50 @@ end
 local function measureChange( event )
 	local phase = event.phase
 	if "ended" == phase then	
-		if measure:getLabel() == "TO METRIC" then
-      gMeasure.measure = "TO IMPERIAL"
-      loadsave.saveTable(gMeasure, "speedMeasure.json")
-			measure:setLabel("TO IMPERIAL")
+		if optionLabels[1]:getText() == "TO METRIC" then
+			gMeasure.measure = "TO IMPERIAL"
+			loadsave.saveTable(gMeasure, "speedMeasure.json")
+			optionLabels[1]:setText("TO IMPERIAL")
 			measureLabel:setText("Metric")
-      speedText.text = "Meters/min"
-      minText.text = "Mill"
-      revText.text = "Mill"
+			speedText:setText("Meters/min")
+			minText:setText("MM")
+			revText:setText("MM")
 			for i = 2, 5, 1 do
-				if tapTable[i].text ~= "Tap Me" then
+				if tapTable[i]:getText() ~= "Tap Me" then
 					if i == 3 then
-            tapTable[i].text = math.round(toMeter(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          else
-            tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          end
-        end
-      end
-    else
-      gMeasure.measure = "TO METRIC"
-      loadsave.saveTable(gMeasure, "speedMeasure.json")
-			measure:setLabel("TO METRIC")
+						tapTable[i]:setText(math.round(toMeter(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					else
+						tapTable[i]:setText(math.round(toMill(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					end
+				end
+			end
+		else
+			gMeasure.measure = "TO METRIC"
+			loadsave.saveTable(gMeasure, "speedMeasure.json")
+			optionLabels[1]:setText("TO METRIC")
 			measureLabel:setText("Imperial")
-      speedText.text = "Feet/min"
-      minText.text = "Inch"
-      revText.text = "Inch"
+			speedText:setText("Feet/min")
+			minText:setText("Inch")
+			revText:setText("Inch")
 			for i = 2, 5, 1 do
-				if tapTable[i].text ~= "Tap Me" then
+				if tapTable[i]:getText() ~= "Tap Me" then
 					if i == 3 then
-            tapTable[i].text = math.round(toFoot(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          else
-            tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          end
-        end          
+						tapTable[i]:setText(math.round(toFoot(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					else
+						tapTable[i]:setText(math.round(toInch(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					end
+				end          
 			end
 		end
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
+	end
 	end	
 	
 	calc()
@@ -312,46 +318,50 @@ end
 
 local function measureChange2()
 
-		if measure:getLabel() == "TO METRIC" then
-			measure:setLabel("TO IMPERIAL")
+		if optionLabels[1]:getText() == "TO METRIC" then
+			gMeasure.measure = "TO IMPERIAL"
+			loadsave.saveTable(gMeasure, "speedMeasure.json")
+			optionLabels[1]:setText("TO IMPERIAL")
 			measureLabel:setText("Metric")
-      speedText.text = "Meters/min"
-      minText.text = "Mill"
-      revText.text = "Mill"
+			speedText:setText("Meters/min")
+			minText:setText("MM")
+			revText:setText("MM")
 			for i = 2, 5, 1 do
-				if tapTable[i].text ~= "Tap Me" then
+				if tapTable[i]:getText() ~= "Tap Me" then
 					if i == 3 then
-            tapTable[i].text = math.round(toMeter(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          else
-            tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          end
-        end
-      end
-    else
-			measure:setLabel("TO METRIC")
+						tapTable[i]:setText(math.round(toMeter(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					else
+						tapTable[i]:setText(math.round(toMill(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					end
+				end
+			end
+		else
+			gMeasure.measure = "TO METRIC"
+			loadsave.saveTable(gMeasure, "speedMeasure.json")
+			optionLabels[1]:setText("TO METRIC")
 			measureLabel:setText("Imperial")
-      speedText.text = "Feet/min"
-      minText.text = "Inch"
-      revText.text = "Inch"
+			speedText:setText("Feet/min")
+			minText:setText("Inch")
+			revText:setText("Inch")
 			for i = 2, 5, 1 do
-				if tapTable[i].text ~= "Tap Me" then
+				if tapTable[i]:getText() ~= "Tap Me" then
 					if i == 3 then
-            tapTable[i].text = math.round(toFoot(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          else
-            tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-          end
-        end          
+						tapTable[i]:setText(math.round(toFoot(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					else
+						tapTable[i]:setText(math.round(toInch(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+					end
+				end          
 			end
 		end
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 183, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
+	end
 	
 	calc()
 	
@@ -369,51 +379,51 @@ function scene:calculate()
   if myData.number ~= "Tap Me" then    
           	
     if whatTap > 5 then
-      tapTable[whatTap - 10].text = myData.number
+      tapTable[whatTap - 10]:setText( myData.number)
     else
-      tapTable[whatTap].text = myData.number
+      tapTable[whatTap]:setText( myData.number)
     end
     
---    if diam.text ~= "Tap Me" and rpm.text == "Tap Me" then
+--    if diam:getText() ~= "Tap Me" and rpm:getText() == "Tap Me" then
 --      surfaceSpeedTap.alpha = 1
 --    end
 
-    if rpm.text ~= "Tap Me" and diam.text == "Tap Me" then
+    if rpm:getText() ~= "Tap Me" and diam:getText() == "Tap Me" then
       surfaceSpeedTap.alpha = 0
       surfaceSpeed.alpha = 0
-    elseif surfaceSpeed.text ~= "Tap Me" and diam.text == "Tap Me" then
+    elseif surfaceSpeed:getText() ~= "Tap Me" and diam:getText() == "Tap Me" then
       rpmTap.alpha = 0
       rpm.alpha = 0
     end
                 
-    if rpm.text ~= "Tap Me" and (rev.text ~= "Tap Me" or minute.text ~= "Tap Me") then
+    if rpm:getText() ~= "Tap Me" and (rev:getText() ~= "Tap Me" or minute:getText() ~= "Tap Me") then
     	feedFlag = true
     else 
     	feedFlag = false
     end
     
-    if diam.text ~= "Tap Me" and (rpm.text ~= "Tap Me" or surfaceSpeed.text ~= "Tap Me") then
+    if diam:getText() ~= "Tap Me" and (rpm:getText() ~= "Tap Me" or surfaceSpeed:getText() ~= "Tap Me") then
     	speedFlag = true
     else
     	speedFlag = false
     end
     
-    if rpm.text ~= "Tap Me" and diam.text ~= "Tap Me" and surfaceSpeed.text ~= "Tap Me" then
+    if rpm:getText() ~= "Tap Me" and diam:getText() ~= "Tap Me" and surfaceSpeed:getText() ~= "Tap Me" then
       --do nothing
     else
       calc()
     end
     
-    if rev.text ~= "Tap Me" or minute.text ~= "Tap Me" then
+    if rev:getText() ~= "Tap Me" or minute:getText() ~= "Tap Me" then
       calc2()
     end
     
-    if rpm.text ~= "Tap Me" then
+    if rpm:getText() ~= "Tap Me" then
       revTap.alpha = 1
       minuteTap.alpha = 1
     end
     
-    if rev.text ~= "Tap Me" or minute.text ~= "Tap Me" then
+    if rev:getText() ~= "Tap Me" or minute:getText() ~= "Tap Me" then
       revTap.alpha = 0
       rev.alpha = 1
       minuteTap.alpha = 0
@@ -421,7 +431,7 @@ function scene:calculate()
     end
     
     for i = 1, 3, 1 do
-      if tapTable[i].text ~= "Tap Me"then
+      if tapTable[i]:getText() ~= "Tap Me"then
         tapTable[i].alpha = 1
         aniTable[i].alpha = 0
       end
@@ -432,7 +442,7 @@ end
 function scene:switch()
   local screenGroup = self.view
   
-  if measure:getLabel() == "TO IMPERIAL" and myData.number ~= "Tap Me" then
+  if optionLabels[1]:getText() == "TO IMPERIAL" and myData.number ~= "Tap Me" then
     myData.number = myData.number / 3.2808
     myData.number = math.round(myData.number * math.pow(10, places)) / math.pow(10, places)
     scene:calculate()
@@ -456,9 +466,9 @@ function scene:switch2()
   
   if myData.inch == true then print("it's true") elseif myData.inch == false then print("it's false") else print("It's Nothing" .. " " .. myData.number) end
   
-  if measure:getLabel() == "TO IMPERIAL" and myData.inch == true then
+  if optionLabels[1]:getText() == "TO IMPERIAL" and myData.inch == true then
     native.showAlert ("Caution", "You have chosen an INCH drill. Switch to IMPERIAL calculations?", { "OK", "Cancel" }, alertListener4 )
-  elseif measure:getLabel() == "TO METRIC" and myData.inch == false then
+  elseif optionLabels[1]:getText() == "TO METRIC" and myData.inch == false then
     native.showAlert ("Caution", "You have chosen an MM drill. Switch to METRIC calculations?", { "OK", "Cancel" }, alertListener4 )
   else
     scene:calculate()
@@ -469,43 +479,40 @@ end
 calc = function()
 	
 	if speedFlag then
-    	if measure:getLabel() == "TO METRIC" then
-    		if rpm.text ~= "Tap Me" then
-          surfaceSpeed.text = rpm.text * diam.text / 3.8197
+    	if optionLabels[1]:getText() == "TO METRIC" then
+    	  if rpm:getText() ~= "Tap Me" then
+          surfaceSpeed:setText( rpm:getText() * diam:getText() / 3.8197)
           surfaceSpeed.alpha = 1
           surfaceSpeedTap.alpha = 0
           print("surface speed")
-    		elseif surfaceSpeed.text ~= "Tap Me" then
-          rpm.text = 3.8197 * surfaceSpeed.text / diam.text
+    	elseif surfaceSpeed:getText() ~= "Tap Me" then
+          rpm:setText( 3.8197 * surfaceSpeed:getText() / diam:getText())
           rpmTap.alpha = 0
           rpm.alpha = 1
-    		end
-    	elseif measure:getLabel() == "TO IMPERIAL" then
-    		if rpm.text ~= "Tap Me" then
-          surfaceSpeed.text = diam.text * rpm.text / 318.31
+    	end
+    elseif optionLabels[1]:getText() == "TO IMPERIAL" then
+    	if rpm:getText() ~= "Tap Me" then
+          surfaceSpeed:setText( diam:getText() * rpm:getText() / 318.31)
           surfaceSpeed.alpha = 1
           surfaceSpeedTap.alpha = 0
-    		elseif surfaceSpeed.text ~= "Tap Me" then
-          rpm.text = 318.31 * surfaceSpeed.text / diam.text
+    	elseif surfaceSpeed:getText() ~= "Tap Me" then
+          rpm:setText( 318.31 * surfaceSpeed:getText() / diam:getText())
           rpmTap.alpha = 0
           rpm.alpha = 1
-    		end    			
-    	end
+    	end    			
+    end
       
       for i = 1, 5, 1 do
-			if tapTable[i].text ~= "Tap Me" then
+			if tapTable[i]:getText() ~= "Tap Me" then
 				if i == 1 then
-					tapTable[1].text = math.round(tapTable[1].text * math.pow(10, 0)) / math.pow(10, 0)
+					tapTable[1]:setText( math.round(tapTable[1]:getText() * math.pow(10, 0)) / math.pow(10, 0))
 				else
-				tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
+				tapTable[i]:setText( math.round(tapTable[i]:getText() * math.pow(10, places)) / math.pow(10, places))
 				end
 			end
       end
     
       timer.performWithDelay( 10, removeListeners, 2 )
-      for i = 1, 3, 1 do
-        tapTable[i]:setFillColor(1)
-      end
     end	
 	
 end
@@ -513,12 +520,12 @@ end
 calc2 = function()
   
       if feedFlag then
-    	if (minute.text ~= "Tap Me") and (whatTap == 5 or whatTap == 15) then
-    		rev.text = minute.text / rpm.text
-        tapTable[4].text = math.round(tapTable[4].text * math.pow(10, places)) / math.pow(10, places)
-    	elseif (rev.text ~= "Tap Me") and (whatTap == 4 or whatTap == 14) then
-    		minute.text = rev.text * rpm.text
-        tapTable[5].text = math.round(tapTable[5].text * math.pow(10, places)) / math.pow(10, places)
+    	if (minute:getText() ~= "Tap Me") and (whatTap == 5 or whatTap == 15) then
+    		rev:setText( minute:getText() / rpm:getText())
+        tapTable[4]:setText( math.round(tapTable[4]:getText() * math.pow(10, places)) / math.pow(10, places))
+    	elseif (rev:getText() ~= "Tap Me") and (whatTap == 4 or whatTap == 14) then
+    		minute:setText( rev:getText() * rpm:getText())
+        tapTable[5]:setText( math.round(tapTable[5]:getText() * math.pow(10, places)) / math.pow(10, places))
     	end
     end
 end
@@ -565,16 +572,12 @@ goBack2 = function()
     myData.number = "Tap Me"
     composer.hideOverlay("slideUp", 500)
   else
-		if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
-		composer.gotoScene( "menu", { effect="fromBottom", time=800})
+	transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    transition.to ( backGroup, { time = 100, alpha = 0 } )
+    transition.to ( optionsBack, { time = 500, x = -170 } )
+    transition.to ( optionsBack, { time = 500, y = -335 } )
+	options = false
+	composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end
 		
 end
@@ -585,10 +588,10 @@ end
 function scene:create( event )
   local screenGroup = self.view
 	
-	tapTable = {}
+  tapTable = {}
   aniTable = {}
-	feedFlag = false
-	speedFlag = false
+  feedFlag = false
+  speedFlag = false
   options = false
 
   gMeasure = loadsave.loadTable("speedMeasure.json")
@@ -604,33 +607,34 @@ function scene:create( event )
     measureSurface = "Feet/min"
   else
     measureText = "Metric"
-    measureFeed = "Mill"
+    measureFeed = "MM"
     measureSurface = "Meters/min"
+  end
+
+  optionLabels = {}
+
+  for i = 1, 3, 1 do
+	optionLabels[i] = display.newBitmapText("", 0, 0, "berlinFont", 18)
   end
 
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup()
-	local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL2 = {text=measureSurface, x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=12}
-  local textOptionsR2 = {text=measureFeed, x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=12}
   
   Runtime:addEventListener( "key", onKeyEvent )
   
-	stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
+  stepSheet = graphics.newImageSheet("Images/stepSheet_stepSheet.png", stepperDataFile.getSpriteSheetData() )
 	
-	back = display.newImageRect ( screenGroup, "backgrounds/background.png",  570, 360 )
-	back.x = display.contentCenterX
-	back.y = display.contentCenterY		
-	backEdgeX = back.contentBounds.xMin
-	backEdgeY = back.contentBounds.yMin
+  back = display.newImageRect ( screenGroup, "backgrounds/background.png",  570, 360 )
+  back.x = display.contentCenterX
+  back.y = display.contentCenterY		
+  backEdgeX = back.contentBounds.xMin
+  backEdgeY = back.contentBounds.yMin
   
   rightDisplay = display.newImageRect(backGroup, "backgrounds/speeds.png", 570, 360)
   rightDisplay.x = display.contentCenterX
   rightDisplay.y = display.contentCenterY  
 	
-		decStep = widget.newStepper
+	decStep = widget.newStepper
 	{
 		
 		left = 0,
@@ -652,56 +656,59 @@ function scene:create( event )
 	
 	measure = widget.newButton
 	{
-		id = "measureButt",
+    id = "measureButt",
     width = 125,
     height = 52,
-		label = gMeasure.measure,
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = measureChange,
-		}
+	onEvent = measureChange,
+	}
 	optionsGroup:insert(measure)
 	measure.x = 70
 	measure.y = backEdgeY + 170
+
+	optionLabels[1]:setText(gMeasure.measure)
+	optionLabels[1].x = measure.contentWidth / 2
+	optionLabels[1].y = measure.contentHeight / 2
+	measure:insert(optionLabels[1])
 	
 	menu = widget.newButton
 	{
-		id = "menuButt",
+	id = "menuButt",
     width = 125,
     height = 52,
-		label = "MENU",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onRelease = goBack,
-		}
+	onRelease = goBack,
+	}
 	optionsGroup:insert(menu)
 	menu.x = 70
 	menu.y = backEdgeY + 230
+
+	optionLabels[2]:setText("MENU")
+	optionLabels[2].x = menu.contentWidth / 2
+	optionLabels[2].y = menu.contentHeight / 2
+	menu:insert(optionLabels[2])
 	
 	reset = widget.newButton
 	{
-		id = "resetButt",
+	id = "resetButt",
     width = 125,
     height = 52,
-		label = "RESET",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = resetCalc,
-		}
+	onEvent = resetCalc,
+	}
 	optionsGroup:insert(reset)
 	reset.x = 70
 	reset.y = backEdgeY + 290
+
+	optionLabels[3]:setText("RESET")
+	optionLabels[3].x = reset.contentWidth / 2
+	optionLabels[3].y = reset.contentHeight / 2
+	reset:insert(optionLabels[3])
 	
-	optionsGroup.alpha = 0
+  optionsGroup.alpha = 0
   
   optionsBack = display.newRect(screenGroup, 0, 0, 200, 365)
   optionsBack:setFillColor(1)
@@ -714,175 +721,172 @@ function scene:create( event )
   optionsButt.y = 15
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
-  
-	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
-  decPlaces:setFillColor(1)
-  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	decPlaces.x = backEdgeX + 115
-	decPlaces.y = backEdgeY + 117
+
+  decPlaces = display.newBitmapText("Decimal Places:", 0, 0, "uiFont", 16)
+  backGroup:insert(decPlaces)
+  decPlaces.x = backEdgeX + 120
+  decPlaces.y = backEdgeY + 117
 	
-	places = 4
-	decLabel = display.newText( screenGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
-	decLabel.x = backEdgeX + 178
-	decLabel.y = backEdgeY + 115
+  places = 4
+  decLabel = display.newBitmapText(places, 0, 0, "inputFont", 24)
+  screenGroup:insert(decLabel)
+  decLabel.x = backEdgeX + 183
+  decLabel.y = backEdgeY + 115
   
-  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
-  measureLabel:setFillColor(1)
-  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	measureLabel.x = backEdgeX + 115
-	measureLabel.y = backEdgeY + 95
+  measureLabel = display.newBitmapText(measureText, 0, 0, "uiFont", 20)
+  backGroup:insert(measureLabel)
+  measureLabel.x = backEdgeX + 115
+  measureLabel.y = backEdgeY + 90
   
   charts = widget.newButton
 	{
 		id = "chartsButt",
-    width = 90,
-    height = 37,
-		label = "Drill Charts",
-		labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 16,
-    defaultFile = "Images/chartButtD.png",
-    overFile = "Images/chartButtO.png",
+		width = 90,
+		height = 37,
+		defaultFile = "Images/chartButtD.png",
+		overFile = "Images/chartButtO.png",
 		onEvent = goToCharts,
-		}
+	}
 	backGroup:insert(charts)
 	charts.x = backEdgeX + 255
 	charts.y = backEdgeY + 90
-  
+
+  chartLabel = display.newBitmapText("Drill Charts", 0, 0, "uiFont", 16)
+  chartLabel.x = charts.contentWidth / 2
+  chartLabel.y = charts.contentHeight / 2
+  charts:insert(chartLabel)
+
   mats = widget.newButton
 	{
 		id = "chartsButt",
-    width = 90,
-    height = 37,
-		label = "Materials",
-		labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 16,
-    defaultFile = "Images/chartButtD.png",
-    overFile = "Images/chartButtO.png",
+		width = 90,
+		height = 37,
+		defaultFile = "Images/chartButtD.png",
+		overFile = "Images/chartButtO.png",
 		onEvent = goToMats,
-		}
+	}
 	backGroup:insert(mats)
 	mats.x = backEdgeX + 255
 	mats.y = backEdgeY + 132
-		
-	rpm = display.newText( textOptionsR )
+
+  matLabel = display.newBitmapText("Materials", 0, 0, "uiFont", 16)
+  matLabel.x = mats.contentWidth / 2
+  matLabel.y = mats.contentHeight / 2
+  mats:insert(matLabel)
+
+  rpm = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(rpm)
-	rpm :addEventListener ( "touch", calcTouch )
-	rpm .x = backEdgeX + 290
-	rpm .y = backEdgeY + 170
-	tapTable[1] = rpm 
-	rpm.tap = 1
+  rpm:setJustification(rpm.Justify.RIGHT)
+  rpm:setAnchor(1, 0.5)
+  rpm:addEventListener ( "touch", calcTouch )
+  rpm.x = backEdgeX + 335
+  rpm.y = backEdgeY + 165
+  tapTable[1] = rpm 
+  rpm.tap = 1
   rpm.alpha = 0
   
-  --rpmTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   rpmTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	rpmTap.x = backEdgeX + 320
-	rpmTap.y = backEdgeY + 170
-	backGroup:insert(rpmTap)
-	rpmTap:addEventListener ( "touch", calcTouch )
-	rpmTap.tap = 11
-	--rpmTap:play()
+  rpmTap.x = backEdgeX + 320
+  rpmTap.y = backEdgeY + 170
+  backGroup:insert(rpmTap)
+  rpmTap:addEventListener ( "touch", calcTouch )
+  rpmTap.tap = 11
   aniTable[1] = rpmTap 
 	
-	diam = display.newText( textOptionsR )
+  diam = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(diam)
-	diam:addEventListener ( "touch", calcTouch )
-	diam.x = backEdgeX + 305
-	diam.y = backEdgeY + 260
-	tapTable[2] = diam
-	diam.tap = 2
+  diam:setJustification(diam.Justify.RIGHT)
+  diam:setAnchor(1, 0.5)
+  diam:addEventListener ( "touch", calcTouch )
+  diam.x = backEdgeX + 350
+  diam.y = backEdgeY + 255
+  tapTable[2] = diam
+  diam.tap = 2
   diam.alpha = 0
   
-  --diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
-  diamTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	diamTap.x = backEdgeX + 330
-	diamTap.y = backEdgeY + 260
-	backGroup:insert(diamTap)
-	diamTap:addEventListener ( "touch", calcTouch )
-	diamTap.tap = 12
-	--diamTap:play()
+  diamTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)diamTap.x = backEdgeX + 330
+  diamTap.y = backEdgeY + 260
+  backGroup:insert(diamTap)
+  diamTap:addEventListener ( "touch", calcTouch )
+  diamTap.tap = 12
   aniTable[2] = diamTap 
 	
-	surfaceSpeed = display.newText( textOptionsR )
+  surfaceSpeed = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(surfaceSpeed)
-	surfaceSpeed:addEventListener ( "touch", calcTouch )
-	surfaceSpeed.x = backEdgeX + 320
-	surfaceSpeed.y = backEdgeY + 310
-	surfaceSpeed.alpha = 0
-	tapTable[3] = surfaceSpeed
-	surfaceSpeed.tap = 3
+  surfaceSpeed:setJustification(surfaceSpeed.Justify.RIGHT)
+  surfaceSpeed:setAnchor(1, 0.5)
+  surfaceSpeed:addEventListener ( "touch", calcTouch )
+  surfaceSpeed.x = backEdgeX + 370
+  surfaceSpeed.y = backEdgeY + 310
+  surfaceSpeed.alpha = 0
+  tapTable[3] = surfaceSpeed
+  surfaceSpeed.tap = 3
   
-  --surfaceSpeedTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   surfaceSpeedTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	surfaceSpeedTap.x = backEdgeX + 355
-	surfaceSpeedTap.y = backEdgeY + 310
-	backGroup:insert(surfaceSpeedTap)
-	surfaceSpeedTap:addEventListener ( "touch", calcTouch )
-	surfaceSpeedTap.tap = 13
-	--surfaceSpeedTap:play()
-  --surfaceSpeedTap.alpha = 0
+  surfaceSpeedTap.x = backEdgeX + 355
+  surfaceSpeedTap.y = backEdgeY + 310
+  backGroup:insert(surfaceSpeedTap)
+  surfaceSpeedTap:addEventListener ( "touch", calcTouch )
+  surfaceSpeedTap.tap = 13
   aniTable[3] = surfaceSpeedTap
 
-	rev = display.newText( textOptionsL )
-	rev:addEventListener ( "touch", calcTouch )
+  rev = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  rev:addEventListener ( "touch", calcTouch )
   backGroup:insert(rev)
-	rev.x = backEdgeX + 150
-	rev.y = backEdgeY + 270
-	rev.alpha = 0
-	tapTable[4] = rev
-	rev.tap = 4
+  rev:setAnchor(0, 0.5)
+  rev.x = backEdgeX + 100
+  rev.y = backEdgeY + 265
+  rev.alpha = 0
+  tapTable[4] = rev
+  rev.tap = 4
   
-  --revTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   revTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	revTap.x = backEdgeX + 120
-	revTap.y = backEdgeY + 270
-	backGroup:insert(revTap)
-	revTap:addEventListener ( "touch", calcTouch )
-	revTap.tap = 14
-	--revTap:play()
+  revTap.x = backEdgeX + 120
+  revTap.y = backEdgeY + 270
+  backGroup:insert(revTap)
+  revTap:addEventListener ( "touch", calcTouch )
+  revTap.tap = 14
   revTap.alpha = 0
 
-	minute = display.newText( textOptionsL )
-	minute:addEventListener ( "touch", calcTouch )
+  minute = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  minute:addEventListener ( "touch", calcTouch )
   backGroup:insert(minute)
-	minute.x = backEdgeX + 150
-	minute.y = backEdgeY + 220
-	minute.alpha = 0
-	tapTable[5] = minute
-	minute.tap = 5
+  minute:setAnchor(0, 0.5)
+  minute.x = backEdgeX + 100
+  minute.y = backEdgeY + 215
+  minute.alpha = 0
+  tapTable[5] = minute
+  minute.tap = 5
   
-  --minuteTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   minuteTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	minuteTap.x = backEdgeX + 120
-	minuteTap.y = backEdgeY + 220
-	backGroup:insert(minuteTap)
-	minuteTap:addEventListener ( "touch", calcTouch )
-	minuteTap.tap = 15
-	--minuteTap:play()
+  minuteTap.x = backEdgeX + 120
+  minuteTap.y = backEdgeY + 220
+  backGroup:insert(minuteTap)
+  minuteTap:addEventListener ( "touch", calcTouch )
+  minuteTap.tap = 15
   minuteTap.alpha = 0
 	
-	speedText = display.newText( textOptionsL2 )
+  speedText = display.newBitmapText(measureSurface, 0, 0, "inputFont", 16)
   backGroup:insert(speedText)
-	--speedText.alpha = 0.8
-	speedText.x = backEdgeX + 508
-	speedText.y = backEdgeY + 281
+  speedText:setAnchor(0, 0.5)
+  speedText.x = backEdgeX + 458
+  speedText.y = backEdgeY + 279
 	
-	revText = display.newText( textOptionsR2 )
+  revText = display.newBitmapText(measureFeed, 0, 0, "inputFont", 14)
   backGroup:insert(revText)
-	--revText:setReferencePoint(display.TopRightReferencePoint)
-	--revText.alpha = 0.8
-	revText.x = backEdgeX + 42
-	revText.y = backEdgeY + 247
+  revText:setJustification(revText.Justify.RIGHT)
+  revText:setAnchor(1, 0.5)
+  revText.x = backEdgeX + 90
+  revText.y = backEdgeY + 245
 	
-	minText = display.newText( textOptionsR2 )
+  minText = display.newBitmapText(measureFeed, 0, 0, "inputFont", 14)
   backGroup:insert(minText)
-	--minText:setReferencePoint(display.TopRightReferencePoint)
-	--minText.alpha = 0.8
-	minText.x = backEdgeX + 42
-	minText.y = backEdgeY + 198
+  minText:setJustification(minText.Justify.RIGHT)
+  minText:setAnchor(1, 0.5)
+  minText.x = backEdgeX + 90
+  minText.y = backEdgeY + 196
   
-	optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
+  optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
   backGroup.anchorX = 0.5; backGroup.anchorY = 0.5; 
   backGroup.alpha = 0
   transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
@@ -919,6 +923,7 @@ function scene:hide( event )
       -- Insert code here to "pause" the scene.
       -- Example: stop timers, stop animation, stop audio, etc.
       Runtime:removeEventListener( "key", onKeyEvent )
+	  decLabel.alpha = 0
    elseif ( phase == "did" ) then
       -- Called immediately after scene goes off screen.
    end

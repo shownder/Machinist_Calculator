@@ -4,6 +4,8 @@ local widget = require ( "widget" )
 local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -14,24 +16,30 @@ local answer, backButt, scrollView, answerX, answerY, diam, emailButt, maskBack
 local back, numY
 local bolt, boltCenterX, boltCenterY, line1, line2, goBack2
 
---local function onKeyEvent( event )
+local function onKeyEvent( event )
 
---   local phase = event.phase
---   local keyName = event.keyName
---   print( event.phase, event.keyName )
+  local phase = event.phase
+  local keyName = event.keyName
+  local platformName = system.getInfo("platformName")
 
---  if ( "back" == keyName and phase == "down" ) then
---    timer.performWithDelay(100,goBack2,1)
---  end
---  return true
---end
+  if platformName == "Android" then
+   if ( "back" == keyName and phase == "up" ) then
+    timer.performWithDelay(100,goBack2,1)
+   end
+  elseif platformName == "WinPhone" then
+   if ( "back" == keyName ) then
+    timer.performWithDelay(100,goBack2,1)
+   end
+  end
+  return true
+end
 
 local function catchStrays(event)
    return true
 end
 
 local function emailPush( event )
-	if event.phase == "ended" then
+  if event.phase == "ended" then
     
     local text = ""
     
@@ -47,11 +55,40 @@ local function emailPush( event )
       subject = "Bolt Circle Answer",
       body = "Here is the list of coordinates: \n"..text      
       }
-		
-		native.showPopup("mail", options)
-		return true
-	end
+    
+    native.showPopup("mail", options)
+    return true
+  end
 end
+
+-------------------
+--Email Options for Window Phone 8
+-------------------
+
+-- local function emailPush( event )
+-- 	if event.phase == "ended" then
+-- 		local text = ""
+    
+-- 		for i = 0, #answer, 1 do
+-- 			text = text..answer[i].."%0D%0A"
+-- 		end
+    
+-- 		print(text)
+    
+-- 		if system.getInfo("platformName") == "WinPhone" then
+-- 			system.openURL("mailto:example@foo.com?subject=Bolt%20Coordinates&body=Here is the list of coordinates: %0D%0A" .. text)
+-- 		else    
+-- 			local options = {      
+-- 				to = "",
+-- 				subject = "Bolt Circle Answer",
+-- 				body = "Here is the list of coordinates: \n"..text      
+-- 			}
+		
+-- 		native.showPopup("mail", options)
+-- 		return true
+-- 		end
+-- 	end
+-- end
 
 local function goBack( event )
 	if event.phase == "ended" then
@@ -59,6 +96,12 @@ local function goBack( event )
 		composer.hideOverlay(true, "slideRight", 500 )
 		
 	end
+end
+
+goBack2 = function()
+	
+	composer.hideOverlay(true, "slideRight", 500 )
+
 end
 
 	local function scrollListener( event )
@@ -121,7 +164,7 @@ function scene:create( event )
 	backEdgeY = back.contentBounds.yMin
   
   
-  numY = backEdgeY + 10
+  numY = backEdgeY + 17
   --numY = 60
   
   boltCenterX = backEdgeX + 360
@@ -136,24 +179,24 @@ scrollView = widget.newScrollView
 		left = 0,
 		top = 50,
 		width = 240,
-		height = 265,
+		height = 270,
 		scrollWidth = 0,
 		id = "answerScroll",
 		hideBackground = false,
 		horizontalScrollDisabled = true,
 		verticalScrollDisabled = false,
-    isBounceEnabled = false,
+		isBounceEnabled = false,
 		listener = scrollListener,		
 	}
 	screenGroup:insert(scrollView)
 	
 	for i = 0, #answer, 1 do	
-		local temp = display.newText( textOptionsL )
-    	temp:setFillColor(0)
-    	temp.text = answer[i]
+		local temp = display.newBitmapText("", 0, 0, "blackFont", 18)
+		scrollView:insert(temp) 
+		temp:setAnchor(0, 1)
+    	temp:setText( answer[i])
 		temp.y = numY
-		temp.x = backEdgeX + 140
-		scrollView:insert(temp)  
+		temp.x = backEdgeX + 5 
 		numY = numY + 30 
 	end
   

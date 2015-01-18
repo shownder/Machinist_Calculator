@@ -5,7 +5,9 @@ local stepperDataFile = require("Images.stepSheet_stepSheet")
 display.setStatusBar(display.HiddenStatusBar)
 local myData = require("myData")
 local loadsave = require("loadsave")
-local analytics = require( "analytics" )
+--local analytics = require( "analytics" )
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -29,20 +31,25 @@ local stepSheet, buttSheet, tapSheet, calcClick
 local toMill, toInch
 local bolts, bolts2, goBack2
 local gMeasure, measureText
+local optionLabels, calcLabel
 
 --Listeners
-
 local function onKeyEvent( event )
 
-   local phase = event.phase
-   local keyName = event.keyName
-   print( event.phase, event.keyName )
-   
+  local phase = event.phase
+  local keyName = event.keyName
+  local platformName = system.getInfo("platformName")
+
+  if platformName == "Android" then
    if ( "back" == keyName and phase == "up" ) then
-       
-       timer.performWithDelay(100,goBack2,1)
+    timer.performWithDelay(100,goBack2,1)
    end
-   return true
+  elseif platformName == "WinPhone" then
+   if ( "back" == keyName ) then
+    timer.performWithDelay(100,goBack2,1)
+   end
+  end
+  return true
 end
 
 local function optionsMove(event)
@@ -53,54 +60,59 @@ local function optionsMove(event)
       options = true
       transition.to ( optionsBack, { time = 200, x = -50 } )
       transition.to ( optionsBack, { time = 200, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=160 } )
+	  transition.to ( optionsGroup, { time = 500, alpha = 1} )
       transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
-      decLabel:setFillColor(0.15, 0.4, 0.729)
-		elseif options then 
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x = 160} )
+	  decLabel:setFont("berlinFont")
+	elseif options then 
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 100} )
+	  decLabel:setFont("inputFont")
+	  options = false
     end
   end
-  return true
 end
 
 local function measureChange( event )
 	local phase = event.phase
 	
 	if "ended" == phase then	
-		if measure:getLabel() == "TO METRIC" then
+		if optionLabels[1]:getText() == "TO METRIC" then
 			gMeasure.measure = "TO IMPERIAL"
-      loadsave.saveTable(gMeasure, "boltMeasure.json")
-			measure:setLabel("TO IMPERIAL")
+			loadsave.saveTable(gMeasure, "boltMeasure.json")
+			optionLabels[1]:setText("TO IMPERIAL")
 			measureLabel:setText("Metric")
-			if diam.text ~= "Tap Me" then
-				diam.text = math.round(toMill(diam.text) * math.pow(10, places)) / math.pow(10, places)
+		for i = 1, 3, 1 do			
+			if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toMill(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+				end
 			end
 		else
 			gMeasure.measure = "TO METRIC"
-      loadsave.saveTable(gMeasure, "boltMeasure.json")
-			measure:setLabel("TO METRIC")
+			loadsave.saveTable(gMeasure, "boltMeasure.json")
+			optionLabels[1]:setText("TO METRIC")
 			measureLabel:setText("Imperial")
-			if diam.text ~= "Tap Me" then
-				diam.text = math.round(toInch(diam.text) * math.pow(10, places)) / math.pow(10, places)
+			for i = 1, 3, 1 do
+				if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toInch(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
+				end
 			end
 		end
-	end
-	if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    
+    if options then
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 100} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
+    
+	end
 end
 
 local function stepPress( event )
@@ -108,10 +120,10 @@ local function stepPress( event )
 	
 	if "increment" == phase then
 		places = places + 1
-		decLabel.text = places
+		decLabel:setText( places)
 	elseif "decrement" == phase then
 		places = places - 1
-		decLabel.text = places
+		decLabel:setText( places)
 	end
 end
 
@@ -152,30 +164,27 @@ local function resetCalc(event)
     transition.to(circleX, {time = 300, alpha = 0})
 		transition.to(circleY, {time = 300, alpha = 0})
 		transition.to(firstHole, {time = 300, alpha = 0})
-    --transition.to(circleXtext, {time = 300, alpha = 0})
-		--transition.to(circleYtext, {time = 300, alpha = 0})
-		--transition.to(firstHoleText, {time = 300, alpha = 0})
     transition.to(circleXTap, {time = 300, alpha = 0})
 		transition.to(circleYTap, {time = 300, alpha = 0})
 		transition.to(firstHoleTap, {time = 300, alpha = 0})
     transition.to(numHolesTap, {time = 300, alpha = 1})
 		transition.to(diamTap, {time = 300, alpha = 1})
     
-    numHoles.text = "Tap Me"
-    diam.text = "Tap Me"
-    circleX.text = "Tap Me"
-    circleY.text = "Tap Me"
-    firstHole.text = "Tap Me"
+    numHoles:setText( "Tap Me")
+    diam:setText( "Tap Me")
+    circleX:setText( "Tap Me")
+    circleY:setText( "Tap Me")
+    firstHole:setText( "Tap Me")
     
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 100} )
-      decLabel:setFillColor(1)
-			options = false
-		end		
+      transition.to (decLabel, { time = 200, x = backEdgeX + 180, y = backEdgeY + 100} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end	
 end
 
 local function goBack (event)
@@ -194,11 +203,11 @@ end
 local function answerScene( event )
 	if event.phase == "ended" then
 		
-		myData.answer = bolts(numHoles.text, diam.text, circleX.text, circleY.text, firstHole.text)
-    bolts2(numHoles.text, diam.text, circleX.text, circleY.text, firstHole.text)
+		myData.answer = bolts(numHoles:getText(), diam:getText(), circleX:getText(), circleY:getText(), firstHole:getText())
+    bolts2(numHoles:getText(), diam:getText(), circleX:getText(), circleY:getText(), firstHole:getText())
     myData.answerX = answerX
     myData.answerY = answerY
-    myData.diam = diam.text
+    myData.diam = diam:getText()
     
     calcClick = false
     
@@ -293,18 +302,13 @@ goBack2 = function()
     myData.number = "Tap Me"
     composer.hideOverlay("slideRight", 500)
   else
-		if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
-		composer.gotoScene( "menu", { effect="fromBottom", time=800})
-  end
-		
+	transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    transition.to ( backGroup, { time = 100, alpha = 0 } )
+    transition.to ( optionsBack, { time = 500, x = -170 } )
+    transition.to ( optionsBack, { time = 500, y = -335 } )
+	options = false
+	composer.gotoScene( "menu", { effect="fromBottom", time=800})
+  end	
 end
 
 function scene:calculate()
@@ -316,23 +320,23 @@ function scene:calculate()
     
     if calcClick == true then
     
-    tapTable[whatTap].text = myData.number
+    tapTable[whatTap]:setText( myData.number)
     
     if whatTap == 1 then
-    	if tonumber(numHoles.text)  <= 0 then
+    	if tonumber(numHoles:getText())  <= 0 then
     		native.showAlert ( "Error", "You need more than 0 holes!", { "OK" }, alertListener )
-    		numHoles.text = "Tap Me"
+    		numHoles:setText( "Tap Me")
     	end
     elseif whatTap == 2 then    
-  	  if tonumber(diam.text)  <= 0 then
+  	  if tonumber(diam:getText())  <= 0 then
     		native.showAlert ( "Error", "Diameter must be greater than 0!", { "OK" }, alertListener )
-    		diam.text = "Tap Me"
+    		diam:setText( "Tap Me")
         diam.alpha = 0
         diamTap.alpha = 1
   	  end
     end
         
-    if diam.text ~= "Tap Me" and numHoles.text ~= "Tap Me" then
+    if diam:getText() ~= "Tap Me" and numHoles:getText() ~= "Tap Me" then
     	circleXtext.alpha = 1
     	circleXTap.alpha = 1
     	circleYTap.alpha = 1
@@ -343,7 +347,7 @@ function scene:calculate()
     end    
        
     for i = 1, 5, 1 do
-      if tapTable[i].text ~= "Tap Me" then
+      if tapTable[i]:getText() ~= "Tap Me" then
         tapTable[i].alpha = 1
         aniTable[i].alpha = 0
       end
@@ -378,6 +382,12 @@ function scene:create( event )
   else
     measureText = "Metric"
   end
+
+  optionLabels = {}
+
+  for i = 1, 3, 1 do
+	optionLabels[i] = display.newBitmapText("", 0, 0, "berlinFont", 18)
+  end
   
   Runtime:addEventListener( "key", onKeyEvent )
   
@@ -397,7 +407,7 @@ function scene:create( event )
   rightDisplay.x = display.contentCenterX
   rightDisplay.y = display.contentCenterY  
 	
-		decStep = widget.newStepper
+	decStep = widget.newStepper
 	{
 		
 		left = 0,
@@ -419,54 +429,57 @@ function scene:create( event )
 	
 	measure = widget.newButton
 	{
-		id = "measureButt",
+    id = "measureButt",
     width = 125,
     height = 52,
-		label = gMeasure.measure,
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = measureChange,
-		}
+	onEvent = measureChange,
+	}
 	optionsGroup:insert(measure)
 	measure.x = 70
 	measure.y = backEdgeY + 170
+
+	optionLabels[1]:setText(gMeasure.measure)
+	optionLabels[1].x = measure.contentWidth / 2
+	optionLabels[1].y = measure.contentHeight / 2
+	measure:insert(optionLabels[1])
 	
 	menu = widget.newButton
 	{
-		id = "menuButt",
+	id = "menuButt",
     width = 125,
     height = 52,
-		label = "MENU",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onRelease = goBack,
-		}
+	onRelease = goBack,
+	}
 	optionsGroup:insert(menu)
 	menu.x = 70
 	menu.y = backEdgeY + 230
+
+	optionLabels[2]:setText("MENU")
+	optionLabels[2].x = menu.contentWidth / 2
+	optionLabels[2].y = menu.contentHeight / 2
+	menu:insert(optionLabels[2])
 	
 	reset = widget.newButton
 	{
-		id = "resetButt",
+	id = "resetButt",
     width = 125,
     height = 52,
-		label = "RESET",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = resetCalc,
-		}
+	onEvent = resetCalc,
+	}
 	optionsGroup:insert(reset)
 	reset.x = 70
 	reset.y = backEdgeY + 290
+
+	optionLabels[3]:setText("RESET")
+	optionLabels[3].x = reset.contentWidth / 2
+	optionLabels[3].y = reset.contentHeight / 2
+	reset:insert(optionLabels[3])
 	
 	optionsGroup.alpha = 0
   
@@ -482,174 +495,162 @@ function scene:create( event )
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 	
-	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
-  decPlaces:setFillColor(1)
-  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	decPlaces.x = backEdgeX + 115
-	decPlaces.y = backEdgeY + 100
+  decPlaces = display.newBitmapText("Decimal Places:", 0, 0, "uiFont", 16)
+  backGroup:insert(decPlaces)
+  decPlaces.x = backEdgeX + 117
+  decPlaces.y = backEdgeY + 100
 	
-	places = 4
-	decLabel = display.newText( screenGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
-	decLabel.x = backEdgeX + 178
-	decLabel.y = backEdgeY + 100
+  places = 4
+  decLabel = display.newBitmapText(places, 0, 0, "inputFont", 24)
+  screenGroup:insert(decLabel)
+  decLabel.x = backEdgeX + 180
+  decLabel.y = backEdgeY + 100
   
-  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
-  measureLabel:setFillColor(1)
-  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	measureLabel.x = backEdgeX + 115
-	measureLabel.y = backEdgeY + 75
+  measureLabel = display.newBitmapText(measureText, 0, 0, "uiFont", 20)
+  backGroup:insert(measureLabel)
+  measureLabel.x = backEdgeX + 118
+  measureLabel.y = backEdgeY + 75
 	
-	numHolesText = display.newEmbossedText(backGroup, "No. of Holes:", 0, 0, "BerlinSansFB-Reg", 18)
-  numHolesText:setFillColor(1)
-  numHolesText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	numHolesText.x = backEdgeX + 100
-	numHolesText.y = backEdgeY + 140
+  numHolesText = display.newBitmapText("No. of Holes:", 0, 0, "uiFont", 18)
+  backGroup:insert(numHolesText)
+  numHolesText.x = backEdgeX + 100
+  numHolesText.y = backEdgeY + 140
 	
-	numHoles = display.newText( textOptionsL )
+  numHoles = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(numHoles)
-	numHoles:addEventListener ( "touch", calcTouch )
-	numHoles.anchorX = 0.5; numHoles.anchorY = 0.5; 
-	numHoles.x = backEdgeX + 200
-	numHoles.y = backEdgeY + 140
-	numHoles.tap = 1
-	tapTable[1] = numHoles
+  numHoles:setAnchor(0, 0.5)
+  numHoles:addEventListener ( "touch", calcTouch )
+  numHoles.anchorX = 0.5; numHoles.anchorY = 0.5; 
+  numHoles.x = backEdgeX + 155
+  numHoles.y = backEdgeY + 140
+  numHoles.tap = 1
+  tapTable[1] = numHoles
   numHoles.alpha = 0
   
-  --numHolesTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   numHolesTap = display.newImageRect(backGroup, "Images/tapTarget.png", 33, 33)
-	numHolesTap.x = backEdgeX + 170
-	numHolesTap.y = backEdgeY + 140
-	numHolesTap:addEventListener ( "touch", calcTouch )
-	numHolesTap.tap = 11
+  numHolesTap.x = backEdgeX + 170
+  numHolesTap.y = backEdgeY + 140
+  numHolesTap:addEventListener ( "touch", calcTouch )
+  numHolesTap.tap = 11
   aniTable[1] = numHolesTap
-	--numHolesTap:play()
+  	
+  diamText = display.newBitmapText("Circle Diameter:", 0, 0, "uiFont", 18)
+  backGroup:insert(diamText)
+  diamText.x = backEdgeX + 111
+  diamText.y = backEdgeY + 185
 	
-	diamText = display.newEmbossedText(backGroup, "Circle Diameter:", 0, 0, "BerlinSansFB-Reg", 18)
-  diamText:setFillColor(1)
-  diamText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	diamText.x = backEdgeX + 111
-	diamText.y = backEdgeY + 185
-	
-	diam = display.newText( textOptionsL )
-	diam:addEventListener ( "touch", calcTouch )
-	diam.anchorX = 0.5; diam.anchorY = 0.5; 
-	diam.x = backEdgeX + 220
-	diam.y = backEdgeY + 185
-	diam.tap = 2
-	tapTable[2] = diam
+  diam = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(diam)
+  diam:addEventListener ( "touch", calcTouch )
+  diam:setAnchor(0, 0.5)
+  diam.x = backEdgeX + 180
+  diam.y = backEdgeY + 185
+  diam.tap = 2
+  tapTable[2] = diam
   diam.alpha = 0
   
-  --diamTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   diamTap = display.newImageRect(backGroup, "Images/tapTarget.png", 33, 33)
-	diamTap.x = backEdgeX + 190
-	diamTap.y = backEdgeY + 185
-	backGroup:insert(diamTap)
-	diamTap:addEventListener ( "touch", calcTouch )
-	diamTap.tap = 12
+  diamTap.x = backEdgeX + 190
+  diamTap.y = backEdgeY + 185
+  backGroup:insert(diamTap)
+  diamTap:addEventListener ( "touch", calcTouch )
+  diamTap.tap = 12
   aniTable[2] = diamTap
-	--diamTap:play()
 	
-	circleXtext = display.newEmbossedText(backGroup, "Circle Centre - X:", 0, 0, "BerlinSansFB-Reg", 18)
-  circleXtext:setFillColor(1)
-  circleXtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	circleXtext.x = backEdgeX + 116
-	circleXtext.y = backEdgeY + 230
-	circleXtext.alpha = 1
+  circleXtext = display.newBitmapText("Circle Centre - X:", 0, 0, "uiFont", 18)
+  backGroup:insert(circleXtext)
+  circleXtext.x = backEdgeX + 116
+  circleXtext.y = backEdgeY + 230
+  circleXtext.alpha = 1
 	
-	circleX = display.newText( textOptionsL )
-	circleX:addEventListener ( "touch", calcTouch )
-	circleX.anchorX = 0.5; circleX.anchorY = 0.5; 
-	circleX.x = backEdgeX + 225
-	circleX.y = backEdgeY + 230
-	circleX.tap = 3
-	tapTable[3] = circleX
-	circleX.alpha = 0
+  circleX = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(circleX)
+  circleX:addEventListener ( "touch", calcTouch )
+  circleX:setAnchor(0, 0.5)
+  circleX.x = backEdgeX + 185
+  circleX.y = backEdgeY + 230
+  circleX.tap = 3
+  tapTable[3] = circleX
+  circleX.alpha = 0
   
-  --circleXTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   circleXTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	circleXTap.x = backEdgeX + 205
-	circleXTap.y = backEdgeY + 230
-	backGroup:insert(circleXTap)
-	circleXTap:addEventListener ( "touch", calcTouch )
-	circleXTap.tap = 13
-  circleXTap[3] = circleXTap
+  circleXTap.x = backEdgeX + 205
+  circleXTap.y = backEdgeY + 230
+  backGroup:insert(circleXTap)
+  circleXTap:addEventListener ( "touch", calcTouch )
+  circleXTap.tap = 13
   circleXTap.alpha = 0
   aniTable[3] = circleXTap
 	
-	circleYtext = display.newEmbossedText(backGroup, "Circle Centre - Y:", 0, 0, "BerlinSansFB-Reg", 18)
-  circleYtext:setFillColor(1)
-  circleYtext:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	circleYtext.x = backEdgeX + 116
-	circleYtext.y = backEdgeY + 275
-	circleYtext.alpha = 1
+  circleYtext = display.newBitmapText("Circle Centre - Y:", 0, 0, "uiFont", 18)
+  backGroup:insert(circleYtext)
+  circleYtext.x = backEdgeX + 116
+  circleYtext.y = backEdgeY + 275
+  circleYtext.alpha = 1
 	
-	circleY = display.newText( textOptionsL )
-	circleY:addEventListener ( "touch", calcTouch )
-	circleY.anchorX = 0.5; circleY.anchorY = 0.5; 
-	circleY.x = backEdgeX + 225
-	circleY.y = backEdgeY + 275
-	circleY.tap = 4
-	tapTable[4] = circleY
-	circleY.alpha = 0
+  circleY = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(circleY)
+  circleY:addEventListener ( "touch", calcTouch )
+  circleY:setAnchor(0, 0.5)
+  circleY.x = backEdgeX + 185
+  circleY.y = backEdgeY + 275
+  circleY.tap = 4
+  tapTable[4] = circleY
+  circleY.alpha = 0
   
-  --circleYTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   circleYTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	circleYTap.x = backEdgeX + 205
-	circleYTap.y = backEdgeY + 275
-	backGroup:insert(circleYTap)
-	circleYTap:addEventListener ( "touch", calcTouch )
-	circleYTap.tap = 14
+  circleYTap.x = backEdgeX + 205
+  circleYTap.y = backEdgeY + 275
+  backGroup:insert(circleYTap)
+  circleYTap:addEventListener ( "touch", calcTouch )
+  circleYTap.tap = 14
   aniTable[4] = circleYTap
   circleYTap.alpha = 0
-  aniTable[4] = circleYTap
 	
-	firstHoleText = display.newEmbossedText(backGroup, "First Hole Angle:", 0, 0, "BerlinSansFB-Reg", 18)
-  firstHoleText:setFillColor(1)
-  firstHoleText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	firstHoleText.x = backEdgeX + 116
-	firstHoleText.y = backEdgeY + 320
-	firstHoleText.alpha = 1
+  firstHoleText = display.newBitmapText("First Hole Angle:", 0, 0, "uiFont", 18)
+  backGroup:insert(firstHoleText)
+  firstHoleText.x = backEdgeX + 116
+  firstHoleText.y = backEdgeY + 320
+  firstHoleText.alpha = 1
 	
-	firstHole = display.newText( textOptionsL )
-	firstHole:addEventListener ( "touch", calcTouch )
-	firstHole.anchorX = 0.5; firstHole.anchorY = 0.5; 
-	firstHole.x = backEdgeX + 225
-	firstHole.y = backEdgeY + 320
-	firstHole.tap = 5
-	tapTable[5] = firstHole
-	firstHole.alpha = 0
+  firstHole = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(firstHole)
+  firstHole:addEventListener ( "touch", calcTouch )
+  firstHole:setAnchor(0, 0.5)
+  firstHole.x = backEdgeX + 185
+  firstHole.y = backEdgeY + 320
+  firstHole.tap = 5
+  tapTable[5] = firstHole
+  firstHole.alpha = 0
   
-  --firstHoleTap = display.newSprite(tapSheet, tapAniSequenceData["tapAniv2"])
   firstHoleTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	firstHoleTap.x = backEdgeX + 200
-	firstHoleTap.y = backEdgeY + 320
-	backGroup:insert(firstHoleTap)
-	firstHoleTap:addEventListener ( "touch", calcTouch )
-	firstHoleTap.tap = 15
+  firstHoleTap.x = backEdgeX + 200
+  firstHoleTap.y = backEdgeY + 320
+  backGroup:insert(firstHoleTap)
+  firstHoleTap:addEventListener ( "touch", calcTouch )
+  firstHoleTap.tap = 15
   aniTable[5] = firstHoleTap
   firstHoleTap.alpha = 0
-  aniTable[5] = firstHoleTap
 	
-	answer = widget.newButton{
-		left = 0,
-		top = 0,
+  answer = widget.newButton
+	{
+		id = "chartsButt",
 		width = 90,
-		height = 35,
-		font = "BerlinSansFB-Reg",
-    fontSize = 14,
-    labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
-		label = "CALCULATE",
-		id = "answer",
-    defaultFile = "Images/chartButtD.png",
-    overFile = "Images/chartButtO.png",
-		onEvent = answerScene
-		}
+		height = 37,
+		defaultFile = "Images/chartButtD.png",
+		overFile = "Images/chartButtO.png",
+		onEvent = answerScene,
+	}
 	backGroup:insert(answer)
 	answer.x = backEdgeX + 430
 	answer.y = backEdgeY + 300
-	answer.alpha = 0
+
+  calcLabel = display.newBitmapText("CALCULATE", 0, 0, "uiFont", 14)
+  calcLabel.x = answer.contentWidth / 2
+  calcLabel.y = answer.contentHeight / 2
+  answer:insert(calcLabel)
   
-	optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
+  optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
   backGroup.anchorX = 0.5; backGroup.anchorY = 0.5; 
   backGroup.alpha = 0
   transition.to ( backGroup, { time = 500, alpha = 1, delay = 200} )
@@ -689,6 +690,7 @@ function scene:hide( event )
       -- Insert code here to "pause" the scene.
       -- Example: stop timers, stop animation, stop audio, etc.
       Runtime:removeEventListener( "key", onKeyEvent )
+	  decLabel.alpha = 0
    elseif ( phase == "did" ) then
       -- Called immediately after scene goes off screen.
    end

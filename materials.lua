@@ -3,6 +3,8 @@ local scene = composer.newScene()
 local widget = require ( "widget" )
 local myData = require("myData")
 display.setStatusBar(display.HiddenStatusBar)
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -15,16 +17,23 @@ local searchBox, mask, placeHolder
 local finalRows, matchRow, fullRows, fullRows2
 local matTable2, matContent2, matAnswer2
 local deleteTables, back, topText, topBox
-local goBack2
+local goBack2, boxText, makeBox
 
 ---------------------------------------------------------------------------------
 local function onKeyEvent( event )
 
   local phase = event.phase
   local keyName = event.keyName
-   
-  if ( "back" == keyName and phase == "up" ) and not myData.isOverlay then
+  local platformName = system.getInfo("platformName")
+
+  if platformName == "Android" then
+   if ( "back" == keyName and phase == "up" ) and not myData.isOverlay then
     timer.performWithDelay(100,goBack2,1)
+   end
+  elseif platformName == "WinPhone" then
+   if ( "back" == keyName ) and not myData.isOverlay then
+    timer.performWithDelay(100,goBack2,1)
+   end
   end
   return true
 end
@@ -58,6 +67,36 @@ local function placeHolder(event)
    mask.isHitTestable = false
   end
 end
+
+-----------------
+--For Windows Phone 8 ONLY
+-----------------
+
+-- local function textListener(event)
+
+-- 	boxText = event.text
+
+--     local tempLen = string.len(event.text)
+--     if tempLen > 0 then
+--       local length = string.len(event.text)
+--       local word = event.text
+      
+--       deleteTables()
+    
+--       matchRow(length, word)
+      
+--       if #matTable2 > 2 then    
+--         matList:deleteAllRows()
+--         fullRows2()
+--       else
+--         matList:deleteAllRows()
+--         fullRows2()
+--       end
+--     else
+--       matList:deleteAllRows()
+--       fullRows()
+--     end
+-- end
 
 local function textListener(event)
   local phase = event.phase
@@ -107,7 +146,7 @@ local function onRowTouch( event )
       end
     else
       if myData.isOverlay then
-        if string.len(searchBox.text) > 0 then
+        if string.len(boxText) > 0 then -- Changed from searchBox.text
           local temp = string.find(matAnswer2[row.index], "%d")
           myData.number = string.sub(matAnswer2[row.index], temp)
         else
@@ -136,29 +175,28 @@ local function onRowRender( event )
 
     
     if row.index < 3 then
-      rowTitle = display.newText( { parent = row, text = title[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 24} )
-      rowTitle:setFillColor(0.15, 0.4, 0.729)
-      rowTitle.anchorX = 0
+	  rowTitle = display.newBitmapText(title[row.index], 0, 0, "berlinFont", 24)
+	  row:insert(rowTitle)
+	  rowTitle:setAnchor(0, 0.5)
       rowTitle.x = 10
-      rowTitle.y = row.contentHeight / 2 - 15
+      rowTitle.y = row.contentHeight / 2 - 5
       if row.index == 1 then
-        rowTitle:setFillColor( 1 )
+		rowTitle:setFont("uiFont")
       elseif row.index == 2 then
-        rowTitle:setFillColor( 0.15, 0.4, 0.729 )
+		rowTitle:setFont("berlinFont")
       end
     end
     
     if row.index > 2 then
-        rowTitle = display.newText( { parent = row, text = title[row.index], x = 0, y = 0, width = display.contentWidth - 10, font = "BerlinSansFB-Reg", fontSize = 20} )
-        rowTitle:setFillColor(0.15, 0.4, 0.729)
-        rowTitle.anchorX = 0
-        rowTitle.anchorY = 0
+		rowTitle = display.newBitmapText(title[row.index], 0, 0, "berlinFont", 20)
+		row:insert(rowTitle)
+		rowTitle:setAnchor(0, 0)
         rowTitle.x = 10
         rowTitle.y = 0
         if row.index == 1 then
-          rowTitle:setFillColor( 1 )
+		  rowTitle:setFont("uiFont")
         elseif row.index == 2 then
-          rowTitle:setFillColor( 0.15, 0.4, 0.729 )
+		  rowTitle:setFont("berlinFont")
         end
     end    
     
@@ -166,26 +204,29 @@ local function onRowRender( event )
       local temp = string.find(answer[row.index], "%s")
       temp = string.sub(answer[row.index], temp + 1)
       temp = math.round((temp / 3.2808) * math.pow(10, 2)) / math.pow(10, 2)
-        rowAnswerRow = display.newText( { parent = row, text = answer[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
-        local display1 = display.newText( { parent = row, text = "ft/min", x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 16} )
-        local display2 = display.newText( { parent = row, text = temp, x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
-        local display3 = display.newText( { parent = row, text = "meters/min", x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 16} )
-        rowAnswerRow:setFillColor(0.757, 0, 0)
-        display1:setFillColor(0.757, 0, 0, 0.8)
-        display2:setFillColor(0.757, 0, 0)
-        display3:setFillColor(0.757, 0, 0, 0.8)
-        rowAnswerRow.anchorX = 1
-        display1.anchorX = 1
-        display2.anchorX = 1
-        display3.anchorX = 1
-        rowAnswerRow.anchorY = 0
-        display1.anchorY = 0
-        display2.anchorY = 0
-        display3.anchorY = 0
+
+		rowAnswerRow = display.newBitmapText(answer[row.index], 0, 0, "redFont", 20)
+		local display1 = display.newBitmapText("ft/min", 0, 0, "redFont", 16)
+		local display2 = display.newBitmapText(temp, 0, 0, "redFont", 20)
+		local display3 = display.newBitmapText("meters/min", 0, 0, "redFont", 16)
+		display1.alpha = 0.8
+		display3.alpha = 0.8
+
+		row:insert(rowAnswerRow)
+		row:insert(display1)
+		row:insert(display2)
+		row:insert(display3)
+
+		rowAnswerRow:setAnchor(1, 0)
+		display1:setAnchor(1, 0)
+		display2:setAnchor(1, 0)
+		display3:setAnchor(1, 0)
+
         rowAnswerRow.x = rowAnswerRow.contentWidth + 10
-        display1.x = rowAnswerRow.contentWidth + display1.contentWidth + 10
-        display2.x = rowAnswerRow.contentWidth + display1.contentWidth + display2.contentWidth + 10
-        display3.x = rowAnswerRow.contentWidth + display1.contentWidth + display2.contentWidth + display3.contentWidth + 10
+        display1.x = rowAnswerRow.contentWidth + display1.contentWidth + 12
+        display2.x = rowAnswerRow.contentWidth + display1.contentWidth + display2.contentWidth + 17
+        display3.x = rowAnswerRow.contentWidth + display1.contentWidth + display2.contentWidth + display3.contentWidth + 19
+
         if rowTitle.contentHeight > 20 then
           rowAnswerRow.y = rowTitle.contentHeight - 5
           display1.y = rowTitle.contentHeight - 5
@@ -198,10 +239,21 @@ local function onRowRender( event )
           display3.y = rowTitle.y + 20
         end
         
-        rowContentRow = display.newText( { parent = row, text = content[row.index], x = 0, y = 0, width = display.contentWidth - 10, font = "BerlinSansFB-Reg", fontSize = 16} )
-        rowContentRow:setFillColor(0)
-        rowContentRow.anchorX = 0
-        rowContentRow.anchorY = 0
+		local temp = content[row.index]
+		local continue = false
+		if temp:len() > 60 then
+			local temp2 = temp:sub(1, 60)
+			local temp3 = temp:sub(61)
+			local temp4 = ""
+			if temp3:len() > 60 then 
+				temp3 = temp:sub(61, 120)
+				temp4 = temp:sub(121)
+			end
+			temp = temp2 .. "\n" .. temp3 .. "\n" .. temp4
+		end
+		rowContentRow = display.newBitmapText(temp, 0, 0, "blackFont", 16)
+		row:insert(rowContentRow)
+		rowContentRow:setAnchor(0, 0)
         rowContentRow.y = rowAnswerRow.y + 20
         rowContentRow.x = 10
     end
@@ -218,15 +270,9 @@ finalRows = function(title, content, answer)
     temp = string.find(content[i], ":")
     if (math.fmod(i, 2)) == 0 then
       answer[i] = string.sub(content[i], temp - 7)
-      --local temp = string.find(answer[i], "%s")
---      temp = string.sub(answer[i], temp + 1)
---      answer[i] = answer[i] .. " ft/min" .. " - " .. " " .. math.round((temp / 3.2808) * math.pow(10, 2)) / math.pow(10, 2) .. " meters/min"
       content[i] = string.sub(content[i], 1, temp - 10)
     else
       answer[i] = string.sub(content[i], temp - 3)
-      local temp = string.find(answer[i], "%s")
-      --temp = string.sub(answer[i], temp + 1)
---      answer[i] = answer[i] .. " ft/min" .. " - " .. " " .. math.round((temp / 3.2808) * math.pow(10, 2)) / math.pow(10, 2) .. " meters/min"
       content[i] = string.sub(content[i], 1, temp - 6)
     end
   end
@@ -307,7 +353,7 @@ end
 
 fullRows = function()
   
-    for i = 1, #matTable, 1 do
+  for i = 1, #matTable, 1 do
        
     local isCategory = false
     local rowHeight = display.contentHeight / 4 + 15
@@ -404,6 +450,15 @@ deleteTables = function()
   matAnswer2[2] = " "
 end
 
+makeBox = function()
+
+  local requestingTextBoxEvent =
+	{
+		name = "requestingTextBox"
+	}
+  local result = Runtime:dispatchEvent( requestingTextBoxEvent )
+end
+
 -- "scene:create()"
 function scene:create( event )
 
@@ -469,13 +524,14 @@ function scene:create( event )
   mask.alpha = 0
   mask:addEventListener("touch", placeHolder)
   mask.isHitTestable = true
+
    
-  searchBox = native.newTextField(display.contentWidth - 110, 30, 200, 30)
-  searchBox:addEventListener( "userInput", textListener)
-  searchBox.placeholder = "Search by name..."
-  searchBox.alpha = 0
-  
-  topText = display.newText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - (searchBox.contentWidth + 40), y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
+   searchBox = native.newTextField(display.contentWidth - 110, 30, 200, 30)
+   searchBox:addEventListener( "userInput", textListener)
+   searchBox.placeholder = "Search by name..."
+   searchBox.alpha = 0
+
+   topText = display.newText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - (searchBox.contentWidth + 40), y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
    topText:setFillColor(1, 0.7)
    topText:addEventListener("touch", goTop)
    topText.alpha = 0
@@ -487,6 +543,27 @@ function scene:create( event )
    topBox.x = topText.x - 1
    topBox.y = topText.y
    topBox.alpha = 0
+   
+
+   -----------------------------------
+   --This is for WPH8 ONLY------------
+   -----------------------------------
+   -- topText = display.newImageRect( sceneGroup, "Images/up.png", 20, 27)
+   -- sceneGroup:insert(topText)
+   -- topText.isHitTestable = true
+   -- topText.alpha = 0
+   -- topText.x = display.contentWidth - 35
+   -- topText.y = 25
+   -- topText:addEventListener("touch", goTop)
+   -- transition.fadeIn( topText, {time = 500})
+
+   -- Runtime:addEventListener( "updateText", textListener )
+   -- timer.performWithDelay( 1000, makeBox )
+   ------------------------------------
+   ------------------------------------
+   ------------------------------------
+
+   boxText = ""
 
 
    -- Initialize the scene here.
@@ -522,12 +599,23 @@ function scene:hide( event )
    if ( phase == "will" ) then
      if not myData.isOverlay then
       Runtime:removeEventListener( "key", onKeyEvent )
+	  Runtime:removeEventListener( "updateText", textListener )
      end
     
      if myData.isOverlay then
       parent:switch()
      end
-      searchBox:removeSelf()      
+
+     --iOS and Android Only
+     searchBox:removeSelf() 
+
+	local requestingTextBoxEvent =
+	{
+		name = "requestingTextBox",
+		message = "remove"
+	}
+  local result = Runtime:dispatchEvent( requestingTextBoxEvent )
+   
    elseif ( phase == "did" ) then
       
       

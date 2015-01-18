@@ -4,6 +4,8 @@ local stepperDataFile = require("Images.stepSheet_stepSheet")
 local myData = require("myData")
 local widget = require ( "widget" )
 local loadsave = require("loadsave")
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -29,21 +31,26 @@ local stepSheet, buttSheet, tapSheet
 
 local addListeners, removeListeners, toMill, toInch
 local update, goBack2
-local gMeasure, measureText
+local gMeasure, measureText, optionLabels, infoLabel
 
 --Forward Functions
 
 local function onKeyEvent( event )
 
-   local phase = event.phase
-   local keyName = event.keyName
-   print( event.phase, event.keyName )
-   
+  local phase = event.phase
+  local keyName = event.keyName
+  local platformName = system.getInfo("platformName")
+
+  if platformName == "Android" then
    if ( "back" == keyName and phase == "up" ) then
-       
-       timer.performWithDelay(100,goBack2,1)
+    timer.performWithDelay(100,goBack2,1)
    end
-   return true
+  elseif platformName == "WinPhone" then
+   if ( "back" == keyName ) then
+    timer.performWithDelay(100,goBack2,1)
+   end
+  end
+  return true
 end
 
 local function optionsMove(event)
@@ -54,18 +61,18 @@ local function optionsMove(event)
       options = true
       transition.to ( optionsBack, { time = 200, x = -50 } )
       transition.to ( optionsBack, { time = 200, y = 0 } )
-			transition.to ( optionsGroup, { time = 500, alpha = 1} )
-      transition.to ( backGroup, { time = 200, x=160 } )
+	  transition.to ( optionsGroup, { time = 500, alpha = 1} )
       transition.to (decLabel, { time = 200, x = 70, y = backEdgeY + 110} )
-      decLabel:setFillColor(0.15, 0.4, 0.729)
-		elseif options then 
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+      transition.to ( backGroup, { time = 200, x = 160} )
+	  decLabel:setFont("berlinFont")
+	elseif options then 
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 178, y = backEdgeY + 125} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
     end
   end
 end
@@ -73,63 +80,63 @@ end
 local function resetCalc(event)
 	local phase = event.phase
 		
-		transition.to(angleAtext, {time = 300, alpha = 0})
-		transition.to(angleBtext, {time = 300, alpha = 0})
-		transition.to(angleCtext, {time = 300, alpha = 0})
-		transition.to(sideAtext, {time = 300, alpha = 0})
-		transition.to(sideBtext, {time = 300, alpha = 0})
-		transition.to(sideCtext, {time = 300, alpha = 0})
+	transition.to(angleAtext, {time = 300, alpha = 0})
+	transition.to(angleBtext, {time = 300, alpha = 0})
+	transition.to(angleCtext, {time = 300, alpha = 0})
+	transition.to(sideAtext, {time = 300, alpha = 0})
+	transition.to(sideBtext, {time = 300, alpha = 0})
+	transition.to(sideCtext, {time = 300, alpha = 0})
     
-    sideAtext.text = "Tap Me"
-    sideBtext.text = "Tap Me"
-    sideCtext.text = "Tap Me"
-    angleAtext.text = "Tap Me"
-    angleBtext.text = "Tap Me"
-    angleCtext.text = "Tap Me"
+    sideAtext:setText("Tap Me")
+    sideBtext:setText("Tap Me")
+    sideCtext:setText("Tap Me")
+    angleAtext:setText("Tap Me")
+    angleBtext:setText("Tap Me")
+    angleCtext:setText("Tap Me")
     
-    areaAnswer.text = ""
+    areaAnswer:setText("")
     
     tapCount = 0
     myData.number = nil
     
     if infoButt.info == 2 then
-				angleAtap.alpha = 0
+		angleAtap.alpha = 0
        	angleBtap.alpha = 0
        	angleCtap.alpha = 1
        	sideAtap.alpha = 1
        	sideBtap.alpha = 1
        	sideCtap.alpha = 0
-			elseif infoButt.info == 3 then
+	elseif infoButt.info == 3 then
        	angleAtap.alpha = 1
-        	angleBtap.alpha = 0
-        	angleCtap.alpha = 0
-        	sideAtap.alpha = 1
-        	sideBtap.alpha = 1
-        	sideCtap.alpha = 0
-			elseif infoButt.info == 4 then
-        	angleAtap.alpha = 0
-        	angleBtap.alpha = 0
-        	angleCtap.alpha = 0
-        	sideAtap.alpha = 1
-        	sideBtap.alpha = 1
-        	sideCtap.alpha = 1
-			elseif infoButt.info == 1 then
-        	angleAtap.alpha = 1
-        	angleBtap.alpha = 1
-        	angleCtap.alpha = 0
-        	sideAtap.alpha = 1
-        	sideBtap.alpha = 0
-        	sideCtap.alpha = 0
-			end
+        angleBtap.alpha = 0
+        angleCtap.alpha = 0
+        sideAtap.alpha = 1
+        sideBtap.alpha = 1
+        sideCtap.alpha = 0
+	elseif infoButt.info == 4 then
+        angleAtap.alpha = 0
+        angleBtap.alpha = 0
+        angleCtap.alpha = 0
+        sideAtap.alpha = 1
+        sideBtap.alpha = 1
+        sideCtap.alpha = 1
+	elseif infoButt.info == 1 then
+        angleAtap.alpha = 1
+        angleBtap.alpha = 1
+        angleCtap.alpha = 0
+        sideAtap.alpha = 1
+        sideBtap.alpha = 0
+        sideCtap.alpha = 0
+	end
     
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 178, y = backEdgeY + 125} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
     end
 end
 
@@ -137,39 +144,39 @@ local function measureChange( event )
 	local phase = event.phase
 	
 	if "ended" == phase then	
-		if measure:getLabel() == "TO METRIC" then
-      gMeasure.measure = "TO IMPERIAL"
-      loadsave.saveTable(gMeasure, "obliqueMeasure.json")
-			measure:setLabel("TO IMPERIAL")
+		if optionLabels[1]:getText() == "TO METRIC" then
+			gMeasure.measure = "TO IMPERIAL"
+			loadsave.saveTable(gMeasure, "obliqueMeasure.json")
+			optionLabels[1]:setText("TO IMPERIAL")
 			measureLabel:setText("Metric")
-			for i = 1, 3, 1 do
-				if (tapTable[i].text ~= "Tap Me") and (tapTable[i].text ~= "") then
-					tapTable[i].text = math.round(toMill(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
-
+		for i = 1, 3, 1 do			
+        if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toMill(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
 				end
 			end
 		else
-      gMeasure.measure = "TO METRIC"
-      loadsave.saveTable(gMeasure, "obliqueMeasure.json")
-			measure:setLabel("TO METRIC")
+			gMeasure.measure = "TO METRIC"
+			loadsave.saveTable(gMeasure, "obliqueMeasure.json")
+			optionLabels[1]:setText("TO METRIC")
 			measureLabel:setText("Imperial")
 			for i = 1, 3, 1 do
-				if (tapTable[i].text ~= "Tap Me") and (tapTable[i].text ~= "") then
-					tapTable[i].text = math.round(toInch(tapTable[i].text) * math.pow(10, places)) / math.pow(10, places)
+				if tapTable[i]:getText() ~= "Tap Me" then
+					tapTable[i]:setText(math.round(toInch(tapTable[i]:getText()) * math.pow(10, places)) / math.pow(10, places))
 				end
 			end
 		end
+    
     if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 178, y = backEdgeY + 125} )
-      decLabel:setFillColor(1)
-			options = false
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
 		end
-
-	end	
+    
+	end
 end
 
 local function goBack(event)
@@ -195,15 +202,15 @@ local function calcTouch( event )
       tapCount = tapCount + 1
     end
     
-    if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
+	if options then
+	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 178, y = backEdgeY + 125} )
-      decLabel:setFillColor(1)
-			options = false
-		end
+      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
+	  decLabel:setFont("inputFont")
+	  options = false
+    end
     
     if whatTap == 4 or whatTap == 5 or whatTap == 6 or whatTap == 14 or whatTap == 15 or whatTap == 16 then isDegree = true else isDegree = false end
 		
@@ -222,10 +229,10 @@ local function stepPress( event )
 	
 	if "increment" == phase then
 		places = places + 1
-		decLabel.text = places
+		decLabel:setText(places)
 	elseif "decrement" == phase then
 		places = places - 1
-		decLabel.text = places
+		decLabel:setText(places)
 	end
 end
 
@@ -233,108 +240,109 @@ local function infoPress( event )
 	local phase = event.phase		
 		if "ended" == phase then
 			
-      if resetVal then
-        timer.performWithDelay( 1000, resetCalc("ended") )
-        resetVal = false
-        infoButt:setLabel("Input")
-      else
+if resetVal then
+	timer.performWithDelay( 1000, resetCalc("ended") )
+    resetVal = false
+    infoLabel:setText("Input")
+else
 			
-      tapCount = 0
+    tapCount = 0
     
-			angleAtext.alpha = 0
-			angleBtext.alpha = 0
-			angleCtext.alpha = 0
-			sideAtext.alpha = 0
-			sideBtext.alpha = 0
-			sideCtext.alpha = 0
-		
-			if infoButt.info == 1 then
-				infoButt.info = 2
-				infoText:setText("2 Sides, Included Angle")
-				angleAtext.text = ""
-				angleBtext.text = ""
-				angleCtext.text = "Tap Me"
-				sideAtext.text = "Tap Me"
-				sideBtext.text = "Tap Me"
-				sideCtext.text = ""
-        	angleAtap.alpha = 0
+	angleAtext.alpha = 0
+	angleBtext.alpha = 0
+	angleCtext.alpha = 0
+	sideAtext.alpha = 0
+	sideBtext.alpha = 0
+	sideCtext.alpha = 0
+	
+	if infoButt.info == 1 then
+		infoButt.info = 2
+		infoText:setText("2 Sides, Included Angle")
+		angleAtext:setText("")
+		angleBtext:setText("")
+		angleCtext:setText("Tap Me")
+		sideAtext:setText("Tap Me")
+		sideBtext:setText("Tap Me")
+		sideCtext:setText("")
+       	angleAtap.alpha = 0
        	angleBtap.alpha = 0
        	angleCtap.alpha = 1
        	sideAtap.alpha = 1
        	sideBtap.alpha = 1
        	sideCtap.alpha = 0
-			elseif infoButt.info == 2 then
-				infoButt.info = 3
-				infoText:setText("2 Sides, Opposite Angle")
-				angleAtext.text = "Tap Me"
-				angleBtext.text = ""
-				angleCtext.text = ""
-				sideAtext.text = "Tap Me"
-				sideBtext.text = "Tap Me"
-				sideCtext.text = ""
+	elseif infoButt.info == 2 then
+		infoButt.info = 3
+		infoText:setText("2 Sides, Opposite Angle")
+		angleAtext:setText("Tap Me")
+		angleBtext:setText("")
+		angleCtext:setText("")
+		sideAtext:setText("Tap Me")
+		sideBtext:setText("Tap Me")
+		sideCtext:setText("")
        	angleAtap.alpha = 1
-        	angleBtap.alpha = 0
-        	angleCtap.alpha = 0
-        	sideAtap.alpha = 1
-        	sideBtap.alpha = 1
-        	sideCtap.alpha = 0
-			elseif infoButt.info == 3 then
-				infoButt.info = 4
-				infoText:setText("All Sides")
-				angleAtext.text = ""
-				angleBtext.text = ""
-				angleCtext.text = ""
-				sideAtext.text = "Tap Me"
-				sideBtext.text = "Tap Me"
-				sideCtext.text = "Tap Me"
-        	angleAtap.alpha = 0
-        	angleBtap.alpha = 0
-        	angleCtap.alpha = 0
-        	sideAtap.alpha = 1
-        	sideBtap.alpha = 1
-        	sideCtap.alpha = 1
-			elseif infoButt.info == 4 then
-				infoButt.info = 1
-				infoText:setText("1 Side, 2 Angles")
-				angleAtext.text = "Tap Me"
-				angleBtext.text = "Tap Me"
-				angleCtext.text = ""
-				sideAtext.text = "Tap Me"
-				sideBtext.text = ""
-				sideCtext.text = ""
-        	angleAtap.alpha = 1
-        	angleBtap.alpha = 1
-        	angleCtap.alpha = 0
-        	sideAtap.alpha = 1
-        	sideBtap.alpha = 0
-        	sideCtap.alpha = 0
-			end		
+       	angleBtap.alpha = 0
+       	angleCtap.alpha = 0
+       	sideAtap.alpha = 1
+       	sideBtap.alpha = 1
+       	sideCtap.alpha = 0
+	elseif infoButt.info == 3 then
+		infoButt.info = 4
+		infoText:setText("All Sides")
+		angleAtext:setText("")
+		angleBtext:setText("")
+		angleCtext:setText("")
+		sideAtext:setText("Tap Me")
+		sideBtext:setText("Tap Me")
+		sideCtext:setText("Tap Me")
+      	angleAtap.alpha = 0
+       	angleBtap.alpha = 0
+       	angleCtap.alpha = 0
+       	sideAtap.alpha = 1
+       	sideBtap.alpha = 1
+       	sideCtap.alpha = 1
+	elseif infoButt.info == 4 then
+		infoButt.info = 1
+		infoText:setText("1 Side, 2 Angles")
+		angleAtext:setText("Tap Me")
+		angleBtext:setText("Tap Me")
+		angleCtext:setText("")
+		sideAtext:setText("Tap Me")
+		sideBtext:setText("")
+		sideCtext:setText("")
+       	angleAtap.alpha = 1
+       	angleBtap.alpha = 1
+       	angleCtap.alpha = 0
+       	sideAtap.alpha = 1
+       	sideBtap.alpha = 0
+       	sideCtap.alpha = 0
+	end		
       
-		areaAnswer.text = ""
-    end
-		end	
+	areaAnswer:setText("")
+    
+	end
+	end	
 end
 
 local function alertListener ( event )
 	if "clicked" == event.action then
 
-		angleAtext.text = ""
-		angleBtext.text = ""
-		angleCtext.text = ""
-		sideAtext.text = "Tap Me"
-		sideBtext.text = "Tap Me"
-		sideCtext.text = "Tap Me"
-    angleAtap.alpha = 0
-    angleBtap.alpha = 0
-    angleCtap.alpha = 0
-    sideAtap.alpha = 1
-    sideBtap.alpha = 1
-    sideCtap.alpha = 1
-    sideAtext.alpha = 0
-    sideBtext.alpha = 0
-    sideCtext.alpha = 0
+		angleAtext:setText("")
+		angleBtext:setText("")
+		angleCtext:setText("")
+		sideAtext:setText("Tap Me")
+		sideBtext:setText("Tap Me")
+		sideCtext:setText("Tap Me")
+		angleAtap.alpha = 0
+		angleBtap.alpha = 0
+		angleCtap.alpha = 0
+		sideAtap.alpha = 1
+		sideBtap.alpha = 1
+		sideCtap.alpha = 1
+		sideAtext.alpha = 0
+		sideBtext.alpha = 0
+		sideCtext.alpha = 0
     
-    tapCount = 0
+		tapCount = 0
     
 	end
 end
@@ -342,17 +350,17 @@ end
 local function alertListener2 ( event )
 	if "clicked" == event.action then
 
-		angleCtext.text = ""
-		sideAtext.text = "Tap Me"
-		sideBtext.text = ""
-		sideCtext.text = ""
-    angleCtap.alpha = 0
-    sideAtap.alpha = 1
-    sideAtext.alpha = 0
-    sideBtap.alpha = 0
-    sideCtap.alpha = 0
+		angleCtext:setText("")
+		sideAtext:setText("Tap Me")
+		sideBtext:setText("")
+		sideCtext:setText("")
+		angleCtap.alpha = 0
+		sideAtap.alpha = 1
+		sideAtext.alpha = 0
+		sideBtap.alpha = 0
+		sideCtap.alpha = 0
        
-    tapCount = 2
+		tapCount = 2
     
 	end
 end
@@ -384,18 +392,13 @@ goBack2 = function()
     myData.number = "Tap Me"
     composer.hideOverlay("slideRight", 500)
   else
-		if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
-		composer.gotoScene( "menu", { effect="fromBottom", time=800})
-  end
-		
+	transition.to ( optionsGroup, { time = 100, alpha = 0} )
+    transition.to ( backGroup, { time = 100, alpha = 0 } )
+    transition.to ( optionsBack, { time = 500, x = -170 } )
+    transition.to ( optionsBack, { time = 500, y = -335 } )
+	options = false
+	composer.gotoScene( "menu", { effect="fromBottom", time=800})
+  end		
 end
 
 toMill = function(num)
@@ -430,40 +433,40 @@ function scene:calculate()
 		end
   end
 	
-  tapTable[whatTap].text = myData.number
+  tapTable[whatTap]:setText(myData.number)
 	 
 	if tapCount >= 3 then
     if infoButt.info == 1 then
-      if tonumber(angleAtext.text) + tonumber(angleBtext.text) > 179 then
+      if tonumber(angleAtext:getText()) + tonumber(angleBtext:getText()) > 179 then
         native.showAlert ( "Error", "The sum of 2 angles cannot exceed 179 degrees!", { "OK" }, alertListener2 )
       else
-          angleCtext.text = 180 - (angleAtext.text + angleBtext.text)
-          sideBtext.text = (sideAtext.text * math.sin(math.rad(angleBtext.text))) / math.sin(math.rad(angleAtext.text))
-          sideCtext.text = (sideAtext.text * math.sin(math.rad(angleCtext.text))) / math.sin(math.rad(angleAtext.text))
+          angleCtext:setText(180 - (angleAtext:getText() + angleBtext:getText()))
+          sideBtext:setText((sideAtext:getText() * math.sin(math.rad(angleBtext:getText()))) / math.sin(math.rad(angleAtext:getText())))
+          sideCtext:setText((sideAtext:getText() * math.sin(math.rad(angleCtext:getText()))) / math.sin(math.rad(angleAtext:getText())))
           continue = true
       end
     elseif infoButt.info == 2 then
-      sideCtext.text = math.sqrt((sideAtext.text * sideAtext.text) + (sideBtext.text * sideBtext.text) - (2 * sideAtext.text * sideBtext.text * math.cos(math.rad(angleCtext.text))))
-      temp = ((sideBtext.text * sideBtext.text) + (sideCtext.text * sideCtext.text) - (sideAtext.text * sideAtext.text)) / (2 * sideBtext.text * sideCtext.text)
-      angleAtext.text = math.deg(math.atan(-temp / math.sqrt(-temp * temp + 1)) + 2 * math.atan(1))
-      angleBtext.text = 180 - (angleAtext.text + angleCtext.text)
+      sideCtext:setText(math.sqrt((sideAtext:getText() * sideAtext:getText()) + (sideBtext:getText() * sideBtext:getText()) - (2 * sideAtext:getText() * sideBtext:getText() * math.cos(math.rad(angleCtext:getText())))))
+      temp = ((sideBtext:getText() * sideBtext:getText()) + (sideCtext:getText() * sideCtext:getText()) - (sideAtext:getText() * sideAtext:getText())) / (2 * sideBtext:getText() * sideCtext:getText())
+      angleAtext:setText(math.deg(math.atan(-temp / math.sqrt(-temp * temp + 1)) + 2 * math.atan(1)))
+      angleBtext:setText(180 - (angleAtext:getText() + angleCtext:getText()))
       continue = true
       elseif infoButt.info == 3 then
-        temp = sideBtext.text * math.sin(math.rad(angleAtext.text)) / sideAtext.text
-        angleBtext.text = math.deg(math.atan(temp / (math.sqrt(-temp * temp + 1))))
-        angleCtext.text = 180 - (angleAtext.text + angleBtext.text)
-        sideCtext.text = (sideAtext.text * math.sin(math.rad(angleCtext.text))) / math.sin(math.rad(angleAtext.text))
+        temp = sideBtext:getText() * math.sin(math.rad(angleAtext:getText())) / sideAtext:getText()
+        angleBtext:setText(math.deg(math.atan(temp / (math.sqrt(-temp * temp + 1)))))
+        angleCtext:setText(180 - (angleAtext:getText() + angleBtext:getText()))
+        sideCtext:setText((sideAtext:getText() * math.sin(math.rad(angleCtext:getText()))) / math.sin(math.rad(angleAtext:getText())))
         continue = true
       elseif infoButt.info == 4 then
-        local one = tonumber(sideCtext.text)
-        local two = tonumber(sideBtext.text)
-        local three = tonumber(sideAtext.text)
+        local one = tonumber(sideCtext:getText())
+        local two = tonumber(sideBtext:getText())
+        local three = tonumber(sideAtext:getText())
         if (one + two > three) and (two + three > one) and (three + one > two) then          
-          temp = ((sideBtext.text * sideBtext.text) + (sideCtext.text * sideCtext.text) - (sideAtext.text * sideAtext.text)) / (2 * sideBtext.text * sideCtext.text)
-          angleAtext.text = math.deg(math.atan(-temp / (math.sqrt(-temp * temp + 1))) + 2 * math.atan(1))
-          temp = sideBtext.text * math.sin(math.rad(angleAtext.text)) / sideAtext.text
-          angleBtext.text = math.deg(math.atan(temp / (math.sqrt(-temp * temp + 1))))
-          angleCtext.text = 180 - (angleAtext.text + angleBtext.text)
+          temp = ((sideBtext:getText() * sideBtext:getText()) + (sideCtext:getText() * sideCtext:getText()) - (sideAtext:getText() * sideAtext:getText())) / (2 * sideBtext:getText() * sideCtext:getText())
+          angleAtext:setText(math.deg(math.atan(-temp / (math.sqrt(-temp * temp + 1))) + 2 * math.atan(1)))
+          temp = sideBtext:getText() * math.sin(math.rad(angleAtext:getText())) / sideAtext:getText()
+          angleBtext:setText(math.deg(math.atan(temp / (math.sqrt(-temp * temp + 1)))))
+          angleCtext:setText(180 - (angleAtext:getText() + angleBtext:getText()))
           continue = true
         else
           native.showAlert ( "Error", "Sum of every 2 sides must exceed 3rd side!", { "OK" }, alertListener )
@@ -488,11 +491,11 @@ function scene:calculate()
     end
 
     if continue then
-      local temp = (sideAtext.text + sideBtext.text + sideCtext.text) / 2
-      areaAnswer.text = math.round(math.sqrt(temp * (temp - sideAtext.text) * (temp - sideBtext.text) * (temp - sideCtext.text)) * math.pow(10, places)) / math.pow(10, places)
+      local temp = (sideAtext:getText() + sideBtext:getText() + sideCtext:getText()) / 2
+      areaAnswer:setText(math.round(math.sqrt(temp * (temp - sideAtext:getText()) * (temp - sideBtext:getText()) * (temp - sideCtext:getText())) * math.pow(10, places)) / math.pow(10, places))
 
       for i =1, 6, 1 do
-        tapTable[i].text = math.round(tapTable[i].text * math.pow(10, places)) / math.pow(10, places)
+        tapTable[i]:setText(math.round(tapTable[i]:getText() * math.pow(10, places)) / math.pow(10, places))
       end
 	
       timer.performWithDelay( 10, removeListeners, 2 )
@@ -506,6 +509,7 @@ function scene:calculate()
 end
 
 -- "scene:create()"
+
 function scene:create( event )
   local screenGroup = self.view
 		
@@ -527,12 +531,14 @@ function scene:create( event )
     measureText = "Metric"
   end
 
-	optionsGroup = display.newGroup ( )
+  optionLabels = {}
+
+  for i = 1, 3, 1 do
+	optionLabels[i] = display.newBitmapText("", 0, 0, "berlinFont", 18)
+  end
+
+  optionsGroup = display.newGroup ( )
   backGroup = display.newGroup ( )
-  local textOptionsR = {text="Tap Me", x=0, y=0, width=100, align="right", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsC = {text="Tap Me", x=0, y=0, width=100, align="center", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL = {text="Tap Me", x=0, y=0, width=100, align="left", font="BerlinSansFB-Reg", fontSize=24}
-  local textOptionsL2 = {text="", x=0, y=0, width=120, align="left", font="BerlinSansFB-Reg", fontSize=24}
     
   Runtime:addEventListener( "key", onKeyEvent )
 		
@@ -549,7 +555,7 @@ function scene:create( event )
   rightDisplay.x = display.contentCenterX
   rightDisplay.y = display.contentCenterY
 		
-	decStep = widget.newStepper
+  decStep = widget.newStepper
 	{
 		
 		left = 0,
@@ -571,54 +577,57 @@ function scene:create( event )
 	
 	measure = widget.newButton
 	{
-		id = "measureButt",
+    id = "measureButt",
     width = 125,
     height = 52,
-		label = gMeasure.measure,
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = measureChange,
-		}
+	onEvent = measureChange,
+	}
 	optionsGroup:insert(measure)
 	measure.x = 70
 	measure.y = backEdgeY + 170
+
+	optionLabels[1]:setText(gMeasure.measure)
+	optionLabels[1].x = measure.contentWidth / 2
+	optionLabels[1].y = measure.contentHeight / 2
+	measure:insert(optionLabels[1])
 	
 	menu = widget.newButton
 	{
-		id = "menuButt",
+	id = "menuButt",
     width = 125,
     height = 52,
-		label = "MENU",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onRelease = goBack,
+	onRelease = goBack,
 	}
 	optionsGroup:insert(menu)
 	menu.x = 70
 	menu.y = backEdgeY + 230
+
+	optionLabels[2]:setText("MENU")
+	optionLabels[2].x = menu.contentWidth / 2
+	optionLabels[2].y = menu.contentHeight / 2
+	menu:insert(optionLabels[2])
 	
 	reset = widget.newButton
 	{
-		id = "resetButt",
+	id = "resetButt",
     width = 125,
     height = 52,
-		label = "RESET",
-		labelColor = { default = {0.15, 0.4, 0.729}, over = {1}},
-		font = "BerlinSansFB-Reg",
-		fontSize = 20,
     defaultFile = "Images/button.png",
     overFile = "Images/buttonOver.png",
-		onEvent = resetCalc,
+	onEvent = resetCalc,
 	}
 	optionsGroup:insert(reset)
 	reset.x = 70
 	reset.y = backEdgeY + 290
+
+	optionLabels[3]:setText("RESET")
+	optionLabels[3].x = reset.contentWidth / 2
+	optionLabels[3].y = reset.contentHeight / 2
+	reset:insert(optionLabels[3])
 	
 	optionsGroup.alpha = 0
 	
@@ -634,168 +643,176 @@ function scene:create( event )
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 		
-	decPlaces = display.newEmbossedText( backGroup, "Decimal Places:", 0, 0, "BerlinSansFB-Reg", 16 )
-  decPlaces:setFillColor(1)
-  decPlaces:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	decPlaces.x = backEdgeX + 115
-	decPlaces.y = backEdgeY + 127
+  decPlaces = display.newBitmapText("Decimal Places:", 0, 0, "uiFont", 16)
+  backGroup:insert(decPlaces)
+  decPlaces.x = backEdgeX + 115
+  decPlaces.y = backEdgeY + 127
 	
-	places = 4
-	decLabel = display.newText( screenGroup, places, 0, 0, "BerlinSansFB-Reg", 22 )
-	decLabel.x = backEdgeX + 178
-	decLabel.y = backEdgeY + 125
+  places = 4
+  decLabel = display.newBitmapText(places, 0, 0, "inputFont", 24)
+  screenGroup:insert(decLabel)
+  decLabel.x = backEdgeX + 178
+  decLabel.y = backEdgeY + 125
   
-  measureLabel = display.newEmbossedText(backGroup, measureText, 0, 0, "BerlinSansFB-Reg", 20)
-  measureLabel:setFillColor(1)
-  measureLabel:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	measureLabel.x = backEdgeX + 115
-	measureLabel.y = backEdgeY + 105
+  measureLabel = display.newBitmapText(measureText, 0, 0, "uiFont", 20)
+  backGroup:insert(measureLabel)
+  measureLabel.x = backEdgeX + 115
+  measureLabel.y = backEdgeY + 105
+
+  area = display.newBitmapText("Area:", 0, 0, "uiFont", 20)
+  backGroup:insert(area)
+  area.x = backEdgeX + 280
+  area.y = backEdgeY + 220
+
+  areaAnswer = display.newBitmapText("", 0, 0, "uiFont", 24)
+  backGroup:insert(areaAnswer)
+  areaAnswer:setAnchor(0, 0.5)
+  areaAnswer:setJustification(areaAnswer.Justify.LEFT)
+  areaAnswer.x = backEdgeX + 310
+  areaAnswer.y = backEdgeY + 220
 		
-	infoButt = widget.newButton
+  infoButt = widget.newButton
 	{
    	left = 0,
   	top = 0,
   	width = 90,
- 	  height = 37,
- 	  fontSize = 14,
+ 	height = 37,
+ 	fontSize = 14,
   	id = "info",
-  	label = "Change Input",
-    labelColor = { default = {1}, over = {0.15, 0.4, 0.729}},
     font = "BerlinSansFB-Reg",
     defaultFile = "Images/chartButtD.png",
     overFile = "Images/chartButtO.png",
   	--emboss = true,
  	  onEvent = infoPress,
 	}
-	backGroup:insert(infoButt)
-	infoButt.x = backEdgeX + 460
-	infoButt.y = backEdgeY + 60
-	infoButt.info = 1
+  backGroup:insert(infoButt)
+  infoButt.x = backEdgeX + 460
+  infoButt.y = backEdgeY + 60
+  infoButt.info = 1
+
+  infoLabel = display.newBitmapText("Change Input", 0, 0, "uiFont", 14)
+  infoLabel.x = infoButt.contentWidth / 2
+  infoLabel.y = infoButt.contentHeight / 2
+  infoButt:insert(infoLabel)
     
-  infoText = display.newEmbossedText( backGroup, "1 Side, 2 Angles", 0, 0, "BerlinSansFB-Reg", 18 )
-	infoText:setFillColor(1)
-  infoText:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
+  infoText = display.newBitmapText("1 Side, 2 Angles", 0, 0, "uiFont", 18)
+  backGroup:insert(infoText)
   infoText.x = backEdgeX + 335
   infoText.y = backEdgeY + 185
-
-  area = display.newEmbossedText(backGroup, "Area:", 0, 0, "BerlinSansFB-Reg", 20)
-  area:setFillColor(1)
-  area:setEmbossColor({highlight = {r=0, g=0, b=0, a=1}, shadow = {r=1,g=1,b=1, a=0}})
-	area.x = backEdgeX + 280
-	area.y = backEdgeY + 220
-  
-  areaAnswer = display.newText( textOptionsL2 )
-  backGroup:insert(areaAnswer)
-	areaAnswer.x = backEdgeX + 365
-	areaAnswer.y = backEdgeY + 220
 			
-	sideAtext = display.newText( textOptionsC )
+  sideAtext = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(sideAtext)
-	sideAtext:addEventListener ( "touch", calcTouch )
-	sideAtext.x = backEdgeX + 320
-	sideAtext.y = backEdgeY + 260
-	sideAtext.tap = 1
-	tapTable[1] = sideAtext
-	sideAtext.alpha = 0
+  sideAtext:setJustification(sideAtext.Justify.CENTER)
+  sideAtext:addEventListener ( "touch", calcTouch )
+  sideAtext.x = backEdgeX + 315
+  sideAtext.y = backEdgeY + 260
+  sideAtext.tap = 1
+  tapTable[1] = sideAtext
+  sideAtext.alpha = 0
 		
   sideAtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-	sideAtap.x = backEdgeX + 315
-	sideAtap.y = backEdgeY + 255
-	backGroup:insert(sideAtap)
-	sideAtap:addEventListener ( "touch", calcTouch )
-	sideAtap.tap = 11
-	aniTable[11] = sideAtap
+  sideAtap.x = backEdgeX + 315
+  sideAtap.y = backEdgeY + 255
+  backGroup:insert(sideAtap)
+  sideAtap:addEventListener ( "touch", calcTouch )
+  sideAtap.tap = 11
+  aniTable[11] = sideAtap
 
-	sideBtext = display.newText( textOptionsL )
+  sideBtext = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(sideBtext)
-  sideBtext.text = ""
+  sideBtext:setAnchor(0, 0.5)
   sideBtext:addEventListener ( "touch", calcTouch )
-	sideBtext.x = backEdgeX + 480
-	sideBtext.y = backEdgeY + 130
-	sideBtext.tap = 2
-	tapTable[2] = sideBtext
-	sideBtext.alpha = 0
+  sideBtext.x = backEdgeX + 430
+  sideBtext.y = backEdgeY + 130
+  sideBtext.tap = 2
+  tapTable[2] = sideBtext
+  sideBtext.alpha = 0
 
   sideBtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
   sideBtap.x = backEdgeX + 460
-	sideBtap.y = backEdgeY + 130
-	backGroup:insert(sideBtap)
-	sideBtap:addEventListener ( "touch", calcTouch )
-	sideBtap.tap = 12
-	aniTable[12] = sideBtap
-	sideBtap.alpha = 0
+  sideBtap.y = backEdgeY + 130
+  backGroup:insert(sideBtap)
+  sideBtap:addEventListener ( "touch", calcTouch )
+  sideBtap.tap = 12
+  aniTable[12] = sideBtap
+  sideBtap.alpha = 0
 
-	sideCtext = display.newText( textOptionsR )
+  sideCtext = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(sideCtext)
-  sideCtext.text = ""
+  sideCtext:setAnchor(1, 0.5)
+  sideCtext:setJustification(sideCtext.Justify.RIGHT)
   sideCtext:addEventListener ( "touch", calcTouch )
-	sideCtext.x = backEdgeX + 120
-	sideCtext.y = backEdgeY + 205
-	sideCtext.tap = 3
-	tapTable[3] = sideCtext
-	sideCtext.alpha = 0
+  sideCtext.x = backEdgeX + 165
+  sideCtext.y = backEdgeY + 200
+  sideCtext.tap = 3
+  tapTable[3] = sideCtext
+  sideCtext.alpha = 0
 
   sideCtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
   sideCtap.x = backEdgeX + 150
-	sideCtap.y = backEdgeY + 205
-	backGroup:insert(sideCtap)
-	sideCtap:addEventListener ( "touch", calcTouch )
-	sideCtap.tap = 13
-	aniTable[13] = sideCtap
-	sideCtap.alpha = 0
+  sideCtap.y = backEdgeY + 205
+  backGroup:insert(sideCtap)
+  sideCtap:addEventListener ( "touch", calcTouch )
+  sideCtap.tap = 13
+  aniTable[13] = sideCtap
+  sideCtap.alpha = 0
 
-	angleAtext = display.newText( textOptionsR )
+  angleAtext = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(angleAtext)
+  angleAtext:setAnchor(1, 0.5)
+  angleAtext:setJustification(angleAtext.Justify.RIGHT)
   angleAtext:addEventListener ( "touch", calcTouch )
-  angleAtext.x = backEdgeX + 275
-	angleAtext.y = backEdgeY + 75
-	angleAtext.tap = 4
-	tapTable[4] = angleAtext
-	angleAtext.alpha = 0
+  angleAtext.x = backEdgeX + 330
+  angleAtext.y = backEdgeY + 70
+  angleAtext.tap = 4
+  tapTable[4] = angleAtext
+  angleAtext.alpha = 0
 		
   angleAtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
   angleAtap.x = backEdgeX + 315
-	angleAtap.y = backEdgeY + 75
-	backGroup:insert(angleAtap)
-	angleAtap:addEventListener ( "touch", calcTouch )
-	angleAtap.tap = 14
-	aniTable[14] = angleAtap
+  angleAtap.y = backEdgeY + 75
+  backGroup:insert(angleAtap)
+  angleAtap:addEventListener ( "touch", calcTouch )
+  angleAtap.tap = 14
+  aniTable[14] = angleAtap
 	
-	angleBtext = display.newText( textOptionsL )
+  angleBtext = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(angleBtext)
-	angleBtext:addEventListener ( "touch", calcTouch )
-	angleBtext.x = backEdgeX + 200
-	angleBtext.y = backEdgeY + 280
-	angleBtext.tap = 5
-	tapTable[5] = angleBtext
-	angleBtext.alpha = 0
+  angleBtext:setAnchor(0, 0.5)
+  angleBtext:addEventListener ( "touch", calcTouch )
+  angleBtext.x = backEdgeX + 150
+  angleBtext.y = backEdgeY + 280
+  angleBtext.tap = 5
+  tapTable[5] = angleBtext
+  angleBtext.alpha = 0
 		
   angleBtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
   angleBtap.x = backEdgeX + 165
-	angleBtap.y = backEdgeY + 280
-	backGroup:insert(angleBtap)
-	angleBtap:addEventListener ( "touch", calcTouch )
-	angleBtap.tap = 15
-	aniTable[15] = angleBtap
+  angleBtap.y = backEdgeY + 280
+  backGroup:insert(angleBtap)
+  angleBtap:addEventListener ( "touch", calcTouch )
+  angleBtap.tap = 15
+  aniTable[15] = angleBtap
 	
-	angleCtext = display.newText( textOptionsR )
+  angleCtext = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(angleCtext)
-  angleCtext.text = ""
-	angleCtext:addEventListener ( "touch", calcTouch )
-	angleCtext.x = backEdgeX + 425
-	angleCtext.y = backEdgeY + 260
-	angleCtext.tap = 6
-	tapTable[6] = angleCtext
-	angleCtext.alpha = 0
+  angleCtext:setAnchor(1, 0.5)
+  angleCtext:setJustification(angleCtext.Justify.RIGHT)
+  angleCtext:addEventListener ( "touch", calcTouch )
+  angleCtext.x = backEdgeX + 475
+  angleCtext.y = backEdgeY + 260
+  angleCtext.tap = 6
+  tapTable[6] = angleCtext
+  angleCtext.alpha = 0
 
   angleCtap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
   angleCtap.x = backEdgeX + 440
-	angleCtap.y = backEdgeY + 260
-	backGroup:insert(angleCtap)
-	angleCtap:addEventListener ( "touch", calcTouch )
-	angleCtap.tap = 16
-	aniTable[16] = angleCtap
-	angleCtap.alpha = 0
+  angleCtap.y = backEdgeY + 260
+  backGroup:insert(angleCtap)
+  angleCtap:addEventListener ( "touch", calcTouch )
+  angleCtap.tap = 16
+  aniTable[16] = angleCtap
+  angleCtap.alpha = 0
 		
   optionsGroup.anchorX = 0.5; optionsGroup.anchorY = 0.5; 
   backGroup.anchorX = 0.5; backGroup.anchorY = 0.5; 
@@ -837,6 +854,8 @@ function scene:hide( event )
       -- Called when the scene is on screen (but is about to go off screen).
       -- Insert code here to "pause" the scene.
       -- Example: stop timers, stop animation, stop audio, etc.
+
+	  decLabel.alpha = 0
       
    elseif ( phase == "did" ) then
      

@@ -2,6 +2,8 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require ( "widget" )
 local myData = require("myData")
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
@@ -22,8 +24,10 @@ local function onKeyEvent( event )
 
   local phase = event.phase
   local keyName = event.keyName
-   
-  if ( "back" == keyName and phase == "up" ) and not myData.isOverlay then
+  local platformName = system.getInfo("platformName")
+
+  if platformName == "Android" then
+   if ( "back" == keyName and phase == "up" ) and not myData.isOverlay then
     if menuHidden then
       timer.performWithDelay(500, menuShow)
       if showing == 1 then
@@ -39,6 +43,24 @@ local function onKeyEvent( event )
       timer.performWithDelay(100,goBack2,1)
     end
   end
+  elseif platformName == "WinPhone" then
+  if ( "back" == keyName ) and not myData.isOverlay then
+    if menuHidden then
+      timer.performWithDelay(500, menuShow)
+      if showing == 1 then
+        openDecEqui()
+      elseif showing == 2 then
+        openUniTap()
+      elseif showing == 3 then
+        openTaperTap()
+      elseif showing == 4 then
+        openIso()  
+      end
+    else
+      timer.performWithDelay(100,goBack2,1)
+    end
+  end
+  end
   return true
 end
 
@@ -48,16 +70,7 @@ goBack2 = function()
     myData.number = "Tap Me"
     composer.hideOverlay("slideUp", 500)
   else
-		if options then
-			transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 177, y = backEdgeY + 115} )
-      decLabel:setFillColor(1)
-			options = false
-		end
-		composer.gotoScene( "menu", { effect="fromBottom", time=800})
+	composer.gotoScene( "menu", { effect="fromBottom", time=800})
   end
 		
 end
@@ -89,25 +102,26 @@ local function onRowRender( event )
     local rowHeight = row.contentHeight
     local rowWidth = row.contentWidth
 
-    local rowTitle = display.newText( { parent = row, text = chart[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
+	local rowTitle = display.newBitmapText(chart[row.index], 0, 0, "uiFont", 20)
+	row:insert(rowTitle)
     if row.index > 2 then
-      local rowAnswer = display.newText( { parent = row, text = answer[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 22} )
-      rowAnswer:setFillColor(0.757, 0, 0)
-      rowAnswer.anchorX = 0
-      rowAnswer.x = rowTitle.contentWidth + 15
-      rowAnswer.y = rowHeight * 0.5
+		local rowAnswer = display.newBitmapText(answer[row.index], 0, 0, "redFont", 22)
+		row:insert(rowAnswer)
+		rowAnswer:setAnchor(0, 0.5)
+		rowAnswer.x = rowTitle.contentWidth + 25
+		rowAnswer.y = rowHeight * 0.5
     end
     
     if row.index == 1 then
-      rowTitle:setFillColor( 1 )
+	  rowTitle:setFont("uiFont")
     elseif row.index == 2 then
-      rowTitle:setFillColor( 0.15, 0.4, 0.729 )
+	  rowTitle:setFont("berlinFont")
     else
-      rowTitle:setFillColor( 0 )
+	  rowTitle:setFont("blackFont")
     end
     
     -- Align the label left and vertically centered
-    rowTitle.anchorX = 0    
+	rowTitle:setAnchor(0, 0.5) 
     rowTitle.x = 10    
     rowTitle.y = rowHeight * 0.5
     return true
@@ -123,17 +137,17 @@ local function onRowRender2( event )
     local rowHeight = row.contentHeight
     local rowWidth = row.contentWidth
 
-    local rowTitle = display.newText( { parent = row, text = choiceTable[row.index], x = 0, y = 0, font = "BerlinSansFB-Reg", fontSize = 20} )
+	local rowTitle = display.newBitmapText(choiceTable[row.index], 0, 0, "blackFont", 20)
+	row:insert(rowTitle)
     if row.index == 1 then
-      rowTitle:setFillColor( 1 )
+      rowTitle:setFont("uiFont")
     elseif row.index == 2 then
-      rowTitle:setFillColor( 0.15, 0.4, 0.729 )
+      rowTitle:setFont("berlinFont")
     else
-      rowTitle:setFillColor( 0 )
+      rowTitle:setFont("blackFont")
     end
     
-    -- Align the label left and vertically centered
-    rowTitle.anchorX = 0
+	rowTitle:setAnchor(0, 0.5)
     rowTitle.x = 10
     rowTitle.y = rowHeight * 0.5
     return true
@@ -178,6 +192,7 @@ local function onRowTouch2( event )
   
   if "release" == phase then
     if row.index == 2 then
+	  transition.fadeOut( topText, {time = 600})
       timer.performWithDelay(500, menuShow)
       if id == "decEqui" then
         openDecEqui()
@@ -266,14 +281,11 @@ menuHide = function()
   
    transition.to(chartChoice, {x = chartChoice.contentWidth - chartChoice.contentWidth * 2, time = 500})
    transition.fadeIn( topText, {time = 1200})
-   transition.fadeIn( topBox, {time = 1200})
 
 end
 
 menuShow = function()
   
-   transition.fadeOut( topText, {time = 50})
-   transition.fadeOut( topBox, {time = 50})
    transition.to(chartChoice, {x = chartChoice.contentWidth / 2, time = 500})
    myData.inch = "none"
 
@@ -609,20 +621,13 @@ function scene:create( event )
            }
          )
      end
-   
-   
-   topText = display.newText( { parent = sceneGroup, text = "TOP", x = display.contentWidth - 35, y = 25, font = "BerlinSansFB-Reg", fontSize = 20} )
-   topText:setFillColor(1, 0.7)
-   topText:addEventListener("touch", goTop)
+
+   topText = display.newImageRect( sceneGroup, "Images/up.png", 20, 27)
+   sceneGroup:insert(topText)
    topText.alpha = 0
-   
-   topBox = display.newRect(sceneGroup, 0, 0, topText.contentWidth + 5, topText.contentHeight + 5)
-   topBox:setFillColor(1, 0)
-   topBox.stroke = {1, 0.7}
-   topBox.strokeWidth = 2
-   topBox.x = topText.x - 1
-   topBox.y = topText.y
-   topBox.alpha = 0
+   topText.x = display.contentWidth - 35
+   topText.y = 25
+   topText:addEventListener("touch", goTop)
 
    
 end

@@ -76,6 +76,7 @@ end
  
 print(system.getInfo("model") .. " " .. system.getInfo("platformVersion"))
 if device.isApple then
+  print(tonumber("5.0"))
   composer.gotoScene( "menu")
 end
 

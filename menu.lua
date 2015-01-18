@@ -1,11 +1,12 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local widget = require ( "widget" )
---widget.setTheme("widget_theme_ios")
 local loadsave = require("loadsave")
 local myData = require("myData")
 local analytics = require( "analytics" )
 display.setStatusBar(display.HiddenStatusBar)
+local fm = require("fontmanager")
+fm.FontManager:setEncoding("utf8")
 ---------------------------------------------------------------------------------
 -- All code outside of the listener functions will only be executed ONCE
 -- unless "composer.removeScene()" is called.
@@ -26,6 +27,7 @@ local back
 local logo, facebookButt
 local topBar
 local scrollComplete, going
+local BerlinSansFB
 
 local butTable, labelTable, menuList
 
@@ -62,11 +64,15 @@ local function goingFacebook ( event )
 	local phase = event.phase
 
     analytics.logEvent( "Facebook" ) 
+	local platformName = system.getInfo("platformName")
 
+	if platformName == "WinPhone" then
+		system.openURL("http://www.facebook.com/pages/Machinists-Calculator/187552938002070")
+	else
     if (not system.openURL("fb://profile/187552938002070")) then
       system.openURL("http://www.facebook.com/pages/Machinists-Calculator/187552938002070")
     end
-    
+	end    
 end
 
 local function onKeyEvent( event )
@@ -156,20 +162,17 @@ local function onRowRender( event )
     local rowHeight = row.contentHeight
     local rowWidth = row.contentWidth
 
-    icon = display.newImageRect(row, buttons[row.index], 56, 56)
+    icon = display.newImageRect(row, buttons, 56, 56)
     icon.anchorX = 0
     icon.x = 0
     icon.y = rowHeight * 0.5
-    -- icon.alpha = 0
-    -- transition.to(icon, {alpha = 0.75, time = 500})
     
-    label = display.newText( { parent = row, text = labels[row.index], 0, 0, font = "BerlinSansFB-Reg", fontSize = 20, width = 100})
-    label.anchorX = 0
+    label = display.newBitmapText(labels,0,0,"berlinFont", 22.5)
+	row:insert(label)
+    label:setAnchor(0,0)
     label.x = icon.x + icon.contentWidth + 10
-    label.y = rowHeight * 0.5
-    label:setFillColor(0.15, 0.4, 0.729, 0.90)
-    -- label.alpha = 0
-    -- transition.to(label, {alpha = 1, time = 500})
+    label.y = rowHeight * 0.15
+    --label:setFillColor(0.15, 0.4, 0.729, 0.90)
 
   return true
 end
@@ -196,7 +199,7 @@ function scene:create( event )
   back = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
   
   backEdgeX = back.contentBounds.xMin
-	backEdgeY = back.contentBounds.yMin
+  backEdgeY = back.contentBounds.yMin
   
   Runtime:addEventListener( "key", onKeyEvent )
   
@@ -231,13 +234,13 @@ function scene:create( event )
   butTable[8] = "Images/mattButt.png"
   
   labelTable[1] = "Right Angle"
-  labelTable[2] = "Oblique Triangle"
+  labelTable[2] = "Oblique\nTriangle"
   labelTable[3] = "Sine Bar"
   labelTable[4] = "Bolt Circle"
-  labelTable[5] = "Speeds & Feeds"
-  labelTable[6] = "C'Sink & Drill Point"
+  labelTable[5] = "Speeds &\nFeeds"
+  labelTable[6] = "C'Sink &\nDrill Point"
   labelTable[7] = "Drill Charts"
-  labelTable[8] = "Materials List"
+  labelTable[8] = "Materials\nList"
   
   menuList = widget.newTableView{
     left = logo.x + logo.contentWidth + 10,
@@ -264,7 +267,7 @@ function scene:create( event )
       rowHeight = rowHeight,
       rowColor = rowColor,
       lineColor = lineColor,
-      params = { buttons = butTable, labels = labelTable }
+      params = { buttons = butTable[i], labels = labelTable[i] }
       }
     )
   end

@@ -141,8 +141,6 @@ function BitmapFont:getFileNameScalar(fontFile)
 		end
 	end
 
-	print("suffix is: " .. selectedSuffix)
-
 	fontFile = fontFile .. selectedSuffix 													-- required font file name.
 	self.suffix = selectedSuffix 															-- save the selected suffix
 	local fullPath = BitmapFont.fontDirectory .. "/" .. fontFile .. ".fnt" 					-- create full file path
@@ -725,8 +723,6 @@ function BitmapString:setText(newText)
 		end
 	end
 
-	print("decZero is: " .. decZero)
-
 	if hasDecimal then
 	for i = 0, string.len(temp), 1 do
 		if string.sub(temp, length - i, length - i)  == "0" then
@@ -742,7 +738,6 @@ function BitmapString:setText(newText)
 	else																	-- This checks to see if the new text is a number
 		temp = tonumber(temp)																			-- and if it is it changes it to a string to prevent errors
 		if temp then newText = tostring(temp)
-			print("zeroCount is: " .. zeroCount)
 			if oneZero then 
 				newText = newText .. ".0"
 			elseif decZero > 0 then

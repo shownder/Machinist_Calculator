@@ -82,8 +82,6 @@ local function numPushed( event )
 
     if not decPushed then
       decTemp = numDisplay:getText() .. label
-    
-      print(decTemp)
     end
     
     if isFocus == 1 and focusD.count <= 8 or isFocus ~= 1 and focusD.count <= 9 then
@@ -93,7 +91,6 @@ local function numPushed( event )
           focusD:setText("-0.")
         else
           focusD:setText(focusD:getText() .. label)
-		  print("decimal was pushed")
         end
         
         decPress = true
@@ -129,9 +126,7 @@ local function numPushed( event )
 
     if isFocus == 1 and degreeGroup.alpha ~= 0 then
       if numDisplay:getText() ~= 0 or numDisplay:getText() ~= 0 then
-        print("decTemp is: " .. decTemp)
         hoursText:setText(decTemp + 1 - 1)
-        print(numDisplay:getText())
         minText:setText((tonumber(numDisplay:getText()) - decTemp) * 60)
       end
         

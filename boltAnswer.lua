@@ -47,8 +47,7 @@ local function emailPush( event )
       text = text..answer[i].."\n"
     end
     
-    print(text)
-        
+    
     local options = {
       
       to = "",

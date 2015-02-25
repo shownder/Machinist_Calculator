@@ -18,7 +18,7 @@ local licensing = require( "licensing" )
 local composer = require( "composer" )
 local analytics = require( "analytics" )
 
-if not device.isApple then
+if ( system.getInfo( "platformName" ) == "Android" ) then
 
 analytics.init( "FRSV5MBZK5MNNRY92PVP" )
 
@@ -75,9 +75,8 @@ end
   end
  
 print(system.getInfo("model") .. " " .. system.getInfo("platformVersion"))
-if device.isApple then
-  print(tonumber("5.0"))
-  composer.gotoScene( "menu")
+if device.isApple or device.isSimulator then
+  composer.gotoScene( "threads")
 end
 
 

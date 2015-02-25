@@ -57,6 +57,9 @@ local function sceneSelect()
     elseif going.num == 8 then
       analytics.logEvent( "Materials_List" )
 		composer.gotoScene( "materials", { effect="fromTop", time=800, params = {isOverlay = false}} )
+    elseif going.num == 9 then
+      --analytics.logEvent( "Materials_List" )
+    composer.gotoScene( "threads", { effect="fromTop", time=800, params = {isOverlay = false}} )
    	end
 end
 
@@ -232,6 +235,7 @@ function scene:create( event )
   butTable[6] = "Images/counterButt.png"
   butTable[7] = "Images/chartMenu.png"
   butTable[8] = "Images/mattButt.png"
+  butTable[9] = "Images/threadMenu.png"
   
   labelTable[1] = "Right Angle"
   labelTable[2] = "Oblique\nTriangle"
@@ -241,6 +245,7 @@ function scene:create( event )
   labelTable[6] = "C'Sink &\nDrill Point"
   labelTable[7] = "Drill Charts"
   labelTable[8] = "Materials\nList"
+  labelTable[9] = "3 Wire\nThread Measure"
   
   menuList = widget.newTableView{
     left = logo.x + logo.contentWidth + 10,

@@ -30,9 +30,11 @@ local gMeasure, measureText, optionLabels
 local majorDiamLabel, measurement, threadAngleLabel
 local typeTap, angleWheel
 local infoButt, infoLabel, pickerGroup, backBox, backLabel
-local angleTap, threadTap, basicMajorTap
-local angleNum, threadNum, basicMajorNum
+local angleTap, threadTap, basicMajorTap, actualWireTap, effectiveTap, overTap
+local angleNum, threadNum, basicMajorNum, actualWireNum, effectiveNum, overNum
 local wireSize
+
+local bestWireCalc, softReset, pitchMath, overMath
 
 
 ---Listeners
@@ -72,7 +74,7 @@ local function optionsMove(event)
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 483, y = backEdgeY + 93} )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
 	  decLabel:setFont("inputFont")
 	  options = false
     end
@@ -81,8 +83,28 @@ end
 
 local function measureChange( event )
   local phase = event.phase
+
+  local function threadCalc()
+    local temp = 1 / threadNum:getText()
+    threadNum:setText((math.round(temp * math.pow(10, places)) / math.pow(10, places)))
+  end
+
+  local function pitchCalc()
+    local temp = 1 / threadNum:getText()
+    threadNum:setText((math.round(temp * math.pow(10, 2)) / math.pow(10, 2)))
+  end
   
-  if "ended" == phase then  
+  if "began" == phase then
+
+    if threadNum:getText() ~= "Tap Me" then
+      if measurement:getText() == "Threads per Inch" then
+        threadCalc()
+      elseif measurement:getText() == "Pitch of Thread" then
+        pitchCalc()
+      end
+    end
+
+  elseif "ended" == phase then  
     if optionLabels[1]:getText() == "TPI" then
       gMeasure.measure = "Pitch"
       loadsave.saveTable(gMeasure, "threadMeasure.json")
@@ -92,6 +114,11 @@ local function measureChange( event )
         angleNum:setText("Tap Me")
         angleNum.alpha = 0
         angleTap.alpha = 1
+        wireSize:setText("0")
+        wireSize.alpha = 0
+        threadNum:setText("Tap Me")
+        threadNum.alpha = 0
+        threadTap.alpha = 1
       end
     else
       gMeasure.measure = "TPI"
@@ -105,9 +132,13 @@ local function measureChange( event )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 483, y = backEdgeY + 93} )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
     decLabel:setFont("inputFont")
     options = false
+    end
+
+    if wireSize:getText() ~= "0" and angleNum:getText() ~= "Tap Me" then
+      bestWireCalc()
     end
     
   end
@@ -118,31 +149,64 @@ local function resetCalc(event)
 		
 	transition.to(angle1, {time = 300, alpha = 0})
 	transition.to(angle2, {time = 300, alpha = 0})
-    transition.to(stackSize, {time = 300, alpha = 0})
+  transition.to(stackSize, {time = 300, alpha = 0})
 	transition.to(sineSize, {time = 300, alpha = 0})
 	transition.to(sineSizeTap, {time = 300, alpha = 1})
-    transition.to(angle1Tap, {time = 300, alpha = 0})
+  transition.to(angle1Tap, {time = 300, alpha = 0})
 	transition.to(angle2Tap, {time = 300, alpha = 0})
-    transition.to(stackSizeTap, {time = 300, alpha = 0})
+  transition.to(stackSizeTap, {time = 300, alpha = 0})
+
+  for i = 1, #tapTable, 1 do
+    transition.to(tapTable[i], {time = 300, alpha = 0})
+    tapTable[i]:setText("Tap Me")
+  end
+
+  transition.to(angleNum, {time = 300, alpha = 0})
+  angleNum:setText("Tap Me")
+  transition.to(wireSize, {time = 300, alpha = 0})
+  wireSize:setText("0")
+
+  transition.to(angleTap, {time = 300, alpha = 1})
+  transition.to(threadTap, {time = 300, alpha = 1})
     
-    angle1:setText("Tap Me")
-    angle2:setText("Tap Me")
-    stackSize:setText("Tap Me")
-    sineSize:setText("Tap Me")
-    
-	continue = false
-    
-    timer.performWithDelay( 10, addListeners )
+  --timer.performWithDelay( 10, addListeners )
     
     if options then
 	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 215, y = backEdgeY + 80} )
-	  decLabel:setFont("inputFont")
-	  options = false	
+      transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
+    decLabel:setFont("inputFont")
+    options = false
 	end
+end
+
+softReset = function()
+
+  for i = 1, #tapTable, 1 do
+    tapTable[i]:setText("Tap Me")
+    tapTable[i].alpha = 0
+  end
+
+  threadTap.alpha = 1
+  basicMajorTap.alpha = 0
+  actualWireTap.alpha = 0
+
+  wireSize:setText("0")
+  wireSize.alpha = 0
+
+--   if majorDiamLabel:getText() == "Measurement over Wires" then
+--       effectiveTap.alpha = 1
+--       overTap.alpha = 0
+--     elseif majorDiamLabel:getText() == "Pitch Diameter" then
+--       overTap.alpha = 1
+--       effectiveTap.alpha = 0
+--     elseif majorDiamLabel:getText() == "Basic Major Diam Only" then
+--       effectiveTap.alpha = 0
+--       overTap.alpha = 0
+--   end
+
 end
 
 local function goBack(event)
@@ -166,9 +230,9 @@ local function calcTouch( event )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 215, y = backEdgeY + 80} )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
     decLabel:setFont("inputFont")
-    options = false 
+    options = false
 		end
 		
     composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
@@ -177,53 +241,43 @@ local function calcTouch( event )
 	end
 end
 
-local function typeTouch( event )
-  if event.phase == "began" then
-
-    print("refresh was hit")
+-- local function typeTouch( event )
+--   if event.phase == "began" then
     
-    if majorDiamLabel:getText() == "Basic Major Diam Only" then
-      majorDiamLabel:setText("Pitch Diameter")
-    elseif majorDiamLabel:getText() == "Pitch Diameter" then
-      majorDiamLabel:setText("Measurement over Wires")
-    elseif majorDiamLabel:getText() == "Measurement over Wires" then
-      majorDiamLabel:setText("Basic Major Diam Only")
-    end
+--     if majorDiamLabel:getText() == "Basic Major Diam Only" then
+--       majorDiamLabel:setText("Pitch Diameter")
+--       effectiveTap.alpha = 0
+--       overTap.alpha = 1
+--     elseif majorDiamLabel:getText() == "Pitch Diameter" then
+--       majorDiamLabel:setText("Measurement over Wires")
+--       overTap.alpha = 0
+--       effectiveTap.alpha = 1
+--     elseif majorDiamLabel:getText() == "Measurement over Wires" then
+--       majorDiamLabel:setText("Basic Major Diam Only")
+--       effectiveTap.alpha = 0
+--       overTap.alpha = 0
+--     end
 
-    gMeasure.type = majorDiamLabel:getText()
-    loadsave.saveTable(gMeasure, "threadMeasure.json")
+--     effectiveNum:setText("Tap Me")
+--     effectiveNum.alpha = 0
+--     overNum:setText("Tap Me")
+--     overNum.alpha = 0
 
-    if options then
-    transition.to ( optionsGroup, { time = 100, alpha = 0} )
-      transition.to ( backGroup, { time = 200, x=0 } )
-      transition.to ( optionsBack, { time = 200, x = -170 } )
-      transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 215, y = backEdgeY + 80} )
-    decLabel:setFont("inputFont")
-    options = false 
-    end
+--     gMeasure.type = majorDiamLabel:getText()
+--     loadsave.saveTable(gMeasure, "threadMeasure.json")
 
-  end
-end
+--     if options then
+--     transition.to ( optionsGroup, { time = 100, alpha = 0} )
+--       transition.to ( backGroup, { time = 200, x=0 } )
+--       transition.to ( optionsBack, { time = 200, x = -170 } )
+--       transition.to ( optionsBack, { time = 200, y = -335 } )
+--       transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
+--     decLabel:setFont("inputFont")
+--     options = false
+--     end
 
-local function bestWireCalc()
-
-  print("calculate the best wire size!")
-
-  local temp = string.sub( angleNum:getText(), 1 , 2 )
-  temp = tonumber( temp )
-  
-  local temp2 = threadNum:getText()
-  
-  if measurement:getText() == "Threads per Inch" then
-    temp2 = 1 / temp2
-  end
-
-  local temp3 = (temp2 / 2) * (1 / math.cos(math.rad(temp) / 2))
-
-  wireSize:setText(math.round(temp3 * math.pow(10, places)) / math.pow(10, places))
-
-end
+--   end
+-- end
 
 local function angleTouch( event )
   if event.phase == "began" then
@@ -233,9 +287,9 @@ local function angleTouch( event )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
       transition.to ( optionsBack, { time = 200, y = -335 } )
-      transition.to (decLabel, { time = 200, x = backEdgeX + 215, y = backEdgeY + 80} )
+      transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
     decLabel:setFont("inputFont")
-    options = false 
+    options = false
     end
 
     if angleWheel.x >= display.contentWidth then
@@ -247,6 +301,10 @@ local function angleTouch( event )
       transition.to( backBox, { time = 300, x = display.contentWidth} )
       transition.to( backLabel, { time = 300, x = display.contentWidth} )
 
+      if angleWheel:getValues()[1].value ~= angleNum:getText() then
+        softReset()
+      end
+
       angleNum:setText(angleWheel:getValues()[1].value)
       angleNum.alpha = 1
       angleTap.alpha = 0
@@ -257,15 +315,13 @@ local function angleTouch( event )
           loadsave.saveTable(gMeasure, "threadMeasure.json")
           optionLabels[1]:setText("TPI")
           measurement:setText("Pitch of Thread")
+
+          native.showAlert( "Notice", "Changed to Pitch of Thread" , { "OK" } )
         end
       end
     end
-
-    if angleNum:getText() ~= "Tap Me" and threadNum:getText() ~= "Tap Me" then
-      bestWireCalc()
-    end 
-
   end
+  return true
 end
 
 local function stepPress( event )
@@ -310,6 +366,85 @@ goBack2 = function()
 		
 end
 
+bestWireCalc = function()
+
+  print("calculate the best wire size!")
+
+  local temp = string.sub( angleNum:getText(), 1 , 2 )
+  temp = tonumber( temp )
+  
+  local temp2 = threadNum:getText()
+  
+  if measurement:getText() == "Threads per Inch" then
+    temp2 = 1 / temp2
+  end
+
+  local temp3 = (temp2 / 2) * (1 / math.cos(math.rad(temp) / 2))
+
+  wireSize:setText(math.round(temp3 * math.pow(10, places)) / math.pow(10, places))
+
+  wireSize.alpha = 1
+  basicMajorTap.alpha = 1
+  actualWireTap.alpha = 1
+
+end
+
+pitchMath = function()
+
+  local factorPitch
+  local angleNumber = string.sub( angleNum:getText(), 1 , 2 )
+  local answer
+  local pitch = threadNum:getText()
+
+  if measurement:getText() == "Threads per Inch" then
+    pitch = 1 / pitch
+  end
+
+  if angleNumber == "60" then
+    factorPitch = 0.649519
+  elseif angleNumber == "55" then
+    factorPitch = 0.640327
+  else
+    factorPitch = 0.5
+  end
+
+  answer = basicMajorNum:getText() - (pitch * factorPitch)
+
+  if angleNumber == "29" then
+    answer = answer - (0.008 * math.sqrt(basicMajorNum:getText()))
+  end
+
+  print(answer)
+
+  return answer
+
+end
+
+overMath = function()
+
+  local pitch = threadNum:getText()
+  local angleNumber = string.sub( angleNum:getText(), 1 , 2 )
+  local answer
+  local actual = tonumber(actualWireNum:getText())
+
+  if measurement:getText() == "Threads per Inch" then
+    pitch = 1 / pitch
+  end
+
+  if angleNumber == "55" then
+    answer = effectiveNum:getText() - (0.9605 * pitch) + (3.1657 * actual)
+  elseif angleNumber == "60" then
+    answer = effectiveNum:getText() - (0.86603 * pitch) + (3 * actual)
+  elseif angleNumber == "30" then
+    answer = effectiveNum:getText() + (actualWireNum:getText() * (1 + math.sin(math.rad(15))))
+  elseif angleNumber == "29" then
+    answer = effectiveNum:getText() + (actualWireNum:getText() * (1 + math.sin(math.rad(14.5))))
+  end
+
+  return answer
+
+end
+
 function scene:calculate()
 
   local screenGroup = self.view
@@ -317,8 +452,6 @@ function scene:calculate()
       myData.isOverlay = false
     
     if myData.number ~= "Tap Me" then
-
-      print("Calculate!")
 
       if whatTap > 5 then
         whatTap = whatTap - 10
@@ -328,26 +461,27 @@ function scene:calculate()
       tapTable[whatTap].alpha = 1
       aniTable[whatTap].alpha = 0
 
-      if angleNum:getText() ~= "Tap Me" and threadNum:getText() ~= "Tap Me" then
+      if angleNum:getText() ~= "Tap Me" and threadNum:getText() ~= "Tap Me" and wireSize:getText() == "0" then
         bestWireCalc()
       end
 
-      if majorDiamLabel:getText() == "Basic Major Diam Only" then
-        calcType = 1
-      elseif majorDiamLabel:getText() == "Pitch Diameter" then
-        calcType = 2
-      else
-        calcType = 3
+      if wireSize:getText() ~= "0" and basicMajorNum:getText() ~= "Tap Me" and actualWireNum:getText() ~= "Tap Me" then
+        effectiveNum:setText(pitchMath())
+      end      
+
+      if effectiveNum:getText() ~= "Tap Me" then
+        overNum:setText(overMath())
       end
 
+      if overNum:getText() ~= "Tap Me" then
+        overNum:setText(math.round(overNum:getText() * math.pow(10, places)) / math.pow(10, places))
+        overNum.alpha = 1
+      end
 
-
-      -- for i = 1, #tapTable, 1 do
-      --   if tapTable[i]:getText() ~= "Tap Me" then
-      --     tapTable[i].alpha = 1
-      --     aniTable[i].alpha = 0
-      --   end
-      -- end      
+      if effectiveNum:getText() ~= "Tap Me" then
+        effectiveNum:setText(math.round(effectiveNum:getText() * math.pow(10, places)) / math.pow(10, places))
+        effectiveNum.alpha = 1
+      end   
     
     end
 
@@ -373,7 +507,7 @@ function scene:create( event )
   if gMeasure == nil then
     gMeasure = {}
     gMeasure.measure = "Pitch"
-    gMeasure.type = "Basic Major Diam Only"
+    --gMeasure.type = "Basic Major Diam Only"
     loadsave.saveTable(gMeasure, "threadMeasure.json")
   end
 
@@ -496,23 +630,23 @@ function scene:create( event )
   optionsButt:addEventListener ( "touch", optionsMove )
   optionsButt.isHitTestable = true
 
-  decPlaces = display.newBitmapText("Decimal Places:", 0, 0, "uiFont", 14)
+  decPlaces = display.newBitmapText("Decimal Places:", 0, 0, "uiFont", 16)
   backGroup:insert(decPlaces)
   decPlaces:setAnchor(0, 0)
   decPlaces.x = backEdgeX + 372
-  decPlaces.y = backEdgeY + 90
+  decPlaces.y = backEdgeY + 85
 	
   places = 4
   decLabel = display.newBitmapText(places, 0, 0, "inputFont", 24)
   screenGroup:insert(decLabel)
-  decLabel.x = backEdgeX + 483
+  decLabel.x = backEdgeX + 490
   decLabel.y = backEdgeY + 93
 
-  majorDiamLabel = display.newBitmapText(gMeasure.type, 0, 0, "uiFont", 13)
-  backGroup:insert(majorDiamLabel)
-  majorDiamLabel:setAnchor(0, 0)
-  majorDiamLabel.x = backEdgeX + 371
-  majorDiamLabel.y = backEdgeY + 68
+  -- majorDiamLabel = display.newBitmapText(gMeasure.type, 0, 0, "uiFont", 13)
+  -- backGroup:insert(majorDiamLabel)
+  -- majorDiamLabel:setAnchor(0, 0)
+  -- majorDiamLabel.x = backEdgeX + 371
+  -- majorDiamLabel.y = backEdgeY + 68
 
   measurement = display.newBitmapText(gMeasure.label, 0, 0, "uiFont", 13)
   backGroup:insert(measurement)
@@ -535,29 +669,29 @@ function scene:create( event )
   
   screenGroup:insert(backGroup)
 
-  infoButt = widget.newButton
-  {
-    left = 0,
-    top = 0,
-    width = 80,
-    height = 32,
-    fontSize = 14,
-    id = "info",
-    font = "BerlinSansFB-Reg",
-    defaultFile = "Images/chartButtD.png",
-    overFile = "Images/chartButtO.png",
-    --emboss = true,
-    onEvent = typeTouch,
-  }
-  backGroup:insert(infoButt)
-  infoButt.x = backEdgeX + 325
-  infoButt.y = backEdgeY + 79
-  infoButt.info = 1
+  -- infoButt = widget.newButton
+  -- {
+  --   left = 0,
+  --   top = 0,
+  --   width = 80,
+  --   height = 32,
+  --   fontSize = 14,
+  --   id = "info",
+  --   font = "BerlinSansFB-Reg",
+  --   defaultFile = "Images/chartButtD.png",
+  --   overFile = "Images/chartButtO.png",
+  --   --emboss = true,
+  --   onEvent = typeTouch,
+  -- }
+  -- backGroup:insert(infoButt)
+  -- infoButt.x = backEdgeX + 325
+  -- infoButt.y = backEdgeY + 79
+  -- infoButt.info = 1
 
-  infoLabel = display.newBitmapText("Change Input", 0, 0, "uiFont", 12)
-  infoLabel.x = infoButt.contentWidth / 2
-  infoLabel.y = infoButt.contentHeight / 2
-  infoButt:insert(infoLabel)
+  -- infoLabel = display.newBitmapText("Change Input", 0, 0, "uiFont", 12)
+  -- infoLabel.x = infoButt.contentWidth / 2
+  -- infoLabel.y = infoButt.contentHeight / 2
+  -- infoButt:insert(infoLabel)
 
   local columnData = {
 
@@ -627,6 +761,13 @@ function scene:create( event )
   tapTable[1] = threadNum
   threadNum:addEventListener ( "touch", calcTouch )
 
+  wireSize = display.newBitmapText("0", 0, 0, "inputFont", 22)
+  backGroup:insert(wireSize)
+  wireSize:setJustification(wireSize.Justify.CENTER)
+  wireSize.x = backEdgeX + 115
+  wireSize.y = backEdgeY + 315
+  wireSize.alpha = 0
+
   basicMajorTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
   basicMajorTap.x = backEdgeX + 370
   basicMajorTap.y = backEdgeY + 260
@@ -635,6 +776,7 @@ function scene:create( event )
   basicMajorTap.isHitTestMasked = false
   basicMajorTap.tap = 12
   aniTable[2] = basicMajorTap
+  basicMajorTap.alpha = 0
 
   basicMajorNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(basicMajorNum)
@@ -647,12 +789,75 @@ function scene:create( event )
   tapTable[2] = basicMajorNum
   basicMajorNum:addEventListener ( "touch", calcTouch )
 
-  wireSize = display.newBitmapText("0", 0, 0, "inputFont", 22)
-  backGroup:insert(wireSize)
-  wireSize:setJustification(wireSize.Justify.CENTER)
-  wireSize.x = backEdgeX + 115
-  wireSize.y = backEdgeY + 315
-  wireSize.alpha = 1
+  actualWireTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  actualWireTap.x = backEdgeX + 287
+  actualWireTap.y = backEdgeY + 310
+  backGroup:insert(actualWireTap)
+  actualWireTap:addEventListener ( "touch", calcTouch )
+  actualWireTap.isHitTestMasked = false
+  actualWireTap.tap = 13
+  aniTable[3] = actualWireTap
+  actualWireTap.alpha = 0
+
+  actualWireNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(actualWireNum)
+  actualWireNum:setAnchor(0, 0.5)
+  actualWireNum:setJustification(actualWireNum.Justify.LEFT)
+  actualWireNum.x = actualWireTap.x - 15
+  actualWireNum.y = actualWireTap.y
+  actualWireNum.alpha = 0
+  actualWireNum.tap = 3
+  tapTable[3] = actualWireNum
+  actualWireNum:addEventListener ( "touch", calcTouch )
+
+  effectiveTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  effectiveTap.x = backEdgeX + 123
+  effectiveTap.y = backEdgeY + 165
+  backGroup:insert(effectiveTap)
+  effectiveTap:addEventListener ( "touch", calcTouch )
+  effectiveTap.isHitTestMasked = false
+  effectiveTap.tap = 14
+  aniTable[4] = effectiveTap
+
+  effectiveNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(effectiveNum)
+  effectiveNum:setAnchor(1, 0.5)
+  effectiveNum:setJustification(effectiveNum.Justify.RIGHT)
+  effectiveNum.x = effectiveTap.x + 13
+  effectiveNum.y = effectiveTap.y + 3
+  effectiveNum.alpha = 0
+  effectiveNum.tap = 4
+  tapTable[4] = effectiveNum
+  effectiveNum:addEventListener ( "touch", calcTouch )
+
+  overTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  overTap.x = backEdgeX + 190
+  overTap.y = backEdgeY + 65
+  backGroup:insert(overTap)
+  overTap:addEventListener ( "touch", calcTouch )
+  overTap.isHitTestMasked = false
+  overTap.tap = 15
+  aniTable[5] = overTap
+
+  overNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  backGroup:insert(overNum)
+  overNum:setJustification(overNum.Justify.RIGHT)
+  overNum:setAnchor(0, 0.5)
+  overNum.x = overTap.x - 30
+  overNum.y = overTap.y
+  overNum.alpha = 0
+  overNum.tap = 5
+  tapTable[5] = overNum
+  overNum:addEventListener ( "touch", calcTouch )
+
+  -- if majorDiamLabel:getText() == "Basic Major Diam Only" then
+    effectiveTap.alpha = 0
+    overTap.alpha = 0
+  -- elseif majorDiamLabel:getText() == "Pitch Diameter" then
+  --   effectiveTap.alpha = 0
+  -- else
+  --   overTap.alpha = 0
+  -- end
 		
 end
 

@@ -626,6 +626,7 @@ local screenGroup = self.view
   transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
   
   screenGroup:insert(backGroup)
+  screenGroup:insert( optionsGroup)
 
    -- Initialize the scene here.
    -- Example: add display objects to "sceneGroup", add touch listeners, etc.

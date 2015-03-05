@@ -735,8 +735,8 @@ function scene:create( event )
   bitLabelTable[14]:setFontSize(20)
   bitLabelTable[14]:setFont("uiFont")
   bitLabelTable[15]:setFont("redFont")
-		
-		screenGroup:insert( num1 )
+
+    screenGroup:insert( num1 )
 		screenGroup:insert( num2 )
 		screenGroup:insert( num3 )
 		screenGroup:insert( num3 )
@@ -753,6 +753,7 @@ function scene:create( event )
 		screenGroup:insert( clear )
     screenGroup:insert( backButt )
 		screenGroup:insert( numDisplay )
+
 end
 
 -- "scene:show()"

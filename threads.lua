@@ -28,7 +28,7 @@ local addListeners, removeListeners, goBack2
 local gMeasure, measureText, optionLabels
 
 local majorDiamLabel, measurement, threadAngleLabel
-local typeTap, angleWheel
+local typeTap, angleWheel, diaWheel
 local infoButt, infoLabel, pickerGroup, backBox, backLabel
 local angleTap, threadTap, basicMajorTap, actualWireTap, effectiveTap, overTap
 local angleNum, threadNum, basicMajorNum, actualWireNum, effectiveNum, overNum
@@ -146,32 +146,26 @@ end
 
 local function resetCalc(event)
 	local phase = event.phase
-		
-	transition.to(angle1, {time = 300, alpha = 0})
-	transition.to(angle2, {time = 300, alpha = 0})
-  transition.to(stackSize, {time = 300, alpha = 0})
-	transition.to(sineSize, {time = 300, alpha = 0})
-	transition.to(sineSizeTap, {time = 300, alpha = 1})
-  transition.to(angle1Tap, {time = 300, alpha = 0})
-	transition.to(angle2Tap, {time = 300, alpha = 0})
-  transition.to(stackSizeTap, {time = 300, alpha = 0})
+
+  if phase == "ended" then
 
   for i = 1, #tapTable, 1 do
     transition.to(tapTable[i], {time = 300, alpha = 0})
+    transition.to(aniTable[i], {time = 300, alpha = 0})
     tapTable[i]:setText("Tap Me")
   end
 
-  transition.to(angleNum, {time = 300, alpha = 0})
-  angleNum:setText("Tap Me")
+  -- transition.to(angleNum, {time = 300, alpha = 0})
+  -- angleNum:setText("Tap Me")
   transition.to(wireSize, {time = 300, alpha = 0})
   wireSize:setText("0")
 
-  transition.to(angleTap, {time = 300, alpha = 1})
+  -- transition.to(angleTap, {time = 300, alpha = 1})
   transition.to(threadTap, {time = 300, alpha = 1})
     
   --timer.performWithDelay( 10, addListeners )
     
-    if options then
+  if options then
 	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
       transition.to ( backGroup, { time = 200, x=0 } )
       transition.to ( optionsBack, { time = 200, x = -170 } )
@@ -180,6 +174,26 @@ local function resetCalc(event)
     decLabel:setFont("inputFont")
     options = false
 	end
+end
+end
+
+local function negAlert(event)
+if event.action == "clicked" then
+
+  print("Okay was pressed")
+
+  for i = 1, #tapTable, 1 do
+    transition.to(tapTable[i], {time = 300, alpha = 0})
+    transition.to(aniTable[i], {time = 300, alpha = 0})
+    tapTable[i]:setText("Tap Me")
+  end
+
+  transition.to(wireSize, {time = 300, alpha = 0})
+  wireSize:setText("0")
+
+  transition.to(threadTap, {time = 300, alpha = 1})
+
+end
 end
 
 softReset = function()
@@ -338,17 +352,17 @@ end
 
 --Local Functions
 
-addListeners = function()
+-- addListeners = function()
   
-  sineSize:addEventListener ( "touch", calcTouch )
+--   sineSize:addEventListener ( "touch", calcTouch )
   
-end
+-- end
 
-removeListeners = function()
+-- removeListeners = function()
   
-  sineSize:removeEventListener ( "touch", calcTouch )
+--   sineSize:removeEventListener ( "touch", calcTouch )
   
-end
+-- end
 
 goBack2 = function()
 	
@@ -384,9 +398,11 @@ bestWireCalc = function()
   wireSize:setText(math.round(temp3 * math.pow(10, places)) / math.pow(10, places))
 
   wireSize.alpha = 1
-  basicMajorTap.alpha = 1
-  actualWireTap.alpha = 1
-
+  
+  if basicMajorNum:getText() == "Tap Me" and actualWireNum:getText() == "Tap Me" then
+    basicMajorTap.alpha = 1
+    actualWireTap.alpha = 1
+  end
 end
 
 pitchMath = function()
@@ -461,7 +477,7 @@ function scene:calculate()
       tapTable[whatTap].alpha = 1
       aniTable[whatTap].alpha = 0
 
-      if angleNum:getText() ~= "Tap Me" and threadNum:getText() ~= "Tap Me" and wireSize:getText() == "0" then
+      if angleNum:getText() ~= "Tap Me" and threadNum:getText() ~= "Tap Me" then
         bestWireCalc()
       end
 
@@ -481,8 +497,14 @@ function scene:calculate()
       if effectiveNum:getText() ~= "Tap Me" then
         effectiveNum:setText(math.round(effectiveNum:getText() * math.pow(10, places)) / math.pow(10, places))
         effectiveNum.alpha = 1
-      end   
-    
+      end
+
+      if effectiveNum:getText() ~= "Tap Me" and overNum:getText() ~= "Tap Me" then
+        if tonumber(effectiveNum:getText()) < 0 or tonumber(overNum:getText()) < 0 then
+          native.showAlert( "Error", "Negative values are not correct. Please check your input.", { "OK" }, negAlert )   
+        end
+      end
+
     end
 
 end
@@ -810,49 +832,56 @@ function scene:create( event )
   tapTable[3] = actualWireNum
   actualWireNum:addEventListener ( "touch", calcTouch )
 
-  effectiveTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-  effectiveTap.x = backEdgeX + 123
-  effectiveTap.y = backEdgeY + 165
-  backGroup:insert(effectiveTap)
-  effectiveTap:addEventListener ( "touch", calcTouch )
-  effectiveTap.isHitTestMasked = false
-  effectiveTap.tap = 14
-  aniTable[4] = effectiveTap
+  -- effectiveTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  -- effectiveTap.x = backEdgeX + 123
+  -- effectiveTap.y = backEdgeY + 165
+  -- backGroup:insert(effectiveTap)
+  -- effectiveTap:addEventListener ( "touch", calcTouch )
+  -- effectiveTap.isHitTestMasked = false
+  -- effectiveTap.tap = 14
+  -- aniTable[4] = effectiveTap
 
   effectiveNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(effectiveNum)
   effectiveNum:setAnchor(1, 0.5)
   effectiveNum:setJustification(effectiveNum.Justify.RIGHT)
-  effectiveNum.x = effectiveTap.x + 13
-  effectiveNum.y = effectiveTap.y + 3
+  -- effectiveNum.x = effectiveTap.x + 13
+  -- effectiveNum.y = effectiveTap.y + 3
+  effectiveNum.x = backEdgeX + 136
+  effectiveNum.y = backEdgeY + 168
   effectiveNum.alpha = 0
   effectiveNum.tap = 4
   tapTable[4] = effectiveNum
-  effectiveNum:addEventListener ( "touch", calcTouch )
+  -- effectiveNum:addEventListener ( "touch", calcTouch )
 
-  overTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
-  overTap.x = backEdgeX + 190
-  overTap.y = backEdgeY + 65
-  backGroup:insert(overTap)
-  overTap:addEventListener ( "touch", calcTouch )
-  overTap.isHitTestMasked = false
-  overTap.tap = 15
-  aniTable[5] = overTap
+  -- overTap = display.newImageRect(screenGroup, "Images/tapTarget.png", 33, 33)
+  -- overTap.x = backEdgeX + 190
+  -- overTap.y = backEdgeY + 65
+  -- backGroup:insert(overTap)
+  -- overTap:addEventListener ( "touch", calcTouch )
+  -- overTap.isHitTestMasked = false
+  -- overTap.tap = 15
+  -- aniTable[5] = overTap
 
   overNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
   backGroup:insert(overNum)
   overNum:setJustification(overNum.Justify.RIGHT)
   overNum:setAnchor(0, 0.5)
-  overNum.x = overTap.x - 30
-  overNum.y = overTap.y
+  -- overNum.x = overTap.x - 30
+  -- overNum.y = overTap.y
+  overNum.x = backEdgeX + 160
+  overNum.y = backEdgeY + 65
   overNum.alpha = 0
   overNum.tap = 5
   tapTable[5] = overNum
-  overNum:addEventListener ( "touch", calcTouch )
+  -- overNum:addEventListener ( "touch", calcTouch )
+
+  screenGroup:insert( backGroup )
+  screenGroup:insert( optionsGroup)
 
   -- if majorDiamLabel:getText() == "Basic Major Diam Only" then
-    effectiveTap.alpha = 0
-    overTap.alpha = 0
+    -- effectiveTap.alpha = 0
+    -- overTap.alpha = 0
   -- elseif majorDiamLabel:getText() == "Pitch Diameter" then
   --   effectiveTap.alpha = 0
   -- else

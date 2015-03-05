@@ -782,6 +782,7 @@ function scene:create( event )
   transition.to ( optionsButt, { time = 500, alpha = 1, delay = 600} )
   
   screenGroup:insert(backGroup)
+  screenGroup:insert( optionsGroup)
     
 end
 

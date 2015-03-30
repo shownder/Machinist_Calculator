@@ -32,7 +32,7 @@ local typeTap, angleWheel, diaWheel
 local infoButt, infoLabel, pickerGroup, backBox, backLabel
 local angleTap, threadTap, basicMajorTap, actualWireTap, effectiveTap, overTap
 local angleNum, threadNum, basicMajorNum, actualWireNum, effectiveNum, overNum
-local wireSize
+local wireSize, tolButt, infoGroup
 
 local bestWireCalc, softReset, pitchMath, overMath
 
@@ -77,6 +77,19 @@ local function optionsMove(event)
       transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
 	  decLabel:setFont("inputFont")
 	  options = false
+    transition.to( infoGroup, { time = 200, x = display.contentWidth } )
+    end
+  end
+end
+
+local function tolInfoMove(event)
+  local phase = event.phase
+
+  if phase == "ended" then
+    if infoGroup.x > 0 then
+      transition.to( infoGroup, { time = 200, x = 0 } )
+    else
+      transition.to( infoGroup, { time = 200, x = display.contentWidth } )
     end
   end
 end
@@ -135,6 +148,7 @@ local function measureChange( event )
       transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
     decLabel:setFont("inputFont")
     options = false
+    transition.to( infoGroup, { time = 200, x = display.contentWidth } )
     end
 
     if wireSize:getText() ~= "0" and angleNum:getText() ~= "Tap Me" then
@@ -173,6 +187,7 @@ local function resetCalc(event)
       transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
     decLabel:setFont("inputFont")
     options = false
+   transition.to( infoGroup, { time = 200, x = display.contentWidth } )
 	end
 end
 end
@@ -231,6 +246,7 @@ local function goBack(event)
     transition.to ( optionsBack, { time = 500, y = -335 } )
 	options = false
 	composer.gotoScene( "menu", { effect="fromBottom", time=800})
+  transition.to( infoGroup, { time = 200, x = display.contentWidth } )
 	return true
 end
 
@@ -238,6 +254,11 @@ local function calcTouch( event )
 	if event.phase == "ended" then
 		
 		whatTap = event.target.tap
+    if whatTap > 3 then
+      whatTap = whatTap - 10
+    end
+
+    print( whatTap )
     
     if options then
 	  transition.to ( optionsGroup, { time = 100, alpha = 0} )
@@ -247,10 +268,16 @@ local function calcTouch( event )
       transition.to (decLabel, { time = 200, x = backEdgeX + 490, y = backEdgeY + 93} )
     decLabel:setFont("inputFont")
     options = false
+    transition.to( infoGroup, { time = 200, x = display.contentWidth } )
 		end
-		
-    composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
-		
+
+    if whatTap == 2 and angleNum:getText() == "60° UN" then
+      print("NEED A SCREW!")
+      composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false, needScrew = true }, isModal = true }  )
+    else
+      print("DO NOT NEED A SCREW!")
+      composer.showOverlay( "calculator", { effect="fromRight", time=200, params = { negTrue = false, needDec = true, isDegree = false }, isModal = true }  )
+    end
 		return true
 	end
 end
@@ -329,8 +356,15 @@ local function angleTouch( event )
           loadsave.saveTable(gMeasure, "threadMeasure.json")
           optionLabels[1]:setText("TPI")
           measurement:setText("Pitch of Thread")
-
           native.showAlert( "Notice", "Changed to Pitch of Thread" , { "OK" } )
+        end
+      else
+        if gMeasure.measure == "TPI" then
+          gMeasure.measure = "Pitch"
+          loadsave.saveTable(gMeasure, "threadMeasure.json")
+          optionLabels[1]:setText("Pitch")
+          measurement:setText("Threads per Inch")
+          native.showAlert( "Notice", "Changed to Threads per Inch" , { "OK" } )
         end
       end
     end
@@ -376,6 +410,7 @@ goBack2 = function()
     transition.to ( optionsBack, { time = 500, y = -335 } )
 	options = false
 	composer.gotoScene( "menu", { effect="fromBottom", time=800})
+  transition.to( infoGroup, { time = 200, x = display.contentWidth } )
   end
 		
 end
@@ -409,6 +444,10 @@ pitchMath = function()
 
   local factorPitch
   local angleNumber = string.sub( angleNum:getText(), 1 , 2 )
+  local acme = false
+  if angleNum:getText()== "29° Stub Acme" then
+    acme = true
+  end
   local answer
   local pitch = threadNum:getText()
 
@@ -420,6 +459,8 @@ pitchMath = function()
     factorPitch = 0.649519
   elseif angleNumber == "55" then
     factorPitch = 0.640327
+  elseif acme then
+    factorPitch = 0.3
   else
     factorPitch = 0.5
   end
@@ -523,6 +564,7 @@ function scene:create( event )
   aniTable = {}
   optionsGroup = display.newGroup ( )
   backGroup = display.newGroup ( )
+  infoGroup = display.newGroup ( )
 	continue = false
 
   gMeasure = loadsave.loadTable("threadMeasure.json")
@@ -541,7 +583,7 @@ function scene:create( event )
 
   optionLabels = {}
 
-  for i = 1, 3, 1 do
+  for i = 1, 4, 1 do
 	optionLabels[i] = display.newBitmapText("", 0, 0, "berlinFont", 18)
   end
 
@@ -637,6 +679,25 @@ function scene:create( event )
   optionLabels[3].x = reset.contentWidth / 2
   optionLabels[3].y = reset.contentHeight / 2
   reset:insert(optionLabels[3])
+
+  tolButt = widget.newButton
+  {
+  id = "tolButt",
+    width = 35,
+    height = 35,
+    defaultFile = "Images/calcButt.png",
+  overFile = "Images/calcButtOver.png",
+  onEvent = tolInfoMove,
+  }
+  optionsGroup:insert(tolButt)
+  tolButt.x = 70
+  tolButt.y = backEdgeY + 70
+
+  optionLabels[4]:setText("i")
+  optionLabels[4]:setFontSize(28)
+  optionLabels[4].x = tolButt.contentWidth / 2 - 0.5
+  optionLabels[4].y = tolButt.contentHeight / 2 - 5
+  tolButt:insert(optionLabels[4])
 	
 	optionsGroup.alpha = 0
 	
@@ -644,8 +705,30 @@ function scene:create( event )
   optionsBack:setFillColor(1)
   optionsBack.anchorX = 0; optionsBack.anchorY = 0; 
   optionsBack.x = -170
-  optionsBack.y = -335  
+  optionsBack.y = -335
+
+  local infoBack = display.newRect(infoGroup, 0, 0, display.actualContentWidth - 150, 365)
+  infoBack:setFillColor(1)
+  infoBack.anchorX = 0; infoBack.anchorY = 0; 
+  infoBack.x = 150
+  infoBack.y = 0
+
+  local infoText = display.newBitmapText("", 0, 0, "berlinFont", 16)
+  infoGroup:insert(infoText)
+  infoText:setJustification(infoText.Justify.LEFT)
+  infoText:setAnchor(0, 0.5)
+  infoText.x = backEdgeX + 200
+  infoText.y = backEdgeY + 180
+
+  local tempText = "TOLERANCES USED IN THIS APP:\n\n-The pitch diameter generated for a UN\nthread" ..
+  " is the top tolerance for a class 3A\n\n-The pitch diameter generated for an Acme\nor Stub Acme thread" ..
+  " is the maximum basic\npitch diameter minus the allowance for a class\n2-G General Purpose single start"..
+  " external\nAcme thread\n\n-The pitch (effective) diameter for the ISO\nmetric thread is for -4h external" ..
+  " threads, top\ntolerance. This tolerance is the basic size of a\ngiven thread\n\n-The pitch diameters" ..
+  " generated for the other\nthreads are for medium fit external threads"
   
+  infoText:setText(tempText)
+
   optionsButt = display.newImageRect(screenGroup, "Images/Options.png", 38, 38)
   optionsButt.x = 15
   optionsButt.y = 15
@@ -675,7 +758,7 @@ function scene:create( event )
   measurement.x = backEdgeX + 440
   measurement.y = backEdgeY + 189
 
-  threadAngleLabel = display.newBitmapText("Thread Angle", 0, 0, "uiFont", 13)
+  threadAngleLabel = display.newBitmapText("Thread Form", 0, 0, "uiFont", 13)
   backGroup:insert(threadAngleLabel)
   threadAngleLabel.x = backEdgeX + 440
   threadAngleLabel.y = backEdgeY + 125
@@ -756,7 +839,7 @@ function scene:create( event )
   angleTap:addEventListener ( "touch", angleTouch )
   angleTap.isHitTestMasked = false
 
-  angleNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 22)
+  angleNum = display.newBitmapText("Tap Me", 0, 0, "inputFont", 20)
   backGroup:insert(angleNum)
   angleNum:setJustification(angleNum.Justify.CENTER)
   angleNum:addEventListener ( "touch", angleTouch )
@@ -887,6 +970,11 @@ function scene:create( event )
   -- else
   --   overTap.alpha = 0
   -- end
+
+  screenGroup:insert(infoGroup)
+  infoGroup.anchorY = 0.5
+  infoGroup.anchorX = 1
+  infoGroup.x = display.contentWidth 
 		
 end
 

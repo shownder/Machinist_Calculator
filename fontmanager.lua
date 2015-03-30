@@ -716,7 +716,7 @@ function BitmapString:setText(newText)
 					decZero = decZero + 1
 				else
 					decZero = 0
-					print("it broke")
+					--print("it broke")
 					break
 				end
 			end

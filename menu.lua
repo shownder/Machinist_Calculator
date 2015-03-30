@@ -22,7 +22,7 @@ local speedButt, speedLabel
 local counterButt, counterLabel
 local chartButt, chartLabel
 local matButt, matLabel
-local timesOpen2
+local timesOpen3
 local back
 local logo, facebookButt
 local topBar
@@ -58,7 +58,7 @@ local function sceneSelect()
       analytics.logEvent( "Materials_List" )
 		composer.gotoScene( "materials", { effect="fromTop", time=800, params = {isOverlay = false}} )
     elseif going.num == 9 then
-      --analytics.logEvent( "Materials_List" )
+      analytics.logEvent( "Thread_Measure" )
     composer.gotoScene( "threads", { effect="fromTop", time=800, params = {isOverlay = false}} )
    	end
 end
@@ -96,8 +96,8 @@ local function alertListener ( event )
 		local i = event.index
     
     if i == 3 then
-      timesOpen2.opened = "never"
-      loadsave.saveTable(timesOpen2, "timesOpen2.json")
+      timesOpen3.opened = "never"
+      loadsave.saveTable(timesOpen3, "timesOpen3.json")
       local options =
         {
           iOSAppId = "687225532",
@@ -118,11 +118,11 @@ local function alertListener ( event )
         native.showPopup("rateApp", options)
       end
     elseif i == 2 then
-      timesOpen2.opened = -1
-      loadsave.saveTable(timesOpen2, "timesOpen2.json")
+      timesOpen3.opened = -1
+      loadsave.saveTable(timesOpen3, "timesOpen3.json")
     elseif i == 1 then
-      timesOpen2.opened = "never"
-      loadsave.saveTable(timesOpen2, "timesOpen2.json")
+      timesOpen3.opened = "never"
+      loadsave.saveTable(timesOpen3, "timesOpen3.json")
     end
         
 	end
@@ -188,13 +188,13 @@ function scene:create( event )
   local sceneGroup = self.view
 
   myData.inch = false 
-  timesOpen2 = loadsave.loadTable("timesOpen2.json")
+  timesOpen3 = loadsave.loadTable("timesOpen3.json")
   
-  if timesOpen2.opened == 5 then
+  if timesOpen3.opened == 5 then
     native.showAlert ( "Find this App useful?", "Leave a review and help others find it!", { "Never", "Later", "OK" }, alertListener )
   end
     
-  print("Times Opened "..timesOpen2.opened)
+  print("Times Opened "..timesOpen3.opened)
   
   going = {}
   going.num = 1

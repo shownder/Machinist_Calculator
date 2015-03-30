@@ -16,13 +16,14 @@ local num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, neg, dec, clea
 local deg, degText, degBorder, min, minText, minBorder, sec, secText, secBorder
 local numDisplay, displayBorder
 local numBack, maskBack, convert
-local needNeg, needDec
+local needNeg, needDec, needScrew
 local backEdgeX, backEdgeY
 local decPress, count, isFocus, degreeGroup, isDegree, decTemp
 local tempDec, decPlace
 local needNeg, needDec, isDegree, isBolt
 local BerlinSansFB, digital
 local bitLabelTable, buttonTable, goBack2
+local screwTable, screwList
 
 local deleteChar, toHours
 
@@ -313,6 +314,47 @@ toHours = function(h, m, s)
   
 end
 
+local function onRowRender( event )
+
+  -- Get reference to the row group
+  local row = event.row
+  local answer = event.row.params.answer
+
+  -- Cache the row "contentWidth" and "contentHeight" because the row bounds can change as children objects are added
+  local rowHeight = row.contentHeight
+  local rowWidth = row.contentWidth
+
+  local rowTitle = display.newBitmapText(answer[row.index], 0, 0, "berlinFont", 20)
+  row:insert(rowTitle)
+    
+  if row.index == 1 then
+    rowTitle:setFont("uiFont")
+  else
+    rowTitle:setFont("berlinFont")
+    rowTitle:setFontSize(24)
+  end
+    
+  -- Align the label left and vertically centered
+  rowTitle:setAnchor(0, 0.5) 
+  rowTitle.x = 10    
+  rowTitle.y = rowHeight * 0.5
+
+  return true
+end
+
+local function onRowTouch( event )
+  local phase = event.phase
+  local row = event.target
+  
+  if "press" == phase then
+    print(row.index)  
+  elseif "release" == phase then
+    local temp = screwList[row.index]
+    local temp2 = string.sub(temp, (string.len(temp) - 5), string.len(temp))
+    numDisplay:setText(temp2)
+  end
+end
+
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 --Create the Scene
@@ -324,6 +366,7 @@ function scene:create( event )
   Runtime:addEventListener( "key", onKeyEvent )
 
   decTemp = 0
+  needScrew = false
 
   BerlinSansFB = "BerlinSansFB-Reg.tff#Berlin Sans FB"
   bitLabelTable = {}
@@ -340,6 +383,7 @@ function scene:create( event )
   decPress = false
   isFocus = 1
 	
+  needScrew = event.params.needScrew
   needNeg = event.params.negTrue
   needDec = event.params.needDec
   isDegree = event.params.isDegree
@@ -736,6 +780,55 @@ function scene:create( event )
   bitLabelTable[14]:setFont("uiFont")
   bitLabelTable[15]:setFont("redFont")
 
+  screwTable = widget.newTableView
+     {
+       id = "screwTable",
+       left = 0,
+       top = display.contentHeight + 10,
+       width = display.contentWidth / 2,
+       height = display.contentHeight,
+       onRowTouch = onRowTouch,
+       onRowRender = onRowRender,
+       hideScrollBar = false,
+       }
+  if needScrew then
+    screwTable.alpha = 1
+  else
+    screwTable.alpha = 0
+  end
+
+  screwList = { "Major Diam of # Threads", "#0 - 0.060", "#1 - 0.073", "#2 - 0.086", "#3 - 0.099", "#4 - 0.112", "#5 - 0.125", "#6 - 0.138", "#8 - 0.164", "#10 - 0.190" , "#12 - 0.215"}
+     
+  for i = 1, 11, 1 do
+       
+    local isCategory = false
+    local rowHeight = display.contentHeight / 6
+    local rowColor = { default={ 1, 1, 1 }, over={ 1, 0.5, 0, 0.2 } }
+    local lineColor = { 0.15, 0.4, 0.729 }
+       
+    if ( i == 1 ) then
+      isCategory = true
+      rowColor = { default={ 0.15, 0.4, 0.729, 0.95 } }
+      lineColor = { 1, 0, 0 }
+    end       
+       
+    screwTable:insertRow(
+      {
+        isCategory = isCategory,
+        rowHeight = rowHeight,
+        rowColor = rowColor,
+        lineColor = lineColor,
+        params = { answer = screwList }
+        }
+      )
+    end
+
+    screwTable.anchorX = 0
+    screwTable.anchorY = 0
+
+    screwTable.x = 0
+    screwTable.y = 0
+
     screenGroup:insert( num1 )
 		screenGroup:insert( num2 )
 		screenGroup:insert( num3 )
@@ -753,6 +846,7 @@ function scene:create( event )
 		screenGroup:insert( clear )
     screenGroup:insert( backButt )
 		screenGroup:insert( numDisplay )
+    screenGroup:insert(screwTable)
 
 end
 
@@ -782,7 +876,7 @@ function scene:hide( event )
   if ( phase == "will" ) then
 	Runtime:removeEventListener( "key", onKeyEvent )
     --calling the calculate function in the parent scene
-    transition.to(maskBakc, {alpha = 0, time = 200})
+    transition.to(maskBack, {alpha = 0, time = 30})
     parent:calculate()
   elseif ( phase == "did" ) then
       -- Called immediately after scene goes off screen.

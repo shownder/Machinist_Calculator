@@ -52,9 +52,9 @@ if device.isApple then
   analytics.init( "C52V5WBYR3QV8Q8XXKZZ" )
 end
 
-local timesOpen2 = loadsave.loadTable("timesOpen2.json")
+local timesOpen3 = loadsave.loadTable("timesOpen3.json")
 local menuOpened = loadsave.loadTable("menuOpen.json")
---timesOpen2.opened = 4
+--timesOpen3.opened = 4
 
 if (menuOpened == nil) then
     menuOpened = {}
@@ -62,21 +62,21 @@ if (menuOpened == nil) then
     loadsave.saveTable(menuOpened, "menuOpen.json")
 end
   
-  if (timesOpen2 == nil) then
-    timesOpen2 = {}
-    timesOpen2.opened = 0
-    loadsave.saveTable(timesOpen2, "timesOpen2.json")
-  elseif timesOpen2.opened ~= "never" then
-    --timesOpen2.opened = 0
-    if timesOpen2.opened < 7 then
-      timesOpen2.opened = timesOpen2.opened + 1
-      loadsave.saveTable(timesOpen2, "timesOpen2.json")
+  if (timesOpen3 == nil) then
+    timesOpen3 = {}
+    timesOpen3.opened = 0
+    loadsave.saveTable(timesOpen3, "timesOpen3.json")
+  elseif timesOpen3.opened ~= "never" then
+    --timesOpen3.opened = 0
+    if timesOpen3.opened < 7 then
+      timesOpen3.opened = timesOpen3.opened + 1
+      loadsave.saveTable(timesOpen3, "timesOpen3.json")
     end
   end
  
 print(system.getInfo("model") .. " " .. system.getInfo("platformVersion"))
 if device.isApple or device.isSimulator then
-  composer.gotoScene( "threads")
+  composer.gotoScene( "menu")
 end
 
 
